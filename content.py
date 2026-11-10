@@ -125,7 +125,7 @@ def home(ctx):
     hero_bg = L(photo("hero"))
     return f'''<section class="hero2" style="--hero:url({hero_bg})"><div class="wrap hero2-grid">
 <div class="hero2-copy">
-<h1><span class="h1-loc">Marlborough, MA</span><span class="h1-a">European</span><span class="h1-b">Auto Specialists</span></h1>
+<h1><span class="h1-loc">Marlborough, MA</span> <span class="h1-a">European</span> <span class="h1-b">Auto Specialists</span></h1>
 <p class="hero2-sub">Diagnostics. Maintenance. Repairs.<br>Performance Builds.</p>
 <div class="btn-row"><a class="btn btn-primary" href="{book}">{ICON["cal"]}Book an Appointment</a><a class="btn btn-ghost" href="{L("/services/")}">Our Services {ICON["arrow"]}</a></div>
 <nav class="hero2-makes" aria-label="Makes we service"><span class="slash" aria-hidden="true"></span>{" <i>/</i> ".join(f'<a href="{L(p)}">{e("VW" if n=="Volkswagen" else "Mercedes" if n=="Mercedes-Benz" else n)}</a>' for n, p in MAKES_NAV)}</nav>
