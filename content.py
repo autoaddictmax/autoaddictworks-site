@@ -165,8 +165,7 @@ def home(ctx):
 </div>
 <div class="hero2-art" aria-hidden="true">
 <img class="medal" src="{L("/img/emblem-gold.svg")}" alt="" width="520" height="520">
-<div class="gauge"><svg viewBox="0 0 120 70"><path class="g-bg" d="M10 62a50 50 0 0 1 100 0"/><path class="g-fg" d="M10 62a50 50 0 0 1 100 0"/></svg>
-<div><small>Shop car · B58 340i</small><b>1,300<em>HP</em></b></div></div>
+<div class="chip-ista chip-warr">{ICON["check"]}<span>{WARRANTY}<br><small>On parts we supply</small></span></div>
 <div class="chip-ista">{ICON["diag"]}<span>BMW ISTA<br><small>Factory diagnostics</small></span></div>
 </div></div></section>
 
@@ -446,8 +445,10 @@ SERVICES = {
   title="BMW & European Performance Builds | Marlborough, MA",
   desc="Turbo upgrades, fueling, cooling and drivetrain builds for BMW, Audi, VW and Mercedes in Marlborough, MA. Plan your build online.",
   h1="Performance Builds",
-  lede="Our shop car is a B58-powered 340i making 1,300 horsepower. Whether you want a clean Stage 1 or a full build, we plan it as a system: power, fueling, cooling, drivetrain and brakes.",
+  lede="Whether you want a clean Stage 1 or a full build, we plan it as a system: power, fueling, cooling, drivetrain and brakes, on a healthy car, with every part installed in our shop.",
+  card="Performance hardware planned as a complete system: fueling, cooling, drivetrain and brakes, not just the parts that make power.",
   body=[
+   ("We drive what we build", "<p>Our own shop car is a B58-powered 340i making 1,300 horsepower, built here with the same process we use on customer cars: health check first, fueling before boost, and a drivetrain that can hold the power.</p>"),
    ("Hardware is ours, tuning is theirs", "<p>We plan the build and install the parts. Software tuning is done by independent tuning specialists, and you work with the tuner directly on the calibration. Keeping those roles separate means each part of the build is handled by the people who do it every day.</p>"),
    ("Built right, not cheap", "<p>More power always costs more than the parts that make it. A proper build includes the fueling, cooling, drivetrain and brakes to support it, plus a healthy engine to start with. We'll be straight with you about cost and risk before anything is ordered. If the goal is the cheapest way to more boost, we're not the right shop; if you want it done properly, we'd love to build it.</p>"),
    ("Plan your build", "<p>Use our <a href=\"/build/\">Build Your Car</a> tool to pick your car, set a power goal and see the parts and supporting mods it takes with a ballpark price. Every build starts with a health check, compression or leak-down, a full scan and a look at known weak points, because power on a tired engine is money wasted.</p>"),
@@ -486,10 +487,10 @@ def service_page(path):
                 faqs=s["faqs"], service=s["name"], body=body, priority="0.8")
 
 def services_hub(ctx):
-    items = [(n, SERVICES[p]["lede"], p) for n, p in SERVICES_NAV]
+    items = [(n, SERVICES[p].get("card", SERVICES[p]["lede"]), p) for n, p in SERVICES_NAV]
     return page_hero(ctx, f"Services · {CITY}", "European Auto Services", "Everything a BMW, Audi, Volkswagen or Mercedes-Benz needs, diagnosed properly, repaired with the right parts, and explained in plain language.",
                      [("Home", "/"), ("Services", "/services/")]) + '<section class="section"><div class="wrap"><div class="grid g3">' + "".join(
-        f'<a class="card icard" href="{ctx.L(p)}">{ICON[SVC_ICON[p]]}<h3>{e(n)}</h3><p>{SERVICES[p]["lede"]}</p><span class="more">Learn more →</span></a>' for n, p in SERVICES_NAV) + f'</div></div></section><section class="section tight"><div class="wrap">{marques(ctx)}</div></section>'
+        f'<a class="card icard" href="{ctx.L(p)}">{ICON[SVC_ICON[p]]}<h3>{e(n)}</h3><p>{SERVICES[p].get("card", SERVICES[p]["lede"])}</p><span class="more">Learn more →</span></a>' for n, p in SERVICES_NAV) + f'</div></div></section><section class="section tight"><div class="wrap">{marques(ctx)}</div></section>'
     items = None
     return page_hero(ctx, f"Services · {CITY}", "European Auto Services", "Everything a BMW, Audi, Volkswagen or Mercedes-Benz needs, diagnosed properly, repaired with the right parts, and explained in plain language.",
                      [("Home", "/"), ("Services", "/services/")]) + f'<section class="section"><div class="wrap">{cards(ctx, items)}</div></section><section class="section tight"><div class="wrap">{marques(ctx)}</div></section>'
@@ -502,7 +503,7 @@ def about(ctx):
 <h2>Why we started</h2>
 <p>Owners of European cars usually get two choices: the dealer, with dealer pricing, or a general shop that treats a BMW like any other car. We built Auto Addict Works to be the third option: a specialist shop with the dealer's diagnostic software and parts quality, run by enthusiasts who explain what's actually going on with your car.</p>
 <h2>BMW first, European always</h2>
-<p>Our team drives BMWs, and our shop car, a B58-powered 340i, makes 1,300 horsepower. BMW is our deepest specialty, with Audi and Volkswagen close behind and Mercedes-Benz service as well. Whether it's your family's X5 or a weekend track car, it gets the same attention.</p>
+<p>Our team drives BMWs and works on them every day. BMW is our deepest specialty, with Audi and Volkswagen close behind and Mercedes-Benz service as well. Whether it's your family's X5 or a weekend track car, it gets the same attention.</p>
 <h2>The team</h2>
 <p>Between us we bring more than 12 years of combined, hands-on experience with BMW and European cars, from routine service to full performance builds. We're enthusiasts who work on these cars every day and drive them on our own time.</p>
 <h2>How we work</h2>

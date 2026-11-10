@@ -673,3 +673,4 @@ a.card:hover{background:linear-gradient(170deg,#25343A,#1A2528)}
 /* hero sits directly on services after removing the icon strip */
 .hero2 + .section{padding-top:56px}
 @media(max-width:980px){.hero2-grid{padding-bottom:44px}.hero2 + .section{padding-top:40px}}
+.chip-ista.chip-warr{top:auto;right:auto;left:-6%;bottom:8%;border-color:rgba(197,165,114,.35)}
