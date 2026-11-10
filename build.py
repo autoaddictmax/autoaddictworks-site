@@ -33,11 +33,11 @@ def phone_link(): return f'tel:{CFG["phoneE164"]}'
 def hours_text():
     out = []
     for h in CFG["hours"]:
-        d = h["days"]; label = d[0][:3] + ("–" + d[-1][:3] if len(d) > 1 else "")
+        d = h["days"]; label = d[0][:3] + (" to " + d[-1][:3] if len(d) > 1 else "")
         def t(x):
             hh, mm = map(int, x.split(":")); ap = "am" if hh < 12 else "pm"; hh = hh % 12 or 12
             return f"{hh}{':%02d' % mm if mm else ''}{ap}"
-        out.append(f"{label} {t(h['opens'])}–{t(h['closes'])}")
+        out.append(f"{label}: {t(h['opens'])} to {t(h['closes'])}")
     return out
 
 def business_schema(ctx):

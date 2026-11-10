@@ -4,9 +4,9 @@
   "name": "Auto Addict Works",
   "legalName": "Auto Addict Works LLC",
   "tagline": "European Vehicle Specialists",
-  "phoneDisplay": "(508) 000-0000",
-  "phoneE164": "+15080000000",
-  "phoneIsPlaceholder": true,
+  "phoneDisplay": "(774) 448-5551",
+  "phoneE164": "+17744485551",
+  "phoneIsPlaceholder": false,
   "email": "service@autoaddictworks.com",
   "address": {
     "street": "41 Brigham Street, Unit 1",
@@ -25,11 +25,18 @@
         "Thursday",
         "Friday"
       ],
-      "opens": "08:00",
-      "closes": "17:00"
+      "opens": "08:30",
+      "closes": "17:30"
+    },
+    {
+      "days": [
+        "Saturday"
+      ],
+      "opens": "10:00",
+      "closes": "14:00"
     }
   ],
-  "hoursArePlaceholder": true,
+  "hoursArePlaceholder": false,
   "laborRate": 155,
   "bookingUrl": "",
   "formEndpoint": "",
