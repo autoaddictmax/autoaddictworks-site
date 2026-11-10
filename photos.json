@@ -15,14 +15,16 @@
   "page-services": {
     "src": "bay-m3-lift.jpg",
     "focus": [
-      0.5,
-      0.38
+      0.38,
+      0.6
     ],
+    "zoom": 1.35,
     "focus_m": [
-      0.56,
-      0.5
+      0.62,
+      0.75
     ],
-    "bright": 1.12
+    "zoom_m": 1.3,
+    "bright": 1.15
   },
   "repairs": {
     "src": "m-caliper-impact.jpg",
@@ -33,17 +35,17 @@
     "bright": 1.05
   },
   "page-services-brakes-suspension": {
-    "src": "ccb-nitron.jpg",
+    "src": "ccb-nitron-wide.jpg",
     "focus": [
-      0.4,
+      0.42,
+      0.62
+    ],
+    "zoom": 1.35,
+    "focus_m": [
+      0.6,
       0.6
     ],
-    "zoom": 1.2,
-    "focus_m": [
-      0.55,
-      0.52
-    ],
-    "bright": 1.15
+    "bright": 1.12
   },
   "performance": {
     "src": "m2-turbo-bay.jpg",
@@ -70,16 +72,17 @@
   "page-services-engine-repair": {
     "src": "m2-engine-out.jpg",
     "focus": [
-      0.5,
-      0.6
+      0.36,
+      0.62
     ],
     "focus_m": [
       0.5,
-      0.62
+      0.72
     ],
     "bright": 1.08,
     "tone": 0.35,
-    "zoom": 1.0
+    "zoom": 1.6,
+    "zoom_m": 1.15
   },
   "page-bmw-repair": {
     "src": "m4-white-hex.jpg",
@@ -93,5 +96,19 @@
     ],
     "bright": 0.95,
     "tone": 0.25
+  },
+  "page-services-coding-retrofits": {
+    "src": "carplay.jpg",
+    "focus": [
+      0.4,
+      0.48
+    ],
+    "zoom": 1.1,
+    "focus_m": [
+      0.55,
+      0.47
+    ],
+    "bright": 0.95,
+    "tone": 0.12
   }
 }
