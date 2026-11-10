@@ -3,6 +3,12 @@ import json, html
 CFG = json.load(open(__file__.rsplit("/", 1)[0] + "/config.json"))
 A = CFG["address"]
 CITY = "Marlborough, MA"
+WARRANTY = (CFG.get("warrantyTerms") + " parts and labor warranty") if CFG.get("warrantyTerms") else "Parts and labor warranty"
+WARRANTY_FAQ = ("What warranty do you offer?",
+  (f"Repairs are covered by our {CFG['warrantyTerms']} warranty on parts and labor" if CFG.get("warrantyTerms") else "Repairs are covered by our parts and labor warranty")
+  + " when we supply the parts. Ask us for the full terms with your estimate.")
+PARTS_FAQ = ("Can I bring my own parts?",
+  "Yes, we'll install parts you supply. Our warranty covers parts we source and the labor to install them, so customer-supplied parts aren't covered, and neither is the labor to diagnose or replace them if they fail or turn out to be the wrong part.")
 
 SERVICES_NAV = [
     ("Diagnostics & Programming", "/services/diagnostics/"),
@@ -86,7 +92,7 @@ def side_panel(ctx, heading="Visit the shop"):
     return f'''<aside class="panel"><h3>{heading}</h3>
 <address class="nap"><strong>{e(CFG["name"])}</strong><br>{e(A["street"])}<br>{e(A["city"])}, {A["region"]} {A["postal"]}<br>
 <a href="tel:{CFG["phoneE164"]}">{e(CFG["phoneDisplay"])}</a></address>
-<p class="muted small" style="margin:16px 0 24px">Drop-off by appointment. Written estimate before any work begins. Flexible financing available.</p>
+<p class="muted small" style="margin:16px 0 24px">Drop-off by appointment. Written estimate before any work begins. {WARRANTY} on parts we supply. Flexible financing available.</p>
 <div class="btn-row"><a class="btn btn-primary" href="{CFG["bookingUrl"] or ctx.L("/contact/")}">Book Service</a>
 <a class="btn btn-ghost" href="{CFG["mapsUrl"]}" target="_blank" rel="noopener">Directions</a></div></aside>'''
 
@@ -98,6 +104,8 @@ TOWNS = ", ".join(CFG["areasServed"][:-1]) + " and " + CFG["areasServed"][-1]
 
 # ------------------------------------------------------------------ home
 HOME_FAQS = [
+    WARRANTY_FAQ,
+    PARTS_FAQ,
     ("Do you offer financing?",
      "Yes. We offer flexible financing for repairs and performance builds. Ask when you get your estimate and we'll walk you through the terms."),
     ("Do I have to go to the dealer to keep my BMW, Audi, VW or Mercedes warranty?",
@@ -158,7 +166,7 @@ def home(ctx):
 <div class="approach-copy"><span class="eyebrow line">Our approach</span>
 <h2>Dealer-level capabilities.<br><span class="gold">An independent experience.</span></h2>
 <p class="lede">We combine factory-grade tools, real technical depth and a genuine obsession with European cars to keep yours performing at its best, on the road and at the track.</p>
-<ul class="badges"><li>{ICON["check"]}Factory ISTA diagnostics</li><li>{ICON["check"]}Genuine &amp; OE parts</li><li>{ICON["check"]}Enthusiast-run</li></ul>
+<ul class="badges"><li>{ICON["check"]}Factory ISTA diagnostics</li><li>{ICON["check"]}Genuine &amp; OE parts</li><li>{ICON["check"]}{WARRANTY}</li><li>{ICON["check"]}12+ years combined experience</li></ul>
 </div></section>
 
 <section class="section"><div class="wrap">
@@ -449,8 +457,10 @@ def about(ctx):
 <p>Owners of European cars usually get two choices: the dealer, with dealer pricing, or a general shop that treats a BMW like any other car. We built Auto Addict Works to be the third option: a specialist shop with the dealer's diagnostic software and parts quality, run by enthusiasts who explain what's actually going on with your car.</p>
 <h2>BMW first, European always</h2>
 <p>Our team drives BMWs, and our shop car, a B58-powered 340i, makes 1,300 horsepower. BMW is our deepest specialty, with Audi and Volkswagen close behind and Mercedes-Benz service as well. Whether it's your family's X5 or a weekend track car, it gets the same attention.</p>
+<h2>The team</h2>
+<p>Between us we bring more than 12 years of combined, hands-on experience with BMW and European cars, from routine service to full performance builds. We're enthusiasts who work on these cars every day and drive them on our own time.</p>
 <h2>How we work</h2>
-{ticks(["Diagnose first, using factory procedures, never parts-cannon guessing.","Genuine and OE-supplier parts by default.","Written estimates and your approval before any work.","Photos and plain-language explanations of what we found.","Records on every repair order, so your service history stays complete."])}
+{ticks(["Diagnose first, using factory procedures, never parts-cannon guessing.","Genuine and OE-supplier parts by default.","Written estimates and your approval before any work.","A parts and labor warranty on parts we supply.","Photos and plain-language explanations of what we found.","Records on every repair order, so your service history stays complete."])}
 </div>{side_panel(ctx)}</div></section>'''
 
 def areas(ctx):
@@ -479,6 +489,8 @@ def contact(ctx):
 <div class="form-status" id="form-status" role="status"></div>
 <div><button class="btn btn-primary" type="submit">Send Request</button></div>
 <p class="note">We'll only use your details to respond to this request.</p>
+
+<p class="muted small" style="margin-top:12px">Bringing your own parts? We're happy to install them. Our warranty covers parts we supply, so customer-supplied parts and the labor tied to them aren't covered.</p>
 </form>
 <aside class="panel"><h3>Shop</h3>
 <address class="nap"><strong>{e(CFG["name"])}</strong><br>{e(A["street"])}<br>{e(A["city"])}, {A["region"]} {A["postal"]}</address>
