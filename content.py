@@ -6,6 +6,7 @@ CITY = "Marlborough, MA"
 
 SERVICES_NAV = [
     ("Diagnostics & Programming", "/services/diagnostics/"),
+    ("Coding & Retrofits", "/services/coding-retrofits/"),
     ("Maintenance & Inspections", "/services/maintenance/"),
     ("Engine & Drivetrain Repair", "/services/engine-repair/"),
     ("Brakes, Suspension & Steering", "/services/brakes-suspension/"),
@@ -42,10 +43,11 @@ ICON = {
  "shield": _I('<path d="M12 3l8 3v6c0 4.5-3.5 8-8 9-4.5-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>'),
  "disc": _I('<circle cx="11" cy="12" r="8"/><circle cx="11" cy="12" r="2.5"/><path d="M11 6.5v1M16.5 12h-1M11 17.5v-1M5.5 12h1"/><path d="M17 5.5a9 9 0 0 1 3.5 6.5"/>'),
  "cal": _I('<rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 10h18M8 3v4M16 3v4"/>'),
+ "code": _I('<rect x="6" y="6" width="12" height="12" rx="1"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/>'),
  "arrow": _I('<path d="M5 12h14M13 6l6 6-6 6"/>'),
  "check": _I('<circle cx="12" cy="12" r="9"/><path d="M8 12.3l2.6 2.6L16 9.5"/>'),
 }
-SVC_ICON = {"/services/diagnostics/": "diag", "/services/maintenance/": "wrench", "/services/engine-repair/": "gear",
+SVC_ICON = {"/services/diagnostics/": "diag", "/services/coding-retrofits/": "code", "/services/maintenance/": "wrench", "/services/engine-repair/": "gear",
             "/services/brakes-suspension/": "disc", "/services/performance-builds/": "turbo", "/services/pre-purchase-inspection/": "shield"}
 
 
@@ -84,7 +86,7 @@ def side_panel(ctx, heading="Visit the shop"):
     return f'''<aside class="panel"><h3>{heading}</h3>
 <address class="nap"><strong>{e(CFG["name"])}</strong><br>{e(A["street"])}<br>{e(A["city"])}, {A["region"]} {A["postal"]}<br>
 <a href="tel:{CFG["phoneE164"]}">{e(CFG["phoneDisplay"])}</a></address>
-<p class="muted small" style="margin:16px 0 24px">Drop-off by appointment. Written estimate before any work begins.</p>
+<p class="muted small" style="margin:16px 0 24px">Drop-off by appointment. Written estimate before any work begins. Flexible financing available.</p>
 <div class="btn-row"><a class="btn btn-primary" href="{CFG["bookingUrl"] or ctx.L("/contact/")}">Book Service</a>
 <a class="btn btn-ghost" href="{CFG["mapsUrl"]}" target="_blank" rel="noopener">Directions</a></div></aside>'''
 
@@ -96,6 +98,8 @@ TOWNS = ", ".join(CFG["areasServed"][:-1]) + " and " + CFG["areasServed"][-1]
 
 # ------------------------------------------------------------------ home
 HOME_FAQS = [
+    ("Do you offer financing?",
+     "Yes. We offer flexible financing for repairs and performance builds. Ask when you get your estimate and we'll walk you through the terms."),
     ("Do I have to go to the dealer to keep my BMW, Audi, VW or Mercedes warranty?",
      "No. Federal law (the Magnuson-Moss Warranty Act) lets you have maintenance done at any qualified shop without voiding your factory warranty, as long as the work follows the manufacturer's schedule with correct-spec parts and fluids. We document every service on your repair order so you have the record."),
     ("What diagnostic equipment do you use?",
@@ -210,7 +214,7 @@ MAKES = {
   ],
   services=["Oil service and Condition Based Service (CBS) resets","Brake fluid, coolant, spark plugs and ZF transmission service","ISTA diagnostics, coding, programming and software updates","Battery registration and retrofits","Engine, cooling and oil-leak repair","Performance hardware: downpipes, intercoolers, port injection, turbo upgrades"],
   faqs=[("Do you work on BMW M cars?", "Yes. We service and modify M cars including the S55 (F80 M3, F82 M4, F87 M2 Competition) and S58 (G80 M3, G82 M4, G87 M2), from routine service to complete performance builds."),
-        ("Can you code and program my BMW?", "Yes. We use ISTA for programming and module software updates, and can code retrofits and features after repairs or upgrades. If a repair needs a module programmed, we handle it in-house."),
+        ("Can you code and program my BMW?", "Yes. We use ISTA for programming and module software updates, and code retrofits and features (see <a href=\"/services/coding-retrofits/\">Coding &amp; Retrofits</a>). If a repair needs a module programmed, we handle it in-house."),
         ("How often should my BMW's oil be changed?", "BMW's Condition Based Service intervals can stretch past 10,000 miles. For turbocharged engines driven in New England weather (short trips, cold starts, or added power), we recommend every 5,000 to 7,500 miles."),
         ("Do you service MINI?", "Yes. MINI shares BMW engines and electronics, and ISTA covers MINI as well.")]),
  "audi": dict(path="/audi-repair/", name="Audi",
@@ -332,10 +336,25 @@ SERVICES = {
    ("How we diagnose", "<p>Every diagnostic starts with verifying the complaint and a full scan of every control module, not just the engine. From there we follow the manufacturer's guided test plan: live data, component tests, wiring checks and, where needed, smoke testing for vacuum and boost leaks. You get a clear finding and a written estimate before any repair.</p>"),
    ("BMW ISTA: dealer-level software", "<p>For BMW and MINI we use ISTA, the factory diagnostic and programming platform. That means guided fault-finding, battery registration, coding after repairs and retrofits, and module software updates, without a trip to the dealer.</p>"),
    ("What we diagnose", ticks(["Check-engine and drivetrain warning lights","Misfires, rough idle and loss of power","Boost leaks and turbo faults","Electrical faults, parasitic battery drain and module communication errors","ABS, stability-control and airbag warnings","Transmission shift faults and limp mode"])),
+   ("Coding and retrofits", "<p>Looking to add features or install factory options? See <a href=\"/services/coding-retrofits/\">Coding &amp; Retrofits</a>.</p>"),
   ],
   faqs=[("How much does a diagnostic cost?", "Diagnostic time depends on the fault. We'll tell you the starting diagnostic charge up front, and if more time is needed we call before going further."),
         ("Can you clear my check engine light?", "We can, but we'd rather fix why it's on. Clearing a code without a repair usually just brings it back, and readiness monitors must reset before a Massachusetts inspection."),
         ("Can you program a new module or key?", "For BMW and MINI, module programming and coding are done in-house with ISTA. For other makes, ask us about your specific job.")]),
+ "/services/coding-retrofits/": dict(name="Coding & Retrofits",
+  title="BMW Coding, CarPlay & Retrofits | Marlborough, MA",
+  desc="BMW and MINI coding, CarPlay activation, feature unlocks and factory retrofits in Marlborough, MA. Done with factory ISTA and coding software.",
+  h1="BMW Coding &amp; Retrofits",
+  lede="Unlock features your car already has and add factory options it didn't come with, coded properly so everything works like it left the factory.",
+  body=[
+   ("Coding: features already in your car", "<p>Many BMW and MINI features are built in but switched off from the factory. Coding turns them on in the car's modules. What's available depends on your model, build date and equipment, so we confirm before we start.</p>" + ticks(["Apple CarPlay activation on supported head units","Comfort settings: mirror fold on lock, window and roof operation from the key, seatbelt chime and start-stop memory","Lighting: DRL options, welcome lights, ambient lighting and turn signal behavior","Display options: digital speed, sport displays and menu features","Key memory: seat, mirror and display settings tied to each key","Coding after repairs: new modules, batteries and replaced parts"])),
+   ("Retrofits: factory options added", "<p>A retrofit installs factory hardware your car didn't come with, then codes it in so the car recognizes it as original equipment. No warning lights, no aftermarket workarounds.</p>" + ticks(["Backup and surround-view cameras","Ambient lighting and upgraded lighting packages","M steering wheels and paddle shifters","Head units, screens and audio upgrades","Trailer hitches with factory wiring and coding","Other factory options: ask about your car"])),
+   ("Done with the right software", "<p>We use ISTA, BMW's factory diagnostic and programming platform, along with professional coding tools. Every job starts with a full scan and a battery support unit on the car, so modules are never programmed on low voltage.</p>"),
+  ],
+  faqs=[("Will coding void my warranty?", "Coding factory features doesn't add aftermarket parts, but a dealer can see coding changes. If you're under warranty, we'll tell you what's low risk and can return settings to stock before a dealer visit."),
+        ("Can you activate CarPlay on my BMW?", "On most cars with a supported head unit, yes. Send us your VIN and we'll confirm what your car supports before you come in."),
+        ("Do you code MINI too?", "Yes. MINI shares BMW's electronics, so coding and retrofits work the same way."),
+        ("How long does coding take?", "Most coding jobs are done while you wait or same day. Retrofits depend on the hardware and are scheduled with a written estimate.")]),
  "/services/maintenance/": dict(name="Maintenance & Inspections",
   title="BMW, Audi, VW & Mercedes Maintenance | Marlborough, MA",
   desc="Factory-schedule maintenance for European cars in Marlborough, MA: oil, brake fluid, spark plugs, transmission and differential fluid. Warranty-safe.",
@@ -380,6 +399,7 @@ SERVICES = {
    ("Hardware is ours, tuning is theirs", "<p>We plan the build and install the parts. Software tuning is done by independent tuning specialists, and you work with the tuner directly on the calibration. Keeping those roles separate means each part of the build is handled by the people who do it every day.</p>"),
    ("Plan your build", "<p>Use our <a href=\"/build/\">Build Your Car</a> tool to pick your car, set a power goal and see the parts and supporting mods it takes with a ballpark price. Every build starts with a health check, compression or leak-down, a full scan and a look at known weak points, because power on a tired engine is money wasted.</p>"),
    ("What we do", ticks(["Intakes, charge pipes, intercoolers and heat exchangers","Downpipes and exhaust","Fueling: port injection, low-pressure fuel pumps, injectors and flex-fuel/E85","Hybrid and big-single turbo upgrades","Built transmissions, clutches, axles and driveshafts","Oil and transmission coolers","Brakes, suspension and tires to match the power"])),
+   ("Flexible financing", "<p>Builds can be financed with flexible terms, so you can do it right the first time instead of cutting corners on supporting mods. Ask about financing when you send your build.</p>"),
    ("Street, track or competition", "<p>Street builds stay emissions-compliant with catted parts. If you're building a dedicated off-road or competition vehicle, tell us. The build tool has a competition option, and we'll talk through what that means for registration and inspection.</p>"),
   ],
   faqs=[("Will more power hurt reliability?", "A conservative, well-supported build on a healthy car is very reliable. Problems come from skipping supporting mods: fueling, cooling, ignition and drivetrain. That's why our build tool adds them automatically."),

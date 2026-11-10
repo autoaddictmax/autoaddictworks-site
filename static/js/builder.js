@@ -74,7 +74,7 @@ function render(){var b=build(),p=b.p,max=gmax();
  var top=p.tiers[p.tiers.length-1][0];$("s-bar").style.width=(b.tgt/top*100)+"%";$("s-stockmark").style.left=(p.stock/top*100)+"%";
  $("s-stock").textContent="Stock "+p.stock;$("s-max").textContent="Max "+top.toLocaleString();
  $("psw").classList.toggle("on",S.price);
- $("pbody").innerHTML=(CAN_PRICE&&S.price)?'<b>'+fmt(b.lo)+' to '+fmt(b.hi)+'</b><p>Parts + ~'+Math.round(b.hrs)+' hrs labor. Final quote after a health check.</p>':'<span class="quote">Custom quote</span><p>We price every build after a pre-build health check.</p>';
+ $("pbody").innerHTML=(CAN_PRICE&&S.price)?'<b>'+fmt(b.lo)+' to '+fmt(b.hi)+'</b><p>Parts + ~'+Math.round(b.hrs)+' hrs labor. Final quote after a health check. Flexible financing available.</p>':'<span class="quote">Custom quote</span><p>We price every build after a pre-build health check. Flexible financing available.</p>';
  var f=[];if(b.have.indexOf("flex")>=0)f.push(["","Built around ethanol blends (E30 to E85). Flex fuel lets you run pump gas too, at lower power."]);
  if(S.c)f.push(["w","Competition build. Off-road use only, signed acknowledgment required."]);else if(b.tier)f.push(["","Street build: catted parts, built to stay free of warning lights."]);
  if(p.gen3&&b.tier)f.push(["","Gen 3 B58: flash tuning support is still limited on this generation. Factory port injection makes ethanol blends easier."]);
