@@ -131,7 +131,7 @@ def home(ctx):
 <nav class="hero2-makes" aria-label="Makes we service"><span class="slash" aria-hidden="true"></span>{" <i>/</i> ".join(f'<a href="{L(p)}">{e("VW" if n=="Volkswagen" else "Mercedes" if n=="Mercedes-Benz" else n)}</a>' for n, p in MAKES_NAV)}</nav>
 </div>
 <div class="hero2-art" aria-hidden="true">
-<img class="medal" src="{L("/img/emblem-gold.svg")}" alt="" width="520" height="520">
+<img class="medal" src="{L("/img/emblem-metallic.svg")}" alt="" width="520" height="520">
 <div class="gauge"><svg viewBox="0 0 120 70"><path class="g-bg" d="M10 62a50 50 0 0 1 100 0"/><path class="g-fg" d="M10 62a50 50 0 0 1 100 0"/></svg>
 <div><small>Shop car · B58 340i</small><b>1,300<em>HP</em></b></div></div>
 <div class="chip-ista">{ICON["diag"]}<span>BMW ISTA<br><small>Factory diagnostics</small></span></div>

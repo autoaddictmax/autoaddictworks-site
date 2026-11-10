@@ -146,7 +146,7 @@ def page_html(ctx, p):
 <meta name="description" content="{esc(desc)}">
 {robots}
 <link rel="canonical" href="{canonical}">
-<meta name="theme-color" content="#1B2528">
+<meta name="theme-color" content="#0B0D10">
 <meta property="og:type" content="website"><meta property="og:site_name" content="{esc(CFG['name'])}">
 <meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}">
 <meta property="og:url" content="{canonical}"><meta property="og:image" content="{ctx.abs('/img/og-share-image-1200x630.png')}">
@@ -155,9 +155,8 @@ def page_html(ctx, p):
 <meta name="geo.region" content="US-MA"><meta name="geo.placename" content="Marlborough">
 <link rel="icon" href="{L('/img/favicon.ico')}" sizes="any"><link rel="icon" href="{L('/img/favicon.svg')}" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{L('/img/apple-touch-icon.png')}"><link rel="manifest" href="{L('/site.webmanifest')}">
-<link rel="preload" href="{L('/fonts/Montserrat-600.woff2')}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{L('/fonts/KronaOne-400.woff2')}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{L('/fonts/Inter-400.woff2')}" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="{L('/fonts/Montserrat-700-italic.woff2')}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{L('/css/site.css')}">
 {ld}
 <script>window.AAW={cfg_js};</script>
@@ -191,7 +190,7 @@ def build():
     open(os.path.join(OUT, "sitemap.xml"), "w").write("\n".join(sm) + "\n")
     open(os.path.join(OUT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\n\nSitemap: {CFG['siteUrl'].rstrip('/')}/sitemap.xml\n")
     json.dump({"name": CFG["name"], "short_name": "AA Works", "start_url": "/", "display": "standalone",
-               "background_color": "#1B2528", "theme_color": "#1B2528",
+               "background_color": "#0B0D10", "theme_color": "#0B0D10",
                "icons": [{"src": "/img/icon-192.png", "sizes": "192x192", "type": "image/png"},
                          {"src": "/img/icon-512.png", "sizes": "512x512", "type": "image/png"}]},
               open(os.path.join(OUT, "site.webmanifest"), "w"))
