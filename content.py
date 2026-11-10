@@ -170,9 +170,10 @@ def home(ctx):
 <div class="chip-ista">{ICON["diag"]}<span>BMW ISTA<br><small>Factory diagnostics</small></span></div>
 </div></div></section>
 
-<section class="istrip"><div class="wrap istrip-row">{strip}</div></section>
-
-{brands_marquee()}
+<section class="section"><div class="wrap">
+<div class="sec-head"><span class="eyebrow line">Our services</span><a class="link-more" href="{L("/services/")}">All services {ICON["arrow"]}</a></div>
+<div class="ptiles">{tile_html}</div>
+</div></section>
 
 <section class="approach"><div class="approach-img{'' if has_photo('approach') else ' art'}" style="--img:url({L(photo("approach"))})">
 <div class="ista-mock" aria-hidden="true"><b>ISTA</b><ul><li>Vehicle identification</li><li>Diagnostics</li><li>Service functions</li><li>Programming / encoding</li></ul></div></div>
@@ -180,22 +181,6 @@ def home(ctx):
 <h2>Dealer-level capabilities.<br><span class="gold">An independent experience.</span></h2>
 <p class="lede">We combine factory-grade tools, real technical depth and a genuine obsession with European cars to keep yours performing at its best, on the road and at the track.</p>
 <ul class="badges"><li>{ICON["check"]}Factory ISTA diagnostics</li><li>{ICON["check"]}Genuine &amp; OE parts</li><li>{ICON["check"]}{WARRANTY}</li><li>{ICON["check"]}12+ years combined experience</li><li>{ICON["check"]}Flexible financing</li></ul>
-</div></section>
-
-<section class="section"><div class="wrap">
-<div class="sec-head"><span class="eyebrow line">Our services</span><a class="link-more" href="{L("/services/")}">All services {ICON["arrow"]}</a></div>
-<div class="ptiles">{tile_html}</div>
-</div></section>
-
-<section class="section deep feature"><div class="wrap split">
-<div><span class="eyebrow line">Build your car</span><h2>Tell us the goal.<br><span class="gold">We'll plan the build.</span></h2>
-<p class="lede">Pick your car, set the power you want and how you'll use it. The build planner lists the parts and supporting mods it takes, with a ballpark price, whether it's a street, track or full competition build.</p>
-<div class="btn-row"><a class="btn btn-primary" href="{L("/build/")}">Start a Build {ICON["arrow"]}</a></div></div>
-<a class="build-preview" href="{L("/build/")}" aria-label="Open the build planner">
-<div class="bp-h"><small>B58 Gen 1 · ZF 8-speed</small><b>Stage 2+ E85</b><span>~540 hp · Spirited street</span></div>
-<div class="bp-bar"><i style="width:42%"></i></div>
-<ul><li>Catted downpipe &amp; intake</li><li>Intercooler upgrade</li><li>Flex-fuel kit + fuel pump</li><li>Supporting mods</li></ul>
-<div class="bp-f"><span>Ballpark</span><b>Your build, priced</b></div></a>
 </div></section>
 
 <section class="section"><div class="wrap">
@@ -207,9 +192,24 @@ def home(ctx):
 <div><b>04</b><h3>Road test</h3><p>We verify the fix and walk you through exactly what we found.</p></div>
 </div></div></section>
 
+{callback(ctx)}
+
+<section class="section deep feature"><div class="wrap split">
+<div><span class="eyebrow line">Build your car</span><h2>Tell us the goal.<br><span class="gold">We'll plan the build.</span></h2>
+<p class="lede">Pick your car, set the power you want and how you'll use it. The build planner lists every part and supporting mod it takes, for street, track or full competition builds.</p>
+<p class="muted">Builds done right, not cheap. Every build starts with a health check and a written plan that covers fueling, cooling and drivetrain, not just the parts that make power. If you're after the cheapest way to more boost, we're not the right shop.</p>
+<div class="btn-row"><a class="btn btn-primary" href="{L("/build/")}">Start a Build {ICON["arrow"]}</a></div></div>
+<a class="build-preview" href="{L("/build/")}" aria-label="Open the build planner">
+<div class="bp-h"><small>B58 Gen 1 · ZF 8-speed</small><b>Stage 2+ E85</b><span>~540 hp · Spirited street</span></div>
+<div class="bp-bar"><i style="width:42%"></i></div>
+<ul><li>Catted downpipe &amp; intake</li><li>Intercooler upgrade</li><li>Flex-fuel kit + fuel pump</li><li>Supporting mods</li></ul>
+<div class="bp-f"><span>Build sheet</span><b>Every part, planned</b></div></a>
+</div></section>
+
+{brands_marquee()}
+
 <section class="section tight"><div class="wrap">{marques(ctx)}</div></section>
 
-{callback(ctx)}
 {faq_block(HOME_FAQS)}
 
 <section class="section tight"><div class="wrap"><p class="muted small" style="max-width:900px">
@@ -449,6 +449,7 @@ SERVICES = {
   lede="Our shop car is a B58-powered 340i making 1,300 horsepower. Whether you want a clean Stage 1 or a full build, we plan it as a system: power, fueling, cooling, drivetrain and brakes.",
   body=[
    ("Hardware is ours, tuning is theirs", "<p>We plan the build and install the parts. Software tuning is done by independent tuning specialists, and you work with the tuner directly on the calibration. Keeping those roles separate means each part of the build is handled by the people who do it every day.</p>"),
+   ("Built right, not cheap", "<p>More power always costs more than the parts that make it. A proper build includes the fueling, cooling, drivetrain and brakes to support it, plus a healthy engine to start with. We'll be straight with you about cost and risk before anything is ordered. If the goal is the cheapest way to more boost, we're not the right shop; if you want it done properly, we'd love to build it.</p>"),
    ("Plan your build", "<p>Use our <a href=\"/build/\">Build Your Car</a> tool to pick your car, set a power goal and see the parts and supporting mods it takes with a ballpark price. Every build starts with a health check, compression or leak-down, a full scan and a look at known weak points, because power on a tired engine is money wasted.</p>"),
    ("What we do", ticks(["Intakes, charge pipes, intercoolers and heat exchangers","Downpipes and exhaust","Fueling: port injection, low-pressure fuel pumps, injectors and flex-fuel/E85","Hybrid and big-single turbo upgrades","Built transmissions, clutches, axles and driveshafts","Oil and transmission coolers","Brakes, suspension and tires to match the power"])),
    ("Flexible financing", "<p class=\"fin-callout\"><strong>Finance your build.</strong> Flexible terms available. Ask when you send your build.</p><p>Builds can be financed with flexible terms, so you can do it right the first time instead of cutting corners on supporting mods. Ask about financing when you send your build.</p>"),
