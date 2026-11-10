@@ -78,7 +78,7 @@ def callback(ctx, heading="Request a call back"):
 <label class="sr" for="cb-name">Name</label><input id="cb-name" name="name" placeholder="Name" autocomplete="name" required>
 <label class="sr" for="cb-phone">Phone</label><input id="cb-phone" name="phone" type="tel" placeholder="Phone" autocomplete="tel" required>
 <label class="sr" for="cb-vin">VIN (optional)</label><input id="cb-vin" name="vin" placeholder="VIN (optional)" maxlength="17" autocapitalize="characters" spellcheck="false">
-<label class="sr" for="cb-msg">What's going on? (optional)</label><input id="cb-msg" name="message" class="cb-msg" placeholder="What's going on? (optional)">
+<label class="sr" for="cb-msg">What's going on?</label><input id="cb-msg" name="message" class="cb-msg" placeholder="What's going on? e.g. check engine light, oil leak" required>
 <button class="btn btn-primary" type="submit">Call me back</button>
 <p class="cb-consent">By submitting, you agree we may call or text you at this number about your request. Msg and data rates may apply. Reply STOP to opt out.</p>
 <div class="form-status" role="status"></div>
@@ -587,7 +587,7 @@ def contact(ctx):
 <div class="row"><div><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email"></div>
 <div><label for="vehicle">Year, make &amp; model</label><input id="vehicle" name="vehicle" placeholder="e.g. 2019 BMW 340i"></div></div>
 <div><label for="reason">What can we help with?</label><select id="reason" name="reason"><option>Maintenance / service</option><option>Diagnosis / warning light</option><option>Repair</option><option>Performance build</option><option>Pre-purchase inspection</option><option>Something else</option></select></div>
-<div><label for="msg">Details</label><textarea id="msg" name="message" placeholder="Symptoms, warning lights, mileage, preferred drop-off day…"></textarea></div>
+<div><label for="msg">What's going on?</label><textarea id="msg" name="message" placeholder="Symptoms, warning lights, mileage, preferred drop-off day…" required></textarea></div>
 <div class="form-status" id="form-status" role="status"></div>
 <div><button class="btn btn-primary" type="submit">Send Request</button></div>
 <p class="note">We'll only use your details to respond to this request.</p>

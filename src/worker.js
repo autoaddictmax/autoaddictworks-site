@@ -15,6 +15,7 @@ async function handleLead(request, env) {
   const lead = {};
   for (const k of FIELDS) if (d[k] != null && String(d[k]).trim()) lead[k] = String(d[k]).trim().slice(0, 4000);
   if (!lead.name || !lead.phone) return json({ ok: false, error: "name and phone required" }, 400);
+  if (!lead.message && !lead.build) return json({ ok: false, error: "message required" }, 400);
   const digits = lead.phone.replace(/\D/g, "");
   if (digits.length < 10 || digits.length > 11) return json({ ok: false, error: "phone" }, 400);
   const parts = lead.name.split(/\s+/);
