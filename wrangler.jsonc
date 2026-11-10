@@ -5,6 +5,8 @@
   "name": "autoaddictworks-site",
   "main": "src/worker.js",
   "compatibility_date": "2026-11-01",
+  // Keep variables set in the dashboard when deploying from GitHub.
+  "keep_vars": true,
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
