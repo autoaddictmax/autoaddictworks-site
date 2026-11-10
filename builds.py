@@ -80,19 +80,18 @@ _ALL = [
     builder_link=None,
   ),
   dict(
-    draft=True,  # NEED: power + fuel, tag (customer/team), owner credit
     slug="2025-bmw-m3",
     name="2025 BMW M3",
     tag="Customer build",
     car="2025 BMW M3 (G80)",
     engine="S58",
     color=None,
-    power=None, power_note=None,
-    fuel=None,
+    power="900 hp", power_note="on E30",
+    fuel="E30 (flex fuel)",
     trans="6-speed manual",
     turbo="Pure Turbos upgraded twins",
     owner=None,
-    story=None,
+    story="A 2025 M3 with the 6-speed manual, Pure Turbos and a full fuel system, making 900 hp on E30.",
     mods={
       "Power": ["Pure Turbos upgraded turbos", "CSF heat exchanger", "CSF intake manifold", "Burger Motorsports intakes", "High-flow catted downpipes"],
       "Fueling": ["Full AMS800 fuel kit", "Reflex+ controller"],
@@ -102,8 +101,8 @@ _ALL = [
     tuning="Custom calibration by an independent tuning specialist.",
     images=dict(card="/img/builds/2025-bmw-m3-card.jpg", hero="/img/builds/2025-bmw-m3-hero.jpg", og="/img/builds/2025-bmw-m3-og.jpg"),
     gallery=[], timeline=[], dyno=None,
-    builder_link=None,
+    builder_link="#p=s58&hp=900",
   ),
 ]
 
-BUILDS = [x for x in _ALL if not x.get("draft")]
+BUILDS = sorted([x for x in _ALL if not x.get("draft")], key=lambda x: -int(x["power"].split()[0].replace(",", "")))  # highest power first

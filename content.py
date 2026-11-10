@@ -394,7 +394,7 @@ def builds_index(ctx):
     return page_hero(ctx, "Our work", "The Builds", "Real cars from our bays, each one planned as a complete system and built in our shop.", crumbs) + f'''
 <section class="section"><div class="wrap">
 <div class="bstats"><div><b>{len(BUILDS)}</b><span>Featured builds</span></div><div><b>{peak:,}</b><span>Peak hp</span></div></div>
-<div class="bgrid">{"".join(_build_card(ctx, b) for b in BUILDS)}</div>
+<div class="bgrid{" two" if len(BUILDS) in (2, 4) else ""}">{"".join(_build_card(ctx, b) for b in BUILDS)}</div>
 </div></section>
 <section class="section deep"><div class="wrap bcta"><div><span class="eyebrow line">Your turn</span><h2>Plan your build</h2><p class="muted">Every build starts with a health check and a written plan. Use the planner to see what your goal takes, then send it to us.</p></div>
 <div class="btn-row"><a class="btn btn-primary" href="{ctx.L("/build/")}">Build Your Car {ICON["arrow"]}</a><a class="btn btn-ghost" href="tel:{CFG["phoneE164"]}">Call {e(CFG["phoneDisplay"])}</a></div></div></section>'''
