@@ -420,60 +420,86 @@ def contact(ctx):
 </div></section>'''
 
 BUILD_FAQS = [
- ("How accurate is the ballpark price?", "It's a planning number built from typical parts prices and labor time at our shop rate. Your final quote comes after a health check, because condition, mileage and previous mods change the plan."),
+ ("How do you price a build?", "Every build is quoted after a pre-build health check, because condition, mileage and previous mods change the plan. Send us your build and we'll follow up with a written quote."),
  ("Why does the build add parts I didn't pick?", "Power needs support. Fueling, cooling, ignition and drivetrain limits are the usual reasons tuned cars fail, so the tool adds what your goal and use actually require."),
  ("What does the off-road / competition option change?", "It unlocks parts that remove or modify emissions equipment, such as catless downpipes. Those builds are for vehicles used off public roads only. They can't pass Massachusetts inspection and aren't legal on a road-registered car."),
- ("My car isn't listed. Can you still build it?", "Probably. Pick the closest platform or send us a note through the contact form and we'll quote it directly."),
+ ("My car isn't listed. Can you still build it?", "The planner covers the BMW platforms we build most: B58, S55 and S58. For anything else, send us a note through the contact form and we'll quote it directly."),
 ]
 
 def build_page(ctx):
-    return page_hero(ctx, "Build your car", "Build Your Car", "Pick your car, set a power goal and tell us how you'll drive it. We'll map the parts, supporting mods and a ballpark price.",
-                     [("Home", "/"), ("Build Your Car", "/build/")], ctas=False) + f'''
-<section class="section" style="padding-top:56px"><div class="wrap builder" id="builder" data-contact="{ctx.L("/contact/")}">
-<div>
- <div class="step"><div class="step-h"><div class="n">1</div><h2>Your car</h2></div><div class="step-b">
-  <div class="tabs" role="tablist"><button role="tab" aria-selected="true" data-tab="pick">Select model</button><button role="tab" aria-selected="false" data-tab="vin">Decode VIN</button></div>
-  <div data-pane="vin" hidden>
-   <label for="vin">17-character VIN</label>
-   <div class="vin-row"><input id="vin" maxlength="17" autocomplete="off" spellcheck="false" placeholder="WBA8B3G5XJNU00000"><button class="btn btn-ghost" type="button" id="vin-go">Decode</button></div>
-   <div class="vinmsg" id="vin-msg" aria-live="polite"></div>
-  </div>
-  <div data-pane="pick">
-   <div class="sel-grid">
-    <div><label for="make">Make</label><select id="make"></select></div>
-    <div><label for="platform">Model / engine</label><select id="platform"></select></div>
-    <div><label for="trans">Transmission</label><select id="trans"></select></div>
-   </div>
-  </div>
- </div></div>
-
- <div class="step"><div class="step-h"><div class="n">2</div><h2>How you'll use it</h2></div><div class="step-b">
-  <div class="chips" id="use"></div>
-  <div class="compete"><label><input type="checkbox" id="compete"><span><strong>This is an off-road / competition build.</strong> The vehicle will be used for racing or off-highway use only, not on public roads.</span></label>
-  <p>Unlocks catless downpipes and other emissions-modifying parts. These won't pass Massachusetts inspection and aren't legal on a road-registered vehicle.</p></div>
- </div></div>
-
- <div class="step"><div class="step-h"><div class="n">3</div><h2>Power goal</h2></div><div class="step-b">
-  <div class="power"><div class="power-read"><b id="hp">0<small>HP</small></b><span class="muted small" id="hp-note"></span></div>
-  <input type="range" id="power" min="0" max="100" step="5" aria-label="Target horsepower">
-  <div class="ticksbar"><span id="hp-min"></span><span id="hp-max"></span></div></div>
- </div></div>
-
- <div class="step"><div class="step-h"><div class="n">4</div><h2>Extras</h2></div><div class="step-b">
-  <div class="chips" id="extras"></div>
- </div></div>
-</div>
-
-<aside class="result" aria-live="polite">
- <div class="result-h"><div class="veh" id="r-veh">Select your car</div><div class="stage" id="r-stage">Select a car</div><div class="muted small" id="r-sub"></div>
- <div class="est"><b id="r-total">$0</b><span>ballpark, parts + labor</span></div></div>
- <div class="result-b" id="r-body"><div class="empty">Choose your car and a power goal to see the build.</div></div>
- <p class="dis">Estimates use typical parts prices and our labor rate. Final pricing follows a pre-build health check.</p>
- <div class="result-f"><button class="btn btn-primary" id="r-send" type="button">Request This Build</button><button class="btn btn-ghost" id="r-copy" type="button">Copy Build Sheet</button></div>
-</aside>
+    crumbs = f'<nav class="crumbs" aria-label="Breadcrumb"><a href="{ctx.L("/")}">Home</a><span>/</span><span aria-current="page" style="margin:0;opacity:1">Build Your Car</span></nav>'
+    return f'''<div class="bx" id="builder" data-contact="{ctx.L("/contact/")}">
+<section class="bx-hero"><div class="wrap">{crumbs}
+ <span class="eyebrow line">BMW performance builds</span>
+ <h1>Build Your <span>Car</span></h1>
+ <p class="lede">Pick your platform, set your goal and see exactly what it takes to get there: every part, every supporting mod, start to finish.</p>
+ <div class="progress" id="prog"><div class="on"><b>01</b>Platform</div><div><b>02</b>How you drive</div><div><b>03</b>Power goal</div><div><b>04</b>Build sheet</div></div>
 </div></section>
-<a class="mbar" id="mbar" href="#r-veh" hidden><span id="mbar-t">See your build</span><b>View build ↓</b></a>
-{faq_block(BUILD_FAQS, "About the build tool")}'''
+
+<section class="sec"><div class="wrap">
+ <div class="sec-h"><b>01</b><h2>Choose your platform</h2><p>BMW turbo platforms we build in-house</p></div>
+ <div class="plats" id="plats"></div>
+ <div class="vinbar"><span>Not sure? Decode your VIN</span><input id="vin" placeholder="17-character VIN" maxlength="17" autocomplete="off" spellcheck="false" aria-label="VIN"><button class="btn" id="vin-go" type="button">Decode</button></div><div class="vinmsg" id="vin-msg" aria-live="polite"></div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+ <div class="sec-h"><b>02</b><h2>How you'll drive it</h2><p>We add the supporting mods your use actually needs</p></div>
+ <div class="modes" id="modes"></div>
+ <div class="compete"><button class="switch" id="comp" type="button" role="switch" aria-checked="false" aria-label="Off-road / competition build"></button>
+  <div><b>Off-road / competition build</b><small>Unlocks catless downpipes and race parts. Not for street-registered cars and won't pass MA inspection.</small></div>
+  <span class="tag">Signed waiver</span></div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+ <div class="sec-h"><b>03</b><h2>Set your power goal</h2><p>Drag the needle or jump to a stage</p></div>
+ <div class="power">
+  <div class="gauge-card">
+   <svg class="bx-gauge" viewBox="0 0 400 300" id="gauge">
+    <defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" stop-color="#A8864F"/><stop offset=".5" stop-color="#E6D3A8"/><stop offset="1" stop-color="#C5A572"/></linearGradient></defs>
+    <g id="g-ticks"></g>
+    <path class="g-track" id="g-track"/>
+    <path class="g-stock" id="g-stock"/>
+    <path class="g-fill" id="g-fill"/>
+    <g id="g-marks"></g>
+    <g class="needle" id="needle"><line x1="200" y1="100" x2="200" y2="40" stroke="#F1EBDF" stroke-width="4" stroke-linecap="round"/><circle cx="200" cy="40" r="5" fill="#F1EBDF"/></g>
+   </svg>
+   <div class="readout"><b id="hp">560</b><span>EST. CRANK HP</span><em id="gain">+240 hp over stock</em></div>
+   <div class="slider"><input type="range" id="range" step="10" aria-label="Target horsepower"></div>
+   <div class="stages" id="stagechips"></div>
+  </div>
+  <div class="dyno-card">
+   <div class="dyno-top"><h3>Dyno projection</h3><div class="legend"><span><i style="background:#6F7D82"></i>Stock</span><span><i style="background:#C5A572"></i>Your build</span></div></div>
+   <svg class="dyno" viewBox="0 0 720 360" id="dyno">
+    <defs><linearGradient id="dg" x1="0" x2="1"><stop offset="0" stop-color="#A8864F"/><stop offset=".6" stop-color="#E6D3A8"/><stop offset="1" stop-color="#C5A572"/></linearGradient>
+     <linearGradient id="da" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(197,165,114,.28)"/><stop offset="1" stop-color="rgba(197,165,114,0)"/></linearGradient></defs>
+    <g id="d-grid"></g>
+    <path class="d-area" id="d-area"/><path class="d-stock" id="d-stock"/><path class="d-tgt" id="d-tgt"/>
+   </svg>
+   <div class="kpis"><div><b id="k1">+75%</b><span>Power gain</span></div><div><b id="k2">Stage 2+ E85</b><span>Build level</span></div><div><b id="k3">E85 / 93</b><span>Fuel</span></div></div>
+   <span class="illus">Illustrative curve, not a dyno sheet</span>
+  </div>
+ </div>
+</div></section>
+
+<section class="sec" id="sheet"><div class="wrap">
+ <div class="sec-h"><b>04</b><h2>Your build sheet</h2><p>The path from stock to your goal</p></div>
+ <div class="sheet">
+  <div><div class="road" id="road"></div><div id="supportwrap"></div></div>
+  <aside class="summary">
+   <div class="sum-h"><small id="s-car">B58 Gen 1 · ZF 8-speed</small><h3 id="s-stage">Stage 2+ E85</h3><p id="s-sub">~560 hp · Spirited street</p>
+    <div class="bar"><i id="s-bar"></i><u id="s-stockmark"></u></div><div class="barl"><span id="s-stock">Stock 320</span><span id="s-max">Max 1,300</span></div></div>
+   <div class="price"><div class="price-top"><span>Estimated investment</span><button class="mini" id="ptog" type="button" hidden><span class="switch" id="psw"></span>Show pricing</button></div>
+    <div id="pbody"></div></div>
+   <div class="flags" id="flags"></div>
+   <div class="bx-cta"><button class="btn gold" id="r-send" type="button">Request this build →</button><button class="btn" id="r-copy" type="button">Copy build sheet</button>
+    <div class="share"><a href="#" id="r-link">Copy link to this build</a></div></div>
+  </aside>
+ </div>
+</div></section>
+
+<a class="mbar" id="mbar" href="#sheet" hidden><span id="mbar-t">Your build</span><b>View build ↓</b></a>
+</div>
+{faq_block(BUILD_FAQS, "About the build planner")}'''
 
 def notfound(ctx):
     return page_hero(ctx, "404", "Page Not Found", "That page has moved or doesn't exist. Try one of these instead.", None, ctas=False) + \

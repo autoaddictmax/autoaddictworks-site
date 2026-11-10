@@ -66,5 +66,7 @@
     "Clinton"
   ],
   "showVehicleSales": false,
-  "_showVehicleSales_note": "Turn on once the dealer license is issued \u2014 adds the Vehicle Sales page, nav link and home tiles."
+  "_showVehicleSales_note": "Turn on once the dealer license is issued \u2014 adds the Vehicle Sales page, nav link and home tiles.",
+  "builderShowPricing": false,
+  "_builderShowPricing_note": "Set true once builder-data.js prices are confirmed; adds a 'Show pricing' switch to the build planner."
 }

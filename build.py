@@ -135,7 +135,7 @@ def page_html(ctx, p):
     scripts = f'<script src="{L("/js/site.js")}" defer></script>'
     if p.get("builder"):
         scripts += f'<script src="{L("/js/builder-data.js")}" defer></script><script src="{L("/js/builder.js")}" defer></script>'
-    cfg_js = json.dumps({k: CFG[k] for k in ("formEndpoint", "email", "phoneDisplay", "phoneE164", "laborRate", "bookingUrl")})
+    cfg_js = json.dumps({k: CFG.get(k) for k in ("formEndpoint", "email", "phoneDisplay", "phoneE164", "laborRate", "bookingUrl", "builderShowPricing")})
     robots = '<meta name="robots" content="noindex">' if p.get("noindex") else '<meta name="robots" content="index,follow,max-image-preview:large">'
     return f'''<!doctype html>
 <html lang="en-US">
@@ -155,10 +155,11 @@ def page_html(ctx, p):
 <meta name="geo.region" content="US-MA"><meta name="geo.placename" content="Marlborough">
 <link rel="icon" href="{L('/img/favicon.ico')}" sizes="any"><link rel="icon" href="{L('/img/favicon.svg')}" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{L('/img/apple-touch-icon.png')}"><link rel="manifest" href="{L('/site.webmanifest')}">
-<link rel="preload" href="{L('/fonts/Montserrat-600.woff2')}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{L('/fonts/Montserrat-700-italic.woff2')}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{L('/fonts/Inter-400.woff2')}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{L('/fonts/Montserrat-700-italic.woff2')}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{L('/css/site.css')}">
+{('<link rel="preload" as="image" fetchpriority="high" href="' + L(content.photo('hero')) + '">') if ctx.path == "/" else ""}
 {ld}
 <script>window.AAW={cfg_js};</script>
 </head>
