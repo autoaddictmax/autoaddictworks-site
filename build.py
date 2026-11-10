@@ -8,6 +8,10 @@ import json, os, shutil, sys, re, html, datetime, posixpath
 ROOT = os.path.dirname(os.path.abspath(__file__))
 CFG = json.load(open(os.path.join(ROOT, "config.json")))
 PREVIEW = "--preview" in sys.argv
+import hashlib
+def ver(rel):
+    """Short content hash so browsers fetch a fresh copy whenever the file changes."""
+    return hashlib.md5(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "static", rel), "rb").read()).hexdigest()[:8]
 OUT = os.path.join(ROOT, "preview" if PREVIEW else "dist")
 TODAY = datetime.date.today().isoformat()
 
@@ -132,9 +136,9 @@ def page_html(ctx, p):
     body = p["body"](ctx)
     if PREVIEW:
         body = re.sub(r'href="(/[^"]*)"', lambda m: f'href="{ctx.L(m.group(1))}"', body)
-    scripts = f'<script src="{L("/js/site.js")}" defer></script>'
+    scripts = f'<script src="{L("/js/site.js")}?v={ver('js/site.js')}" defer></script>'
     if p.get("builder"):
-        scripts += f'<script src="{L("/js/builder-data.js")}" defer></script><script src="{L("/js/builder.js")}" defer></script>'
+        scripts += f'<script src="{L("/js/builder-data.js")}?v={ver('js/builder-data.js')}" defer></script><script src="{L("/js/builder.js")}?v={ver('js/builder.js')}" defer></script>'
     cfg_js = json.dumps({k: CFG.get(k) for k in ("formEndpoint", "email", "phoneDisplay", "phoneE164", "laborRate", "bookingUrl", "builderShowPricing")})
     robots = '<meta name="robots" content="noindex">' if p.get("noindex") else '<meta name="robots" content="index,follow,max-image-preview:large">'
     return f'''<!doctype html>
@@ -158,7 +162,7 @@ def page_html(ctx, p):
 <link rel="preload" href="{L('/fonts/Montserrat-700-italic.woff2')}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{L('/fonts/Inter-400.woff2')}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{L('/fonts/Montserrat-700-italic.woff2')}" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{L('/css/site.css')}">
+<link rel="stylesheet" href="{L('/css/site.css')}?v={ver('css/site.css')}">
 {('<link rel="preload" as="image" fetchpriority="high" href="' + L(content.photo('hero')) + '">') if ctx.path == "/" else ""}
 {ld}
 <script>window.AAW={cfg_js};</script>
