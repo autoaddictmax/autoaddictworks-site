@@ -670,3 +670,6 @@ a.card:hover{background:linear-gradient(170deg,#25343A,#1A2528)}
 /* spacing pass */
 .cb + .section.deep{border-top:1px solid var(--border)}
 @media(max-width:700px){.section{padding:64px 0}.section.tight{padding:40px 0}.cb{padding:44px 0}.approach-copy{padding:44px 24px 52px}.approach-img{min-height:260px}}
+/* hero sits directly on services after removing the icon strip */
+.hero2 + .section{padding-top:56px}
+@media(max-width:980px){.hero2-grid{padding-bottom:44px}.hero2 + .section{padding-top:40px}}
