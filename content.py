@@ -38,6 +38,23 @@ def photo(slot):
                 "repairs": "tile-3", "performance": "tile-4", "sales": "tile-2", "page": "hero"}
     return f"/img/art/{fallback.get(slot, 'tile-1')}.jpg"
 def has_photo(slot): return not photo(slot).startswith("/img/art/")
+def photo_m(slot):
+    """Phone crop if one exists, else the desktop image."""
+    p = photo(slot)
+    if p.startswith("/img/photos/"):
+        base, ext = p.rsplit(".", 1)
+        if os.path.exists(os.path.join(_ROOT, "static", base.lstrip("/") + "-m." + ext)):
+            return base + "-m." + ext
+    return p
+def page_slot(crumbs):
+    """Per-page photo slot, e.g. /bmw-repair/oil-leaks/ -> page-bmw-repair-oil-leaks, falling back to the parent, then generic."""
+    path = crumbs[-1][1] if crumbs else "/"
+    parts = [x for x in path.strip("/").split("/") if x]
+    while parts:
+        slot = "page-" + "-".join(parts)
+        if has_photo(slot): return slot
+        parts.pop()
+    return "page"
 
 _I = lambda d: f'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{d}</svg>'
 ICON = {
@@ -67,7 +84,8 @@ def page_hero(ctx, eyebrow, h1, lede, crumbs, ctas=True):
         cr = '<nav class="crumbs" aria-label="Breadcrumb">' + '<span>/</span>'.join(parts) + '</nav>'
     btns = (f'<div class="btn-row"><a class="btn btn-primary" href="{CFG["bookingUrl"] or ctx.L("/contact/")}">{ICON["cal"]}Book Appointment</a>'
             f'<a class="btn btn-ghost" href="tel:{CFG["phoneE164"]}">Call {e(CFG["phoneDisplay"])}</a></div>') if ctas else ""
-    return f'''<section class="page-hero" style="--bg:url({ctx.L(photo('page'))})"><div class="wrap">{cr}<span class="eyebrow line">{e(eyebrow)}</span>
+    slot = page_slot(crumbs)
+    return f'''<section class="page-hero{' has-photo' if has_photo(slot) else ''}" style="--bg:url({ctx.L(photo(slot))});--bg-m:url({ctx.L(photo_m(slot))})"><div class="wrap">{cr}<span class="eyebrow line">{e(eyebrow)}</span>
 <h1>{h1}</h1><p class="lede">{lede}</p>{btns}</div></section>'''
 
 def callback(ctx, heading="Request a call back"):
@@ -157,7 +175,7 @@ def home(ctx):
     tile_html = "".join(f'''<a class="ptile{'' if has_photo(slot) else ' art'}" href="{L(p)}"><div class="ptile-in" style="--img:url({L(photo(slot))})">
 <span class="ptile-ico">{ICON[ic]}</span><span class="ptile-t">{e(n)}</span><span class="ptile-a">{ICON["arrow"]}</span></div></a>''' for n, slot, p, ic in tiles)
     hero_bg = L(photo("hero"))
-    return f'''<section class="hero2" style="--hero:url({hero_bg})"><div class="wrap hero2-grid">
+    return f'''<section class="hero2{' has-photo' if has_photo('hero') else ''}" style="--hero:url({hero_bg});--hero-m:url({L(photo_m("hero"))})"><div class="wrap hero2-grid">
 <div class="hero2-copy">
 <h1><span class="h1-loc">Marlborough, MA</span> <span class="h1-a">European</span> <span class="h1-b">Auto Specialists</span></h1>
 <p class="hero2-sub">Diagnostics. Maintenance. Repairs.<br>Performance Builds.</p>

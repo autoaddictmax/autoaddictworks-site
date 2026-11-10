@@ -3,3 +3,4 @@ preview/
 __pycache__/
 *.pyc
 .DS_Store
+photos-src/
