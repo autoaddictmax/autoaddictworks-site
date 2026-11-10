@@ -96,6 +96,7 @@ def header(ctx):
 <a href="{L('/')}"{' aria-current="page"' if ctx.path == "/" else ""}>Home</a>
 <div class="dd"><a href="{L('/services/')}"{cur('/services/')}>Services</a><button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-svc" aria-label="Show services and makes"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9l6 6 6-6"/></svg></button><div class="dd-menu" id="dd-svc">{svc}<hr>{mk}</div></div>
 <a href="{L('/services/performance-builds/')}">Performance</a>
+<a href="{L('/builds/')}"{cur('/builds/')}>Builds</a>
 <a href="{L('/build/')}"{cur('/build/')}>Build Your Car</a>
 {sales}
 <a href="{L('/about/')}"{cur('/about/')}>About</a>
@@ -117,7 +118,7 @@ def footer(ctx):
 <p class="muted small" style="margin-top:12px">{hrs}</p></div>
 <div><h3 class="fh">Services</h3><ul>{svc}</ul></div>
 <div><h3 class="fh">Makes</h3><ul>{mk}</ul></div>
-<div><h3 class="fh">Shop</h3><ul><li><a href="{L('/build/')}">Build Your Car</a></li><li><a href="{L('/about/')}">About</a></li>
+<div><h3 class="fh">Shop</h3><ul><li><a href="{L('/builds/')}">Builds</a></li><li><a href="{L('/build/')}">Build Your Car</a></li><li><a href="{L('/about/')}">About</a></li>
 <li><a href="{L('/areas-we-serve/')}">Areas We Serve</a></li><li><a href="{L('/contact/')}">Contact &amp; Directions</a></li>
 <li><a href="{CFG['mapsUrl']}" rel="noopener" target="_blank">Google Maps</a></li></ul></div>
 </div><div class="fbase"><span>© {datetime.date.today().year} {esc(CFG['legalName'])}. Independent service specialist, not affiliated with BMW AG, Audi AG, Volkswagen AG or Mercedes-Benz Group.</span>
@@ -153,7 +154,7 @@ def page_html(ctx, p):
 <meta name="theme-color" content="#1B2528">
 <meta property="og:type" content="website"><meta property="og:site_name" content="{esc(CFG['name'])}">
 <meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}">
-<meta property="og:url" content="{canonical}"><meta property="og:image" content="{ctx.abs('/img/og-share-image-1200x630.png')}">
+<meta property="og:url" content="{canonical}"><meta property="og:image" content="{ctx.abs(p.get('og','/img/og-share-image-1200x630.png'))}">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="geo.region" content="US-MA"><meta name="geo.placename" content="Marlborough">

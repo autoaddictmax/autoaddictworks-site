@@ -13,7 +13,8 @@ BUILDS = [
     power="1,300 hp", power_note="on E85",
     fuel="E85 (flex fuel)",
     trans="Built 8-speed automatic",
-    use="Drag",
+    turbo="Turbosmart 76mm single",
+    owner=None,
     story="Our own 340i, built in this shop with the same process we use on customer cars: health check first, fueling before boost, and a drivetrain that can hold the power.",
     mods={
       "Power": ["Turbosmart 76mm turbo", "RK Autowerks intake manifold"],
@@ -32,24 +33,28 @@ BUILDS = [
   ),
   dict(
     slug="m2-72mm",
-    name="M2 72mm",  # placeholder title, confirm
+    name="M2 72mm",
     tag="Customer build",
     car="2025 BMW M2 (G87)",
     engine="S58",
     color=None,
-    power=None, power_note=None,   # NEED: power figure and fuel
-    fuel=None, trans=None, use=None,  # NEED: trans (manual/auto, built?), use
-    story=None,
+    power="1,200 hp", power_note="on E85",
+    fuel="E85 (flex fuel)",
+    trans="Built 8-speed automatic",
+    turbo="Precision 72mm single",
+    owner=("@dng_race", "https://www.instagram.com/dng_race/"),
+    story="A 2025 M2 converted from twin turbos to a single 72mm Precision turbo with a hood dump, on a built engine and built transmission.",
     mods={
-      "Power": ["Precision 72mm single turbo", "Hood dump"],
-      "Engine": ["Cam lock"],  # confirm meaning
-      "Chassis": ["Beadlock wheels"],
-      # NEED: confirm which of the 340i's mods carry over (built engine, built trans, fuel system, port injection, Reflex+, flex fuel, coilovers, drag radials)
+      "Power": ["Precision 72mm single turbo conversion", "Hood dump", "RK Autowerks intake manifold"],
+      "Engine": ["Built engine", "Exhaust cam locked at 109 degrees"],
+      "Fueling": ["Upgraded low-pressure fuel pump", "Upgraded injectors", "Return-style fuel system",
+                  "Port injection", "Reflex+ controller", "Flex fuel (E85)"],
+      "Drivetrain": ["Built transmission"],
+      "Chassis": ["Coilovers", "Beadlock wheels", "Drag radials"],
     },
-    tuning="Custom calibration by an independent tuning specialist.",
+    tuning="Custom flex fuel calibration by an independent tuning specialist.",
     images=dict(card="/img/builds/m2-72mm-card.jpg", hero="/img/builds/m2-72mm-hero.jpg", og="/img/builds/m2-72mm-og.jpg"),
     gallery=[], timeline=[], dyno=None,
-    owner_ok=False,  # NEED before publishing
-    builder_link="#p=s58&m=drag",
+    builder_link="#p=s58&m=drag&hp=900",
   ),
 ]

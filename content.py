@@ -197,7 +197,7 @@ def home(ctx):
 <div><span class="eyebrow line">Build your car</span><h2>Tell us the goal.<br><span class="gold">We'll plan the build.</span></h2>
 <p class="lede">Pick your car, set the power you want and how you'll use it. The build planner lists every part and supporting mod it takes, for street, track or full competition builds.</p>
 <p class="muted">Builds done right, not cheap. Every build starts with a health check and a written plan that covers fueling, cooling and drivetrain, not just the parts that make power. If you're after the cheapest way to more boost, we're not the right shop.</p>
-<div class="btn-row"><a class="btn btn-primary" href="{L("/build/")}">Start a Build {ICON["arrow"]}</a></div></div>
+<div class="btn-row"><a class="btn btn-primary" href="{L("/build/")}">Start a Build {ICON["arrow"]}</a><a class="btn btn-ghost" href="{L("/builds/")}">See our builds</a></div></div>
 <a class="build-preview" href="{L("/build/")}" aria-label="Open the build planner">
 <div class="bp-h"><small>B58 Gen 1 · ZF 8-speed</small><b>Stage 2+ E85</b><span>~540 hp · Spirited street</span></div>
 <div class="bp-bar"><i style="width:42%"></i></div>
@@ -375,6 +375,59 @@ def repair_page(path):
 <h2>Related</h2><p>{rel}</p>
 </div>{side_panel(ctx, "Book this repair")}</div></section>{callback(ctx)}{faq_block(r["faqs"])}'''
     return dict(title=r["title"], desc=r["desc"], crumbs=crumbs, faqs=r["faqs"], service=r["name"], body=body, priority="0.7")
+
+
+# ------------------------------------------------------------------ builds showcase
+from builds import BUILDS
+
+def _build_card(ctx, b):
+    return (f'<a class="bcard" href="{ctx.L("/builds/"+b["slug"]+"/")}">'
+            f'<div class="bc-img"><img src="{ctx.L(b["images"]["card"])}" alt="{e(b["car"])} built by Auto Addict Works" width="960" height="1200" loading="lazy">'
+            f'<span class="bc-tag">{e(b["tag"])}</span>'
+            f'<div class="bc-pw"><b>{e(b["power"].replace(" hp",""))}</b><span>HP {e(b["power_note"] or "")}</span></div></div>'
+            f'<div class="bc-body"><span class="bc-code">{e(b["engine"])} · {e(b["car"].split(" (")[0])}</span><h3>{e(b["name"])}</h3>'
+            f'<span class="bc-more">View the build →</span></div></a>')
+
+def builds_index(ctx):
+    crumbs = [("Home", "/"), ("Builds", "/builds/")]
+    peak = max(int(b["power"].split()[0].replace(",", "")) for b in BUILDS)
+    return page_hero(ctx, "Our work", "The Builds", "Real cars from our bays, each one planned as a complete system and built in our shop.", crumbs) + f'''
+<section class="section"><div class="wrap">
+<div class="bstats"><div><b>{len(BUILDS)}</b><span>Featured builds</span></div><div><b>{peak:,}</b><span>Peak hp</span></div></div>
+<div class="bgrid">{"".join(_build_card(ctx, b) for b in BUILDS)}</div>
+</div></section>
+<section class="section deep"><div class="wrap bcta"><div><span class="eyebrow line">Your turn</span><h2>Plan your build</h2><p class="muted">Every build starts with a health check and a written plan. Use the planner to see what your goal takes, then send it to us.</p></div>
+<div class="btn-row"><a class="btn btn-primary" href="{ctx.L("/build/")}">Build Your Car {ICON["arrow"]}</a><a class="btn btn-ghost" href="tel:{CFG["phoneE164"]}">Call {e(CFG["phoneDisplay"])}</a></div></div></section>'''
+
+def build_profile(b):
+    path = "/builds/" + b["slug"] + "/"
+    crumbs = [("Home", "/"), ("Builds", "/builds/"), (b["name"], path)]
+    def body(ctx):
+        specs = [("Engine", b["engine"]), ("Turbo", b.get("turbo")), ("Fuel", b.get("fuel")), ("Transmission", b.get("trans"))]
+        spec_html = "".join(f'<div><small>{k}</small><b>{e(v)}</b></div>' for k, v in specs if v)
+        mods = "".join(f'<div class="mgrp"><h3>{e(g)}</h3><ul>' + "".join(f"<li>{e(m)}</li>" for m in items) + "</ul></div>" for g, items in b["mods"].items())
+        owner = f'<p class="bowner">Owner: <a href="{b["owner"][1]}" target="_blank" rel="noopener">{e(b["owner"][0])}</a></p>' if b.get("owner") else ""
+        others = [o for o in BUILDS if o is not b]
+        more = (f'<section class="section deep"><div class="wrap"><span class="eyebrow line">More builds</span><div class="bgrid" style="margin-top:28px">{"".join(_build_card(ctx, o) for o in others)}</div></div></section>') if others else ""
+        return f'''<section class="bprof"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb">{'<span>/</span>'.join(f'<a href="{ctx.L(p)}">{e(n)}</a>' for n, p in crumbs[:-1])}<span>/</span><span aria-current="page" style="margin:0;opacity:1">{e(b["name"])}</span></nav></div><div class="wrap bprof-in">
+<div class="bprof-img"><img src="{ctx.L(b["images"]["hero"])}" alt="{e(b["car"])} built by Auto Addict Works" width="1400" height="1867" fetchpriority="high"></div>
+<div class="bprof-info">
+<span class="eyebrow line">{e(b["tag"])}</span>
+<h1>{e(b["name"])}</h1>
+<p class="bcar">{e(b["car"])}</p>
+<div class="bpower"><b>{e(b["power"].replace(" hp",""))}</b><span>HP {e(b["power_note"] or "")}</span></div>
+{f'<p class="bstory">{e(b["story"])}</p>' if b.get("story") else ""}
+{owner}
+<div class="bspecs">{spec_html}</div>
+<h2 class="bh">Build sheet</h2>
+<div class="mgrid">{mods}</div>
+<div class="btune">{ICON["check"]}<p><b>Tuning</b>{e(b["tuning"])} We handled the hardware, installation and supporting work.</p></div>
+<div class="btn-row" style="margin-top:28px"><a class="btn btn-primary" href="{ctx.L("/build/")}{b.get("builder_link","")}">Start from this build {ICON["arrow"]}</a><a class="btn btn-ghost" href="{ctx.L("/builds/")}">All builds</a></div>
+</div></div></section>
+{more}'''
+    return dict(title=f'{b["name"]}: {b["car"].split(" (")[0]}, {b["power"]} | Auto Addict Works'[:70],
+                desc=f'{b["car"]} built by Auto Addict Works in Marlborough, MA: {b["power"]} {b["power_note"] or ""}, {b.get("turbo","")} turbo, built engine and transmission. Full build sheet.',
+                crumbs=crumbs, body=body, og=b["images"]["og"], priority="0.6")
 
 # ------------------------------------------------------------------ services
 SERVICES = {
@@ -665,3 +718,5 @@ if CFG.get("showVehicleSales"):
 for k in MAKES: PAGES[MAKES[k]["path"]] = make_page(k)
 for p in SERVICES: PAGES[p] = service_page(p)
 for p in REPAIRS: PAGES[p] = repair_page(p)
+PAGES["/builds/"] = dict(title="Builds: BMW Performance Builds | Auto Addict Works", desc="Performance builds from Auto Addict Works in Marlborough, MA. Full build sheets for B58 and S58 BMWs making 1,200+ hp, planned and built in our shop.", crumbs=[("Home", "/"), ("Builds", "/builds/")], body=builds_index, priority="0.7")
+for _b in BUILDS: PAGES["/builds/" + _b["slug"] + "/"] = build_profile(_b)
