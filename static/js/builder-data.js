@@ -41,9 +41,10 @@ var PL=[
  {id:"s55",code:"S55",gen:"F8x · 2015 to 2021",name:"M3 · M4 · M2 Competition",models:"F80 M3 (2015 to 2018) · F82/F83 M4 (2015 to 2020) · F87 M2 Competition and CS (2019 to 2021)",fac:425,stock:400,trans:"7-speed DCT",tlim:560,dct:1,tq:[480,520,560,620,620,640],stq:400,turbo:"s55",
   tiers:[[450,"Stage 1",["tune"]],[495,"Stage 2",["dp","intake","cp","plugs"]],[545,"Stage 2+",["fmic","dct","hub"]],
          [600,"Stock-Turbo E85",["flex","lpfp","coils"]],[650,"Upgraded Turbos",["tw","cust","oil"]],[730,"Upgraded Turbos E85 + PI",["pi","hpfp"]]]},
- {id:"s58",code:"S58",gen:"G8x · 2020+",name:"M3 · M4 · M2 · X3 M",models:"G80 M3 (2021+) · G82/G83 M4 (2021+) · G87 M2 (2023+) · X3 M and X4 M (2020 to 2024)",fac:503,stock:450,trans:"ZF 8-speed M",tlim:720,tq:[560,620,675,720,800],stq:443,tx:{name:"ZF 8HP76",warn:700,limit:780},turbo:"s58",
+ {id:"s58",code:"S58",gen:"G8x · 2020+",name:"M3 · M4 · M2 · X3 M",models:"G80 M3 (2021+) · G82/G83 M4 (2021+) · G87 M2 (2023+) · X3 M and X4 M (2020 to 2024)",fac:503,stock:450,trans:"ZF 8-speed M",tlim:720,tq:[560,620,675,720,800,980,1200],stq:443,tx:{name:"ZF 8HP76",warn:700,limit:780},turbo:"s58",
   tiers:[[540,"Stage 1",["tune","ecu"]],[590,"Stage 2",["dp","intake","fmic","plugs","tt"]],[660,"Stage 2 E50",["flex","lpfp"]],
-         [730,"Stage 2 E85 + PI",["pi","coils"]],[900,"Upgraded Turbos",["tw","cust","oil","hpfp"]]]}];
+         [730,"Stage 2 E85 + PI",["pi","coils"]],[900,"Upgraded Turbos",["tw","cust","oil","hpfp"]],
+         [1100,"Big Single",["big","rad","inj"],["tw"]],[1400,"Built Motor",["built"]]]}];
 var MODES=[["daily","Daily driver","Reliable, CEL-free",'<path d="M4 15l2-5h12l2 5v3H4z"/><circle cx="8" cy="18" r="1.6"/><circle cx="16" cy="18" r="1.6"/>'],
  ["street","Spirited street","Back roads & weekends",'<path d="M3 20c5-2 6-9 9-9s3 6 9 9"/><path d="M12 3v4"/>'],
  ["track","Track / HPDE","Heat & braking",'<path d="M4 4v16"/><path d="M4 4h12l-2 4 2 4H4"/>'],

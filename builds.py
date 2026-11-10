@@ -55,6 +55,6 @@ BUILDS = [
     tuning="Custom flex fuel calibration by an independent tuning specialist.",
     images=dict(card="/img/builds/m2-72mm-card.jpg", hero="/img/builds/m2-72mm-hero.jpg", og="/img/builds/m2-72mm-og.jpg"),
     gallery=[], timeline=[], dyno=None,
-    builder_link="#p=s58&m=drag&hp=900",
+    builder_link="#p=s58&m=drag&hp=1200",
   ),
 ]
