@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Auto Addict Works — static site generator.
+"""Auto Addict Works static site generator.
 Usage:  python3 build.py            -> dist/     (production: clean URLs, deploy this folder)
         python3 build.py --preview  -> preview/  (relative links, opens from disk or any host path)
 Edit config.json for phone, hours, email, form endpoint; edit content.py for page copy."""
@@ -86,7 +86,7 @@ def header(ctx):
     sales = f'<a href="{L("/vehicle-sales/")}"{cur("/vehicle-sales/")}>Vehicle Sales</a>' if CFG.get("showVehicleSales") else ""
     return f'''<a class="skip" href="#main">Skip to content</a>
 <header class="site-header"><div class="wrap">
-<a class="brand" href="{L('/')}" aria-label="{esc(CFG['name'])} home"><img src="{L('/img/logo-horizontal.svg')}" alt="{esc(CFG['name'])} — {esc(CFG['tagline'])}" width="252" height="50"></a>
+<a class="brand" href="{L('/')}" aria-label="{esc(CFG['name'])} home"><img src="{L('/img/logo-horizontal.svg')}" alt="{esc(CFG['name'])}, {esc(CFG['tagline'])}" width="252" height="50"></a>
 <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
 <nav class="nav" id="nav" aria-label="Main">
 <a href="{L('/')}"{' aria-current="page"' if ctx.path == "/" else ""}>Home</a>
@@ -116,7 +116,7 @@ def footer(ctx):
 <div><h3 class="fh">Shop</h3><ul><li><a href="{L('/build/')}">Build Your Car</a></li><li><a href="{L('/about/')}">About</a></li>
 <li><a href="{L('/areas-we-serve/')}">Areas We Serve</a></li><li><a href="{L('/contact/')}">Contact &amp; Directions</a></li>
 <li><a href="{CFG['mapsUrl']}" rel="noopener" target="_blank">Google Maps</a></li></ul></div>
-</div><div class="fbase"><span>© {datetime.date.today().year} {esc(CFG['legalName'])}. Independent service specialist — not affiliated with BMW AG, Audi AG, Volkswagen AG or Mercedes-Benz Group.</span>
+</div><div class="fbase"><span>© {datetime.date.today().year} {esc(CFG['legalName'])}. Independent service specialist, not affiliated with BMW AG, Audi AG, Volkswagen AG or Mercedes-Benz Group.</span>
 <span>{esc(a['city'])}, Massachusetts</span></div></div></footer>'''
 
 def page_html(ctx, p):

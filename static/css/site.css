@@ -1,4 +1,4 @@
-/* Auto Addict Works — site styles. Tokens mirror the brand design system. */
+/* Auto Addict Works: site styles. Tokens mirror the brand design system. */
 @font-face{font-family:"Montserrat";font-weight:500;font-display:swap;src:url(../fonts/Montserrat-500.woff2) format("woff2")}
 @font-face{font-family:"Montserrat";font-weight:600;font-display:swap;src:url(../fonts/Montserrat-600.woff2) format("woff2")}
 @font-face{font-family:"Inter";font-weight:400;font-display:swap;src:url(../fonts/Inter-400.woff2) format("woff2")}
@@ -257,7 +257,7 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;background:var(--ink)
 }
 
 /* =====================================================================
-   PREMIUM LAYER (v2) — italic display, cinematic hero, angled tiles
+   PREMIUM LAYER (v2): italic display, cinematic hero, angled tiles
    ===================================================================== */
 @font-face{font-family:"Montserrat";font-weight:700;font-display:swap;src:url(../fonts/Montserrat-700.woff2) format("woff2")}
 @font-face{font-family:"Montserrat";font-weight:700;font-style:italic;font-display:swap;src:url(../fonts/Montserrat-700-italic.woff2) format("woff2")}

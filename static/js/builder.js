@@ -17,11 +17,11 @@ var mk=$("make"),pl=$("platform"),tr=$("trans");
 mk.innerHTML='<option value="">Select make</option>'+makes.map(function(m){return '<option>'+esc(m)+'</option>'}).join("");
 function fillPlatforms(make){
   var list=PLATS.filter(function(p){return p.make===make});
-  pl.innerHTML='<option value="">'+(make?"Select model / engine":"—")+'</option>'+list.map(function(p){return '<option value="'+p.id+'">'+esc(p.label)+'</option>'}).join("");
+  pl.innerHTML='<option value="">'+(make?"Select model / engine":"Select a make first")+'</option>'+list.map(function(p){return '<option value="'+p.id+'">'+esc(p.label)+'</option>'}).join("");
   pl.disabled=!make;
 }
 function fillTrans(p){
-  tr.innerHTML=p?p.trans.map(function(t){return '<option value="'+t.id+'">'+esc(t.n)+'</option>'}).join(""):'<option>—</option>';
+  tr.innerHTML=p?p.trans.map(function(t){return '<option value="'+t.id+'">'+esc(t.n)+'</option>'}).join(""):'<option>Select a model first</option>';
   tr.disabled=!p;
 }
 mk.addEventListener("change",function(){fillPlatforms(mk.value);setPlatform(null)});
@@ -74,8 +74,8 @@ function decode(){
      var desc=[yr||"",titleCase(make),d.Model,d.Trim||d.Series].filter(Boolean).join(" ");
      S.vin=v;S.vinLabel=desc;
      var hit=null;for(var i=0;i<RULES.length;i++){var r=RULES[i];if(r.make.test(make)&&r.re.test(txt)&&yr>=r.y[0]&&yr<=r.y[1]){hit=r.p;break}}
-     if(hit){var p=plat(hit);mk.value=p.make;fillPlatforms(p.make);pl.value=p.id;setPlatform(p.id);vmsg("✓ "+desc+" — matched to "+p.label.split(" — ")[0]+".","ok")}
-     else vmsg(desc+" isn't in our build planner yet — pick the closest platform, or send it to us for a custom quote.","err");
+     if(hit){var p=plat(hit);mk.value=p.make;fillPlatforms(p.make);pl.value=p.id;setPlatform(p.id);vmsg("✓ "+desc+": matched to "+p.label.split(": ")[0]+".","ok")}
+     else vmsg(desc+" isn't in our build planner yet. Pick the closest platform, or send it to us for a custom quote.","err");
    }).catch(function(){vmsg("Couldn't decode that VIN right now. Select your model instead.","err")});
 }
 function titleCase(s){return s.toLowerCase().replace(/\b\w/g,function(c){return c.toUpperCase()}).replace(/^Bmw$/,"BMW")}
@@ -111,14 +111,14 @@ function compute(){
   S.x.forEach(function(x){add(x);if(x==="coilovers")add("alignment")});
   if(powered||u==="track"||u==="drag")set.unshift("health"),set=set.filter(function(k,i){return set.indexOf(k)===i});
   // flags
-  if(set.indexOf("flex")>=0)flags.push(["","Built around E85 / ethanol blends. The flex-fuel kit lets you switch between pump gas and ethanol — power drops on 93."]);
+  if(set.indexOf("flex")>=0)flags.push(["","Built around E85 / ethanol blends. The flex-fuel kit lets you switch between pump gas and ethanol. Power drops on 93."]);
   if(S.c)flags.push(["w","Competition build: catless or emissions-modifying parts are for vehicles used off public roads only. They won't pass Massachusetts inspection. We'll ask you to sign an off-road/competition use acknowledgment."]);
-  else if(powered)flags.push(["","Street build: we spec catted parts and tune to stay free of warning lights. Some performance parts aren't emissions-certified — we'll confirm what fits your registration before ordering."]);
+  else if(powered)flags.push(["","Street build: we spec catted parts and tune to stay free of warning lights. Some performance parts aren't emissions-certified, so we'll confirm what fits your registration before ordering."]);
   if(set.indexOf("turbo_big")>=0&&!S.c)flags.push(["w","Big-turbo kits generally aren't emissions-certified. Plan this as a dedicated track or competition car, or talk to us about street use first."]);
-  if(set.indexOf("built_engine")>=0)flags.push(["","Built-motor builds are planned and quoted individually — this range is a starting point."]);
+  if(set.indexOf("built_engine")>=0)flags.push(["","Built-motor builds are planned and quoted individually. This range is a starting point."]);
   if(set.indexOf("ecu_unlock")>=0)flags.push(["","Whether your ECU needs an unlock depends on build date and software; we check before quoting it."]);
   if(set.indexOf("crank_hub")>=0)flags.push(["w","S55 owners: the crank hub can spin past roughly stock-turbo E85 power. We fix it before adding that torque."]);
-  if(u==="track"&&!S.x.length)flags.push(["","Track tip: coilovers and a big brake kit are the next upgrades most drivers add — select them under Extras."]);
+  if(u==="track"&&!S.x.length)flags.push(["","Track tip: coilovers and a big brake kit are the next upgrades most drivers add. Select them under Extras."]);
   notes.forEach(function(n){flags.push(["",n])});
   var items=set.map(function(k){return {k:k,p:P[k]}}).filter(function(i){return i.p});
   var lo=0,hi=0,hrs=0;items.forEach(function(i){lo+=i.p.lo;hi+=i.p.hi;hrs+=i.p.hrs});
@@ -130,17 +130,17 @@ function render(){
   var r=compute();
   // slider fill
   var rg=$("power");var pc=rg.max>rg.min?((rg.value-rg.min)/(rg.max-rg.min))*100:0;rg.style.setProperty("--fill",pc+"%");
-  if(!r){$("hp").innerHTML='—<small>HP</small>';$("r-veh").textContent="Select your car";$("r-stage").textContent="—";$("r-sub").textContent="";$("r-total").textContent="$—";
+  if(!r){$("hp").innerHTML='0<small>HP</small>';$("r-veh").textContent="Select your car";$("r-stage").textContent="Select a car";$("r-sub").textContent="";$("r-total").textContent="$0";
     $("r-body").innerHTML='<div class="empty">Choose your car and a power goal to see the build.</div>';saveHash();return}
   $("hp").innerHTML=S.hp+'<small>HP</small>';
   $("hp-note").textContent=r.tier?("≈ "+r.tier.n):"Stock power";
-  $("r-veh").textContent=(S.vinLabel?S.vinLabel+" · ":"")+r.p.label.split(" — ")[0]+" · "+r.t.n;
+  $("r-veh").textContent=(S.vinLabel?S.vinLabel+" · ":"")+r.p.label.split(": ")[0]+" · "+r.t.n;
   $("r-stage").textContent=r.tier?r.tier.n:"Stock power";
   var uses={};USES.forEach(function(u){uses[u.id]=u.n});
   $("r-sub").textContent=(r.tier?"~"+r.target+" hp (est. crank)":"~"+r.p.stock+" hp stock")+" · "+uses[S.u]+(S.c?" · Competition":"");
-  $("r-total").textContent=r.items.length?fmt(r.lo)+" – "+fmt(r.hi):"$0";
+  $("r-total").textContent=r.items.length?fmt(r.lo)+" to "+fmt(r.hi):"$0";
   var mb=$("mbar");if(mb){mb.hidden=false;$("mbar-t").textContent=(r.tier?r.tier.n:"Stock")+" · "+$("r-total").textContent}
-  if(!r.items.length){$("r-body").innerHTML='<div class="empty">At stock power for daily driving there\'s nothing to add — move the slider or pick a different use.</div>';saveHash();return}
+  if(!r.items.length){$("r-body").innerHTML='<div class="empty">At stock power for daily driving there\'s nothing to add. Move the slider or pick a different use.</div>';saveHash();return}
   var groups={};r.items.forEach(function(i){(groups[i.p.g]=groups[i.p.g]||[]).push(i)});
   var html="";
   GROUP_ORDER.forEach(function(g){if(!groups[g])return;
@@ -158,13 +158,13 @@ function render(){
 function sheet(){
   var r=compute();if(!r)return "";
   var uses={};USES.forEach(function(u){uses[u.id]=u.n});
-  var L=["AUTO ADDICT WORKS — BUILD SHEET",
+  var L=["AUTO ADDICT WORKS BUILD SHEET",
     "Vehicle: "+(S.vinLabel||r.p.label)+(S.vin?" (VIN "+S.vin+")":""),
     "Platform: "+r.p.label,"Transmission: "+r.t.n,
     "Goal: "+(r.tier?r.tier.n+" ~"+r.target+" hp":"Stock power")+" · "+uses[S.u]+(S.c?" · OFF-ROAD / COMPETITION BUILD":""),
     "","Parts & work:"];
   r.items.forEach(function(i){L.push(" - "+i.p.n)});
-  L.push("","Ballpark: "+fmt(r.lo)+" – "+fmt(r.hi)+" (parts + labor, before health check)","Link: "+location.href);
+  L.push("","Ballpark: "+fmt(r.lo)+" to "+fmt(r.hi)+" (parts + labor, before health check)","Link: "+location.href);
   return L.join("\n");
 }
 $("r-copy").addEventListener("click",function(){
@@ -174,7 +174,7 @@ $("r-copy").addEventListener("click",function(){
 });
 $("r-send").addEventListener("click",function(){
   var s=sheet();if(!s){$("make").focus();return}
-  try{sessionStorage.setItem("aaw-build",s);sessionStorage.setItem("aaw-build-vehicle",JSON.stringify(S.vinLabel||plat(S.p).label.split(" — ")[1]||""))}catch(e){}
+  try{sessionStorage.setItem("aaw-build",s);sessionStorage.setItem("aaw-build-vehicle",JSON.stringify(S.vinLabel||plat(S.p).label.split(": ")[1]||""))}catch(e){}
   if(window.dataLayer)window.dataLayer.push({event:"build_request",platform:S.p,hp:S.hp,use:S.u,competition:S.c});
   location.href=root.getAttribute("data-contact");
 });
