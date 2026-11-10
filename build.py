@@ -109,7 +109,7 @@ def footer(ctx):
 <footer class="site-footer"><div class="wrap"><div class="fgrid">
 <div><img src="{L('/img/emblem.svg')}" alt="" width="96" height="96" loading="lazy" style="width:96px;margin-bottom:20px">
 <address class="nap"><strong>{esc(CFG['name'])}</strong><br>{esc(a['street'])}<br>{esc(a['city'])}, {a['region']} {a['postal']}<br>
-<a href="{phone_link()}">{esc(CFG['phoneDisplay'])}</a><br><a href="mailto:{CFG['email']}">{esc(CFG['email'])}</a></address>
+<a href="{phone_link()}">{esc(CFG['phoneDisplay'])}</a><br><a href="mailto:{CFG['email']}">{esc(CFG['email'])}</a>{('<br><a href="'+CFG['social']['instagram']+'" rel="noopener" target="_blank">Instagram @autoaddictworks</a>') if CFG['social'].get('instagram') else ''}</address>
 <p class="muted small" style="margin-top:12px">{hrs}</p></div>
 <div><h3 class="fh">Services</h3><ul>{svc}</ul></div>
 <div><h3 class="fh">Makes</h3><ul>{mk}</ul></div>
