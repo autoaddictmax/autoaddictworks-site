@@ -32,8 +32,8 @@ BUILDS = [
     builder_link="#p=b58f&m=drag&hp=1300",
   ),
   dict(
-    slug="m2-72mm",
-    name="M2 72mm",
+    slug="2025-bmw-m2",
+    name="2025 BMW M2",
     tag="Customer build",
     car="2025 BMW M2 (G87)",
     engine="S58",

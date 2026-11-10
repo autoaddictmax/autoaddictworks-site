@@ -385,7 +385,7 @@ def _build_card(ctx, b):
             f'<div class="bc-img"><img src="{ctx.L(b["images"]["card"])}" alt="{e(b["car"])} built by Auto Addict Works" width="960" height="1200" loading="lazy">'
             f'<span class="bc-tag">{e(b["tag"])}</span>'
             f'<div class="bc-pw"><b>{e(b["power"].replace(" hp",""))}</b><span>HP {e(b["power_note"] or "")}</span></div></div>'
-            f'<div class="bc-body"><span class="bc-code">{e(b["engine"])} · {e(b["car"].split(" (")[0])}</span><h3>{e(b["name"])}</h3>'
+            f'<div class="bc-body"><span class="bc-code">{e(b["engine"]) if b["name"] in b["car"] else e(b["engine"]) + " · " + e(b["car"].split(" (")[0])}</span><h3>{e(b["name"])}</h3>'
             f'<span class="bc-more">View the build →</span></div></a>')
 
 def builds_index(ctx):
@@ -414,7 +414,7 @@ def build_profile(b):
 <div class="bprof-info">
 <span class="eyebrow line">{e(b["tag"])}</span>
 <h1>{e(b["name"])}</h1>
-<p class="bcar">{e(b["car"])}</p>
+<p class="bcar">{e(b["car"]) if b["name"] not in b["car"] else e(b["car"].split("(")[-1].rstrip(")")) + " · " + e(b["engine"])}</p>
 <div class="bpower"><b>{e(b["power"].replace(" hp",""))}</b><span>HP {e(b["power_note"] or "")}</span></div>
 {f'<p class="bstory">{e(b["story"])}</p>' if b.get("story") else ""}
 {owner}
@@ -425,7 +425,7 @@ def build_profile(b):
 <div class="btn-row" style="margin-top:28px"><a class="btn btn-primary" href="{ctx.L("/build/")}{b.get("builder_link","")}">Start from this build {ICON["arrow"]}</a><a class="btn btn-ghost" href="{ctx.L("/builds/")}">All builds</a></div>
 </div></div></section>
 {more}'''
-    return dict(title=f'{b["name"]}: {b["car"].split(" (")[0]}, {b["power"]} | Auto Addict Works'[:70],
+    return dict(title=(f'{b["name"]}: {b["car"].split(" (")[0]}, {b["power"]} | Auto Addict Works' if b["name"] not in b["car"] else f'{b["name"]} Build, {b["power"]} | Auto Addict Works')[:70],
                 desc=f'{b["car"]} built by Auto Addict Works in Marlborough, MA: {b["power"]} {b["power_note"] or ""}, {b.get("turbo","")} turbo, built engine and transmission. Full build sheet.',
                 crumbs=crumbs, body=body, og=b["images"]["og"], priority="0.6")
 

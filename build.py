@@ -195,7 +195,7 @@ def build():
         sm.append(f"  <url><loc>{CFG['siteUrl'].rstrip('/')}{path}</loc><lastmod>{TODAY}</lastmod><priority>{pr}</priority></url>")
     sm.append("</urlset>")
     open(os.path.join(OUT, "sitemap.xml"), "w").write("\n".join(sm) + "\n")
-    if not PREVIEW: open(os.path.join(OUT, "_redirects"), "w").write("/services/performance-tuning/ /services/performance-builds/ 301\n/services/performance-tuning /services/performance-builds/ 301\n")
+    if not PREVIEW: open(os.path.join(OUT, "_redirects"), "w").write("/services/performance-tuning/ /services/performance-builds/ 301\n/services/performance-tuning /services/performance-builds/ 301\n/builds/m2-72mm/ /builds/2025-bmw-m2/ 301\n/builds/m2-72mm /builds/2025-bmw-m2/ 301\n")
     open(os.path.join(OUT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\n\nSitemap: {CFG['siteUrl'].rstrip('/')}/sitemap.xml\n")
     json.dump({"name": CFG["name"], "short_name": "AA Works", "start_url": "/", "display": "standalone",
                "background_color": "#1B2528", "theme_color": "#1B2528",
