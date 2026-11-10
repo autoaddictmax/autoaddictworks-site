@@ -15,6 +15,7 @@ SERVICES_NAV = [
 MAKES_NAV = [
     ("BMW", "/bmw-repair/"), ("Audi", "/audi-repair/"),
     ("Volkswagen", "/volkswagen-repair/"), ("Mercedes-Benz", "/mercedes-benz-repair/"),
+    ("MINI", "/mini-repair/"), ("Porsche", "/porsche-repair/"),
 ]
 
 def e(s): return html.escape(s)
@@ -266,6 +267,43 @@ MAKES = {
   faqs=[("What's the difference between Service A and Service B?", "Service A is the lighter interval (oil, filter and inspections). Service B adds items like the cabin filter and brake fluid. Your car's display tells you which is due; we perform either to the factory checklist."),
         ("Can you work on AMG models?", "Yes. Maintenance, repair and performance work on AMG 43, 45, 53 and 63 models."),
         ("Do you repair Airmatic suspension?", "Yes. We diagnose whether it's a strut, the compressor, a valve block or a leak before replacing anything.")]),
+
+ "mini": dict(path="/mini-repair/", name="MINI",
+  title="MINI Cooper Repair & Service in Marlborough, MA | Auto Addict Works",
+  desc="MINI specialist in Marlborough, MA. Cooper, Cooper S, JCW and Countryman diagnostics, maintenance and repair with BMW ISTA and genuine parts.",
+  h1="MINI Repair &amp; Service in Marlborough, MA",
+  lede="MINIs are BMWs underneath, and we treat them that way: ISTA diagnostics, genuine and OE parts, and technicians who know their engines.",
+  intro="We service Cooper, Cooper S, John Cooper Works, Clubman and Countryman models, from the older N14 and N18 Cooper S to the current B38 and B48 cars. ISTA covers MINI the same way it covers BMW, so we can run guided diagnostics, register batteries, code modules and update software in-house.",
+  issues=[
+   "<strong>Timing chain:</strong> chain stretch and tensioner wear on N14 and N18 Cooper S engines.",
+   "<strong>Oil leaks:</strong> oil filter housing, valve cover and oil pan gaskets.",
+   "<strong>Cooling system:</strong> water pumps, thermostat housings and coolant hoses.",
+   "<strong>Carbon buildup:</strong> intake valve cleaning on direct-injection engines.",
+   "<strong>Ignition:</strong> coils and spark plugs, especially on turbocharged models.",
+   "<strong>Suspension:</strong> control-arm bushings, struts and mounts.",
+  ],
+  services=["Oil service and Condition Based Service resets","ISTA diagnostics, coding and programming","Timing chain, cooling and oil-leak repair","Clutch and transmission service","Brakes, suspension and alignment","JCW and Cooper S tuning: tunes, intakes and downpipes"],
+  faqs=[("Do you use dealer-level diagnostics on MINI?", "Yes. ISTA, BMW's factory software, covers MINI, so we diagnose, code and program MINIs the same way the dealer does."),
+        ("Is the timing chain on my Cooper S a problem?", "The N14 and N18 engines in 2007 to 2016 Cooper S models are known for timing chain wear. A rattle on cold start is the usual warning sign. We can inspect it and tell you where yours stands."),
+        ("Do you tune MINIs?", "Yes, including JCW and Cooper S models. Tell us your goal and we'll plan it properly.")]),
+ "porsche": dict(path="/porsche-repair/", name="Porsche",
+  title="Porsche Repair & Service in Marlborough, MA | Auto Addict Works",
+  desc="Porsche service and repair in Marlborough, MA. 911, Cayman, Boxster, Macan, Cayenne and Panamera maintenance, diagnostics and repair.",
+  h1="Porsche Repair &amp; Service in Marlborough, MA",
+  lede="Maintenance, diagnostics and repair for the 911, Cayman, Boxster, Macan, Cayenne and Panamera, done by European specialists.",
+  intro="Porsche owners expect precision, and so do we. Every job starts with a proper diagnosis, and we use genuine or OE-supplier parts and the correct fluids for your model.",
+  issues=[
+   "<strong>Scheduled maintenance:</strong> oil service, spark plugs, brake fluid and filters on the factory schedule.",
+   "<strong>PDK service:</strong> transmission fluid and filter service.",
+   "<strong>Cooling system:</strong> coolant pipes, water pumps and thermostats, including the known coolant pipe issue on early V8 Cayennes.",
+   "<strong>Oil leaks:</strong> valve cover, rear main seal and air-oil separator problems.",
+   "<strong>Engine health:</strong> inspections for IMS bearing and bore scoring concerns on 996, 997.1 and 986/987 models.",
+   "<strong>Suspension and brakes:</strong> control arms, air suspension on Cayenne and Panamera, pads and rotors.",
+  ],
+  services=["Scheduled maintenance","PDK and transmission service","Diagnostics and electrical repair","Cooling and oil-leak repair","Brakes, suspension and alignment","Pre-purchase inspections"],
+  faqs=[("Do you work on air-cooled 911s?", "Call us about your specific car. We focus on water-cooled models from the 996 on, plus the Macan, Cayenne and Panamera."),
+        ("Can you inspect for IMS bearing or bore scoring issues?", "Yes. If you own or are buying a 996, 997.1, Boxster or Cayman with the M96 or M97 engine, we can inspect it and explain the risk and your options."),
+        ("Do you do pre-purchase inspections on Porsches?", "Yes. A used Porsche should always be inspected by someone who knows the model's weak points before you buy.")]),
 }
 
 def make_page(key):
@@ -472,7 +510,7 @@ def build_page(ctx):
     <g id="g-marks"></g>
     <g class="needle" id="needle"><line x1="200" y1="100" x2="200" y2="40" stroke="#F1EBDF" stroke-width="4" stroke-linecap="round"/><circle cx="200" cy="40" r="5" fill="#F1EBDF"/></g>
    </svg>
-   <div class="readout"><b id="hp">560</b><span>EST. CRANK HP</span><em id="gain">+240 hp over stock</em></div>
+   <div class="readout"><b id="hp">0</b><span>EST. WHEEL HP</span><em id="gain">Stock power</em></div>
    <div class="slider"><input type="range" id="range" step="10" aria-label="Target horsepower"></div>
    <div class="stages" id="stagechips"></div>
   </div>
@@ -485,7 +523,7 @@ def build_page(ctx):
     <path class="d-area" id="d-area"/><path class="d-stock" id="d-stock"/><path class="d-tgt" id="d-tgt"/>
    </svg>
    <div class="kpis"><div><b id="k1">+75%</b><span>Power gain</span></div><div><b id="k2">Stage 2+ E85</b><span>Build level</span></div><div><b id="k3">E85 / 93</b><span>Fuel</span></div></div>
-   <span class="illus">Illustrative curve, not a dyno sheet</span>
+   <span class="illus">Illustrative curve from typical tuner results, not your car&#39;s dyno sheet</span>
   </div>
  </div>
 </div></section>

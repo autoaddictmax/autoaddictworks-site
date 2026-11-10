@@ -627,3 +627,7 @@ a.card:hover{background:linear-gradient(170deg,#25343A,#1A2528)}
 @media (prefers-reduced-motion:reduce){.marquee-track{animation:none;flex-wrap:wrap;width:auto;justify-content:center}.marquee ul[aria-hidden]{display:none}}
 @media (max-width:640px){.marquee li{font-size:17px;padding:0 22px}.marquee-track{animation-duration:36s}}
 @media(max-width:640px){.hero2-makes{letter-spacing:.14em;gap:6px 10px;font-size:12px}}
+.marques{grid-template-columns:repeat(7,1fr)}
+.marques a{padding:24px 8px;font-size:13px;letter-spacing:.12em}
+@media (max-width:980px){.marques{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:640px){.marques{grid-template-columns:1fr 1fr}.marques a:last-child{grid-column:span 2}}
