@@ -1,0 +1,63 @@
+{
+  "_note": "Edit this file, then run: python3 build.py   \u2014 every page, the schema markup and the sitemap update from here. Anything marked TODO must be filled before launch.",
+  "siteUrl": "https://autoaddictworks.com",
+  "name": "Auto Addict Works",
+  "legalName": "Auto Addict Works LLC",
+  "tagline": "European Vehicle Specialists",
+  "phoneDisplay": "(508) 000-0000",
+  "phoneE164": "+15080000000",
+  "phoneIsPlaceholder": true,
+  "email": "service@autoaddictworks.com",
+  "address": {
+    "street": "41 Brigham Street, Unit 1",
+    "city": "Marlborough",
+    "region": "MA",
+    "postal": "01752",
+    "country": "US"
+  },
+  "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41+Brigham+Street+Unit+1+Marlborough+MA+01752",
+  "hours": [
+    {
+      "days": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "opens": "08:00",
+      "closes": "17:00"
+    }
+  ],
+  "hoursArePlaceholder": true,
+  "laborRate": 155,
+  "bookingUrl": "",
+  "formEndpoint": "",
+  "social": {
+    "instagram": "",
+    "facebook": "",
+    "googleBusinessProfile": ""
+  },
+  "areasServed": [
+    "Marlborough",
+    "Hudson",
+    "Southborough",
+    "Northborough",
+    "Sudbury",
+    "Framingham",
+    "Westborough",
+    "Berlin",
+    "Stow",
+    "Maynard",
+    "Shrewsbury",
+    "Bolton",
+    "Acton",
+    "Natick",
+    "Wayland",
+    "Ashland",
+    "Hopkinton",
+    "Clinton"
+  ],
+  "showVehicleSales": false,
+  "_showVehicleSales_note": "Turn on once the dealer license is issued \u2014 adds the Vehicle Sales page, nav link and home tiles."
+}
