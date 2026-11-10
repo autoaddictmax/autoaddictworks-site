@@ -107,6 +107,13 @@ HOME_FAQS = [
      "Yes. Performance is where our team lives. Start with the <a href=\"/build/\">Build Your Car</a> tool to see what your power goal takes and a ballpark price, then we'll confirm the plan after inspecting the car."),
 ]
 
+BRANDS = ["FCP Euro", "Precision Raceworks", "RK Autowerks", "Precision Turbo", "Turbosmart", "bootmod3", "MHD Tuning",
+          "xHP", "Dorch Engineering", "Spool Performance", "Pure Turbos", "CSF", "Wagner Tuning", "Eventuri", "Mishimoto", "KW Suspension", "Motul"]
+def brands_marquee():
+    items = "".join(f"<li>{e(b)}</li>" for b in BRANDS)
+    return f'''<section class="brands" aria-label="Brands we build with"><span class="eyebrow line">Brands we build with</span>
+<div class="marquee"><div class="marquee-track"><ul>{items}</ul><ul aria-hidden="true">{items}</ul></div></div></section>'''
+
 def home(ctx):
     L = ctx.L
     book = CFG["bookingUrl"] or L("/contact/")
@@ -138,6 +145,8 @@ def home(ctx):
 </div></div></section>
 
 <section class="istrip"><div class="wrap istrip-row">{strip}</div></section>
+
+{brands_marquee()}
 
 <section class="approach"><div class="approach-img{'' if has_photo('approach') else ' art'}" style="--img:url({L(photo("approach"))})">
 <div class="ista-mock" aria-hidden="true"><b>ISTA</b><ul><li>Vehicle identification</li><li>Diagnostics</li><li>Service functions</li><li>Programming / encoding</li></ul></div></div>

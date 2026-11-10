@@ -1,6 +1,7 @@
 (function(){
   var t=document.querySelector('.nav-toggle'),n=document.getElementById('nav');
   if(t&&n)t.addEventListener('click',function(){var o=n.classList.toggle('open');t.setAttribute('aria-expanded',o)});
+  document.querySelectorAll('.dd-btn').forEach(function(b){b.addEventListener('click',function(){var d=b.parentNode,o=d.classList.toggle('open');b.setAttribute('aria-expanded',o)})});
 
   var f=document.getElementById('contact-form');
   if(!f)return;

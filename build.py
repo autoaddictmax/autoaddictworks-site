@@ -90,7 +90,7 @@ def header(ctx):
 <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
 <nav class="nav" id="nav" aria-label="Main">
 <a href="{L('/')}"{' aria-current="page"' if ctx.path == "/" else ""}>Home</a>
-<div class="dd"><a href="{L('/services/')}"{cur('/services/')}>Services</a><div class="dd-menu">{svc}<hr>{mk}</div></div>
+<div class="dd"><a href="{L('/services/')}"{cur('/services/')}>Services</a><button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-svc" aria-label="Show services and makes"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9l6 6 6-6"/></svg></button><div class="dd-menu" id="dd-svc">{svc}<hr>{mk}</div></div>
 <a href="{L('/services/performance-tuning/')}">Performance</a>
 <a href="{L('/build/')}"{cur('/build/')}>Build Your Car</a>
 {sales}
