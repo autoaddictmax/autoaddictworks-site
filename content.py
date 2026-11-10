@@ -212,7 +212,7 @@ def home(ctx):
 
 {faq_block(HOME_FAQS)}
 
-<section class="section tight"><div class="wrap"><p class="muted small" style="max-width:900px">
+<section class="section tight" style="padding-top:0"><div class="wrap"><p class="muted small" style="max-width:900px">
 Auto Addict Works is an independent European auto repair shop at {e(A["street"])}, {e(A["city"])}, MA, serving drivers from {e(TOWNS)}. <a href="{L("/areas-we-serve/")}">See all areas we serve</a>.</p></div></section>
 '''
 
