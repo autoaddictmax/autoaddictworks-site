@@ -733,3 +733,4 @@ a.card:hover{background:linear-gradient(170deg,#25343A,#1A2528)}
  .page-hero.has-photo{padding:72px 0 56px;background:linear-gradient(180deg,rgba(9,13,15,.35),rgba(9,13,15,.88) 75%),var(--bg-m,var(--bg)) center/cover}
 }
 @media (max-width:980px){.hero2{background:linear-gradient(180deg,rgba(9,13,15,.6),rgba(9,13,15,.92)),var(--hero-m,var(--hero)) center/cover}.hero2.has-photo{background:linear-gradient(180deg,rgba(9,13,15,.35),rgba(9,13,15,.9) 80%),var(--hero-m,var(--hero)) center/cover}}
+.hero2.has-photo .chip-ista.chip-warr{left:auto;right:0;bottom:-2%;top:auto}

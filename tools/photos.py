@@ -2,6 +2,7 @@
 
 Put originals in photos-src/ (not committed), list them in photos.json:
   {"hero": {"src": "bay-dusk.jpg", "focus": [0.55, 0.5]}, "page-bmw-repair": {"src": "bmw-m3.jpg", "focus": [0.6, 0.45]}}
+focus = the point (optional: zoom >1 crops tighter, bright >1 lightens)
 focus = the point (0..1 across, 0..1 down) that must stay in frame: the car, a badge, a face.
 Run: python3 tools/photos.py   -> writes static/img/photos/<slot>.jpg and <slot>-m.jpg (phone crop).
 """
@@ -28,10 +29,11 @@ def kind(slot):
     if slot.startswith("person"): return "person"
     return "tile"
 
-def crop_to(im, w, h, fx, fy):
+def crop_to(im, w, h, fx, fy, zoom=1.0):
     W, H = im.size
     r = w / h
     cw, ch = (W, int(W / r)) if W / H < r else (int(H * r), H)
+    cw, ch = int(cw / zoom), int(ch / zoom)
     x = min(max(int(fx * W - cw / 2), 0), W - cw)
     y = min(max(int(fy * H - ch / 2), 0), H - ch)
     return im.crop((x, y, x + cw, y + ch)).resize((w, h), Image.LANCZOS)
@@ -52,15 +54,16 @@ def main():
         if not os.path.exists(src):
             print("missing", src); continue
         im = grade(ImageOps.exif_transpose(Image.open(src)).convert("RGB"))
+        if c.get("bright"): im = ImageEnhance.Brightness(im).enhance(c["bright"])
         for blur in c.get("blur", []):  # plates etc: [x0,y0,x1,y1] as fractions
             W, H = im.size; box = tuple(int(v * (W if i % 2 == 0 else H)) for i, v in enumerate(blur))
             reg = im.crop(box); im.paste(reg.resize((5, 3)).resize(reg.size).filter(ImageFilter.GaussianBlur(10)), box)
         fx, fy = c.get("focus", [0.5, 0.5])
         d, m = SIZES[kind(slot)]
-        crop_to(im, *d, fx, fy).save(os.path.join(OUT, f"{slot}.jpg"), quality=76, optimize=True, progressive=True)
+        crop_to(im, *d, fx, fy, c.get("zoom", 1.0)).save(os.path.join(OUT, f"{slot}.jpg"), quality=76, optimize=True, progressive=True)
         if m:
             mf = c.get("focus_m", [fx, fy])
-            crop_to(im, *m, *mf).save(os.path.join(OUT, f"{slot}-m.jpg"), quality=76, optimize=True, progressive=True)
+            crop_to(im, *m, *mf, c.get("zoom_m", 1.0)).save(os.path.join(OUT, f"{slot}-m.jpg"), quality=76, optimize=True, progressive=True)
         print("ok", slot)
 
 if __name__ == "__main__":
