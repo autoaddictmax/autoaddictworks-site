@@ -2,7 +2,7 @@
 Rules: no tuner names (tuning credited to an independent specialist), plates blurred,
 owner OK required for customer cars. Sections with no data are hidden on the page."""
 
-BUILDS = [
+_ALL = [
   dict(
     slug="project-1300",
     name="Project 1300",
@@ -58,25 +58,52 @@ BUILDS = [
     builder_link="#p=s58&m=drag&hp=1200",
   ),
   dict(
-    slug="2017-vw-gti",
-    name="2017 VW GTI",
+    slug="2018-vw-gti",
+    name="2018 VW GTI",
     tag="Team build",
-    car="2017 VW GTI (MK7)",
+    car="2018 VW GTI (MK7.5)",
     engine="EA888 Gen 3",
     color=None,
-    power="500 hp", power_note=None,
-    fuel=None,
+    power="420 hp", power_note="on 93 octane",
+    fuel="93 octane (E85-capable)",
     trans="6-speed manual",
     turbo="IS38 hybrid",
     owner=None,
-    story="A team member's MK7 GTI with a hybrid IS38 turbo and a 6-speed manual on an upgraded clutch.",
+    story="A team member's MK7.5 GTI with a hybrid IS38 turbo and a 6-speed manual on an upgraded clutch, making 420 hp on pump gas and ready for E85.",
     mods={
       "Power": ["IS38 hybrid turbo", "Upgraded intercooler", "Intake", "Downpipe"],
       "Drivetrain": ["6-speed manual", "Upgraded clutch"],
     },
     tuning="Custom calibration by an independent tuning specialist.",
-    images=dict(card="/img/builds/2017-vw-gti-card.jpg", hero="/img/builds/2017-vw-gti-hero.jpg", og="/img/builds/2017-vw-gti-og.jpg"),
+    images=dict(card="/img/builds/2018-vw-gti-card.jpg", hero="/img/builds/2018-vw-gti-hero.jpg", og="/img/builds/2018-vw-gti-og.jpg"),
+    gallery=[], timeline=[], dyno=None,
+    builder_link=None,
+  ),
+  dict(
+    draft=True,  # NEED: power + fuel, tag (customer/team), owner credit
+    slug="2025-bmw-m3",
+    name="2025 BMW M3",
+    tag="Customer build",
+    car="2025 BMW M3 (G80)",
+    engine="S58",
+    color=None,
+    power=None, power_note=None,
+    fuel=None,
+    trans="6-speed manual",
+    turbo="Pure Turbos upgraded twins",
+    owner=None,
+    story=None,
+    mods={
+      "Power": ["Pure Turbos upgraded turbos", "CSF heat exchanger", "CSF intake manifold", "Burger Motorsports intakes", "High-flow catted downpipes"],
+      "Fueling": ["Full AMS800 fuel kit", "Reflex+ controller"],
+      "Drivetrain": ["6-speed manual", "Upgraded clutch", "Short throw shifter"],
+      "Chassis": ["Ohlins suspension", "Suspension Secrets control arms"],
+    },
+    tuning="Custom calibration by an independent tuning specialist.",
+    images=dict(card="/img/builds/2025-bmw-m3-card.jpg", hero="/img/builds/2025-bmw-m3-hero.jpg", og="/img/builds/2025-bmw-m3-og.jpg"),
     gallery=[], timeline=[], dyno=None,
     builder_link=None,
   ),
 ]
+
+BUILDS = [x for x in _ALL if not x.get("draft")]
