@@ -241,7 +241,7 @@ MAKES = {
         ("Do you service MINI?", "Yes. MINI shares BMW engines and electronics, and ISTA covers MINI as well.")]),
  "audi": dict(path="/audi-repair/", name="Audi",
   title="Audi Repair & Service in Marlborough, MA | Auto Addict Works",
-  desc="Audi specialist in Marlborough, MA. Diagnostics, maintenance, S tronic and quattro service, engine repair and performance upgrades for A3–A8, Q-models, S and RS.",
+  desc="Audi specialist in Marlborough, MA. Diagnostics, maintenance, S tronic and quattro service, engine repair and performance upgrades for A3 to A8, Q-models, S and RS.",
   h1="Audi Repair &amp; Service in Marlborough, MA",
   lede="Maintenance, diagnostics and repair for Audi A, S, RS and Q models, plus performance work for the 2.0T, 2.5 TFSI and 2.9/3.0T platforms.",
   intro="We work on the Audi models New England actually drives: A3/S3, A4/S4, A5/S5, A6, Q5/SQ5, Q7 and the RS cars. Every repair starts with a full module scan and the manufacturer's test procedure, and we use genuine or OE-supplier parts so your Audi drives the way it should.",
@@ -340,12 +340,42 @@ def make_page(key):
 <section class="section"><div class="wrap split"><div class="prose">
 <h2>{m["name"]} service done properly</h2><p>{m["intro"]}</p>
 <h2>Common {m["name"]} problems we fix</h2>{ticks(m["issues"])}
+{repair_links(ctx, m["path"], f"{m['name']} repair guides")}
 <h2>{m["name"]} services</h2><ul>{"".join(f"<li>{s}</li>" for s in m["services"])}</ul>
 <p>Want more from your {m["name"]}? <a href="{ctx.L("/build/")}">Build your car</a> and see what your power goal takes.</p>
 </div>{side_panel(ctx, f"Book your {m['name']}")}</div></section>
 {callback(ctx)}{faq_block(m["faqs"], f"{m['name']} questions")}'''
     return dict(title=m["title"], desc=m["desc"], crumbs=[("Home", "/"), (f"{m['name']} Repair", m["path"])],
                 faqs=m["faqs"], service=f"{m['name']} repair and service", body=body, priority="0.9")
+
+# ------------------------------------------------------------------ repair pages
+from repairs import REPAIRS, BY_PARENT
+
+def _first(s):
+    s = s.split(". ")[0]
+    return s if s[-1] in ".?!" else s + "."
+
+def repair_links(ctx, parent, heading="Common repairs we handle"):
+    items = BY_PARENT.get(parent, [])
+    if not items: return ""
+    return f'<h2>{heading}</h2><div class="rlinks">' + "".join(
+        f'<a href="{ctx.L(p)}"><b>{e(REPAIRS[p]["name"])}</b><span>{_first(REPAIRS[p]["lede"])}</span></a>' for p in items) + '</div>'
+
+def repair_page(path):
+    r = REPAIRS[path]
+    pn, pp = r["parent"]
+    crumbs = [("Home", "/"), (pn, pp), (r["name"], path)]
+    def body(ctx):
+        secs = "".join(f"<h2>{h}</h2>{b}" for h, b in r["sections"])
+        rel = " · ".join(f'<a href="{ctx.L(p)}">{e(REPAIRS[p]["name"] if p in REPAIRS else SERVICES[p]["name"])}</a>' for p in r["related"])
+        return page_hero(ctx, f"{pn.replace(' Repair','')} · {CITY}" if pp != "/services/" else f"Services · {CITY}", r["h1"], r["lede"], crumbs) + f'''
+<section class="section"><div class="wrap split"><div class="prose">
+<h2>Which cars are affected</h2>{ticks(r["cars"])}
+<h2>Symptoms to watch for</h2>{ticks(r["symptoms"])}
+{secs}
+<h2>Related</h2><p>{rel}</p>
+</div>{side_panel(ctx, "Book this repair")}</div></section>{callback(ctx)}{faq_block(r["faqs"])}'''
+    return dict(title=r["title"], desc=r["desc"], crumbs=crumbs, faqs=r["faqs"], service=r["name"], body=body, priority="0.7")
 
 # ------------------------------------------------------------------ services
 SERVICES = {
@@ -385,7 +415,7 @@ SERVICES = {
   body=[
    ("Maintenance that matches the manufacturer", "<p>European cars are specific about oil approvals, coolant types and transmission fluids. We use fluids that meet the manufacturer's specification (BMW LL-01/LL-17, VW 502/504/508, MB 229.5/229.71 and so on) and record every service on your repair order.</p>"),
    ("Services", ticks(["Oil and filter service, with Condition Based Service resets","Brake fluid flush","Spark plugs and ignition coils","Engine and cabin air filters","Coolant service","Automatic, DSG/S tronic and manual transmission fluid","Differential, transfer case and Haldex service","Multi-point inspection with photos"])),
-   ("Why intervals matter in New England", "<p>Short trips, cold starts and road salt are hard on European cars. For turbocharged engines we generally recommend oil changes every 5,000–7,500 miles rather than stretching to the maximum interval, especially on modified cars.</p>"),
+   ("Why intervals matter in New England", "<p>Short trips, cold starts and road salt are hard on European cars. For turbocharged engines we generally recommend oil changes every 5,000 to 7,500 miles rather than stretching to the maximum interval, especially on modified cars.</p>"),
   ],
   faqs=[("Will servicing my car here void the warranty?", "No. Under the Magnuson-Moss Warranty Act you can have maintenance done at any qualified shop. Keep your records. We provide them on every repair order."),
         ("Do you reset the service indicator?", "Yes, including BMW Condition Based Service (CBS) items and Mercedes Service A/B reminders.")]),
@@ -448,6 +478,7 @@ def service_page(path):
         return page_hero(ctx, f"Services · {CITY}", s["h1"], s["lede"],
                          [("Home", "/"), ("Services", "/services/"), (s["name"], path)]) + f'''
 <section class="section"><div class="wrap split"><div class="prose">{sections}
+{repair_links(ctx, path, "Repair guides")}
 <h2>Makes we service</h2><p>{" · ".join(f'<a href="{ctx.L(p)}">{e(n)}</a>' for n, p in MAKES_NAV)}</p></div>
 {side_panel(ctx)}</div></section>{callback(ctx)}{faq_block(s["faqs"])}'''
     return dict(title=s["title"], desc=s["desc"], crumbs=[("Home", "/"), ("Services", "/services/"), (s["name"], path)],
@@ -631,3 +662,4 @@ if CFG.get("showVehicleSales"):
         crumbs=[("Home", "/"), ("Vehicle Sales", "/vehicle-sales/")], body=sales_page, priority="0.7")
 for k in MAKES: PAGES[MAKES[k]["path"]] = make_page(k)
 for p in SERVICES: PAGES[p] = service_page(p)
+for p in REPAIRS: PAGES[p] = repair_page(p)

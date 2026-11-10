@@ -659,3 +659,11 @@ a.card:hover{background:linear-gradient(170deg,#25343A,#1A2528)}
 .cb-consent{grid-column:1/-1;margin:0;font-size:12px;line-height:1.5;color:var(--ink-muted)}
 @media(max-width:640px){.cb-form .cb-msg,.cb-form .btn{grid-column:auto}}
 @media(max-width:640px){.cb-form{grid-template-columns:1fr}}
+/* repair guide links */
+.rlinks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0 28px}
+.rlinks a{display:block;padding:16px 18px;border:1px solid var(--border);background:var(--surface-raised);text-decoration:none;color:var(--ink);transition:border-color .2s}
+.rlinks a:hover{border-color:var(--accent)}
+.rlinks b{display:block;font:600 15px/1.3 var(--display);margin-bottom:4px}
+.rlinks b::after{content:" →";color:var(--accent)}
+.rlinks span{font-size:13.5px;line-height:1.5;color:var(--ink-muted)}
+@media(max-width:640px){.rlinks{grid-template-columns:1fr}}
