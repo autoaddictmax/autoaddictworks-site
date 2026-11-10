@@ -74,6 +74,7 @@ def callback(ctx, heading="Request a call back"):
     return f'''<section class="cb"><div class="wrap cb-in">
 <div class="cb-copy"><span class="eyebrow line">Quick question?</span><h2>{heading}</h2><p>Leave your number and we'll call you back during shop hours. Add your VIN and we can look up your car before we call.</p></div>
 <form class="cb-form lead-form" novalidate data-kind="Call back request">
+<input type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
 <label class="sr" for="cb-name">Name</label><input id="cb-name" name="name" placeholder="Name" autocomplete="name" required>
 <label class="sr" for="cb-phone">Phone</label><input id="cb-phone" name="phone" type="tel" placeholder="Phone" autocomplete="tel" required>
 <label class="sr" for="cb-vin">VIN (optional)</label><input id="cb-vin" name="vin" placeholder="VIN (optional)" maxlength="17" autocapitalize="characters" spellcheck="false">
@@ -579,6 +580,7 @@ def contact(ctx):
                      [("Home", "/"), ("Contact", "/contact/")], ctas=False) + f'''
 <section class="section"><div class="wrap split">
 <form class="form lead-form" id="contact-form" novalidate data-kind="Service request">
+<input type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
 <div id="build-summary-wrap" hidden><label for="build">Your build</label><textarea id="build" name="build" readonly style="min-height:180px"></textarea></div>
 <div class="row"><div><label for="name">Name</label><input id="name" name="name" autocomplete="name" required></div>
 <div><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required></div></div>

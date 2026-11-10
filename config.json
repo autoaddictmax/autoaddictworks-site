@@ -39,7 +39,7 @@
   "hoursArePlaceholder": false,
   "laborRate": 155,
   "bookingUrl": "",
-  "formEndpoint": "",
+  "formEndpoint": "/api/lead",
   "social": {
     "instagram": "https://www.instagram.com/autoaddictworks/",
     "facebook": "",

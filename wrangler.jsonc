@@ -1,9 +1,13 @@
 {
-  // Cloudflare Workers static-assets config. Build: python3 build.py · Deploy: npx wrangler deploy
+  // Cloudflare Worker: static site in ./dist plus /api/lead form relay (src/worker.js).
+  // Build: python3 build.py · Deploy: npx wrangler deploy
+  // Secret required in the dashboard: GHL_WEBHOOK_URL (Settings > Variables and Secrets)
   "name": "autoaddictworks-site",
+  "main": "src/worker.js",
   "compatibility_date": "2026-11-01",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
     "not_found_handling": "404-page",
     "html_handling": "auto-trailing-slash"
   }
