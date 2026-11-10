@@ -94,7 +94,7 @@ _ALL = [
     story="A 2025 M3 with the 6-speed manual, Pure Turbos and a full fuel system, making 900 hp on E30.",
     mods={
       "Power": ["Pure Turbos upgraded turbos", "CSF heat exchanger", "CSF intake manifold", "Burger Motorsports intakes", "High-flow catted downpipes"],
-      "Fueling": ["Full AMS800 fuel kit", "Reflex+ controller"],
+      "Fueling": ["AFS800 fuel kit", "Port injection", "Reflex+ controller"],
       "Drivetrain": ["6-speed manual", "Upgraded clutch", "Short throw shifter"],
       "Chassis": ["Ohlins suspension", "Suspension Secrets control arms"],
     },
