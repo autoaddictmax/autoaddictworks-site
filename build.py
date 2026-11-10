@@ -164,7 +164,7 @@ def page_html(ctx, p):
 <link rel="preload" href="{L('/fonts/Inter-400.woff2')}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{L('/fonts/Montserrat-700-italic.woff2')}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{L('/css/site.css')}?v={ver('css/site.css')}">
-{('<link rel="preload" as="image" fetchpriority="high" href="' + L(content.photo('hero')) + '">') if ctx.path == "/" else ""}
+{('<link rel="preload" as="image" fetchpriority="high" href="' + L(content.photo('hero')) + '" media="(min-width:981px)"><link rel="preload" as="image" fetchpriority="high" href="' + L(content.photo_m('hero')) + '" media="(max-width:980px)">') if ctx.path == "/" else ""}
 {ld}
 <script>window.AAW={cfg_js};</script>
 </head>

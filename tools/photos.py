@@ -15,9 +15,9 @@ SRC = os.path.join(ROOT, "photos-src")
 
 # slot type -> (desktop size, phone size or None)
 SIZES = {
-    "hero": ((2400, 1200), (1080, 1350)),
-    "page": ((2400, 900), (1080, 1080)),
-    "band": ((2400, 900), (1080, 900)),
+    "hero": ((2000, 1000), (900, 1125)),
+    "page": ((2000, 750), (900, 900)),
+    "band": ((2000, 750), (900, 750)),
     "approach": ((1400, 1100), (1080, 810)),
     "tile": ((900, 1200), None),
     "team": ((2400, 1030), (1080, 810)),
@@ -60,10 +60,10 @@ def main():
             reg = im.crop(box); im.paste(reg.resize((5, 3)).resize(reg.size).filter(ImageFilter.GaussianBlur(10)), box)
         fx, fy = c.get("focus", [0.5, 0.5])
         d, m = SIZES[kind(slot)]
-        crop_to(im, *d, fx, fy, c.get("zoom", 1.0)).save(os.path.join(OUT, f"{slot}.jpg"), quality=76, optimize=True, progressive=True)
+        crop_to(im, *d, fx, fy, c.get("zoom", 1.0)).save(os.path.join(OUT, f"{slot}.jpg"), quality=72, optimize=True, progressive=True)
         if m:
             mf = c.get("focus_m", [fx, fy])
-            crop_to(im, *m, *mf, c.get("zoom_m", 1.0)).save(os.path.join(OUT, f"{slot}-m.jpg"), quality=76, optimize=True, progressive=True)
+            crop_to(im, *m, *mf, c.get("zoom_m", 1.0)).save(os.path.join(OUT, f"{slot}-m.jpg"), quality=72, optimize=True, progressive=True)
         print("ok", slot)
 
 if __name__ == "__main__":
