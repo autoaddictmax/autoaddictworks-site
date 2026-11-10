@@ -140,7 +140,7 @@ def page_html(ctx, p):
     scripts = f'<script src="{L("/js/site.js")}?v={ver('js/site.js')}" defer></script>'
     if p.get("builder"):
         scripts += f'<script src="{L("/js/builder-data.js")}?v={ver('js/builder-data.js')}" defer></script><script src="{L("/js/builder.js")}?v={ver('js/builder.js')}" defer></script>'
-    cfg_js = json.dumps({k: CFG.get(k) for k in ("formEndpoint", "email", "phoneDisplay", "phoneE164", "laborRate", "bookingUrl", "builderShowPricing")})
+    cfg_js = json.dumps({k: CFG.get(k) for k in ("formEndpoint", "email", "phoneDisplay", "phoneE164", "laborRate", "bookingUrl", "builderShowPricing", "turnstileSiteKey")})
     robots = '<meta name="robots" content="noindex">' if p.get("noindex") else '<meta name="robots" content="index,follow,max-image-preview:large">'
     return f'''<!doctype html>
 <html lang="en-US">

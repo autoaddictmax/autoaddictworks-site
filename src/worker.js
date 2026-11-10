@@ -7,11 +7,26 @@ function json(body, status = 200) {
 }
 
 async function handleLead(request, env) {
+  // GET = health check: shows whether the secrets are set, never their values.
+  if (request.method === "GET") return json({ ok: true, ghl: !!env.GHL_WEBHOOK_URL, captcha: !!env.TURNSTILE_SECRET });
   if (request.method !== "POST") return json({ ok: false, error: "method" }, 405);
   let d;
   try { d = await request.json(); } catch { return json({ ok: false, error: "bad json" }, 400); }
   // Honeypot: real visitors never fill the hidden "company" field. Pretend success for bots.
   if (d.company) return json({ ok: true });
+  // Cloudflare Turnstile check (enforced once the TURNSTILE_SECRET secret is set).
+  if (env.TURNSTILE_SECRET) {
+    const token = d["cf-turnstile-response"];
+    if (!token) return json({ ok: false, error: "captcha" }, 403);
+    const form = new FormData();
+    form.append("secret", env.TURNSTILE_SECRET);
+    form.append("response", token);
+    const ip = request.headers.get("CF-Connecting-IP");
+    if (ip) form.append("remoteip", ip);
+    const v = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", { method: "POST", body: form });
+    const vr = await v.json().catch(() => ({}));
+    if (!vr.success) return json({ ok: false, error: "captcha" }, 403);
+  }
   const lead = {};
   for (const k of FIELDS) if (d[k] != null && String(d[k]).trim()) lead[k] = String(d[k]).trim().slice(0, 4000);
   if (!lead.name || !lead.phone) return json({ ok: false, error: "name and phone required" }, 400);
