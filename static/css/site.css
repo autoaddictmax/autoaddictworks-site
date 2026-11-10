@@ -651,3 +651,5 @@ a.card:hover{background:linear-gradient(170deg,#25343A,#1A2528)}
 .cb-form .form-status{grid-column:1/-1}
 @media(max-width:1000px){.cb-in{grid-template-columns:1fr;gap:24px}}
 @media(max-width:640px){.cb-form{grid-template-columns:1fr}.cb{padding:48px 0}}
+.fin-callout{border:1px solid rgba(197,165,114,.5);background:linear-gradient(120deg,rgba(197,165,114,.14),rgba(197,165,114,.03));padding:16px 18px;border-radius:2px}
+.fin-callout strong{color:var(--accent)}

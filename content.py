@@ -177,7 +177,7 @@ def home(ctx):
 <div class="approach-copy"><span class="eyebrow line">Our approach</span>
 <h2>Dealer-level capabilities.<br><span class="gold">An independent experience.</span></h2>
 <p class="lede">We combine factory-grade tools, real technical depth and a genuine obsession with European cars to keep yours performing at its best, on the road and at the track.</p>
-<ul class="badges"><li>{ICON["check"]}Factory ISTA diagnostics</li><li>{ICON["check"]}Genuine &amp; OE parts</li><li>{ICON["check"]}{WARRANTY}</li><li>{ICON["check"]}12+ years combined experience</li></ul>
+<ul class="badges"><li>{ICON["check"]}Factory ISTA diagnostics</li><li>{ICON["check"]}Genuine &amp; OE parts</li><li>{ICON["check"]}{WARRANTY}</li><li>{ICON["check"]}12+ years combined experience</li><li>{ICON["check"]}Flexible financing</li></ul>
 </div></section>
 
 <section class="section"><div class="wrap">
@@ -419,7 +419,7 @@ SERVICES = {
    ("Hardware is ours, tuning is theirs", "<p>We plan the build and install the parts. Software tuning is done by independent tuning specialists, and you work with the tuner directly on the calibration. Keeping those roles separate means each part of the build is handled by the people who do it every day.</p>"),
    ("Plan your build", "<p>Use our <a href=\"/build/\">Build Your Car</a> tool to pick your car, set a power goal and see the parts and supporting mods it takes with a ballpark price. Every build starts with a health check, compression or leak-down, a full scan and a look at known weak points, because power on a tired engine is money wasted.</p>"),
    ("What we do", ticks(["Intakes, charge pipes, intercoolers and heat exchangers","Downpipes and exhaust","Fueling: port injection, low-pressure fuel pumps, injectors and flex-fuel/E85","Hybrid and big-single turbo upgrades","Built transmissions, clutches, axles and driveshafts","Oil and transmission coolers","Brakes, suspension and tires to match the power"])),
-   ("Flexible financing", "<p>Builds can be financed with flexible terms, so you can do it right the first time instead of cutting corners on supporting mods. Ask about financing when you send your build.</p>"),
+   ("Flexible financing", "<p class=\"fin-callout\"><strong>Finance your build.</strong> Flexible terms available. Ask when you send your build.</p><p>Builds can be financed with flexible terms, so you can do it right the first time instead of cutting corners on supporting mods. Ask about financing when you send your build.</p>"),
    ("Street, track or competition", "<p>Street builds stay emissions-compliant with catted parts. If you're building a dedicated off-road or competition vehicle, tell us. The build tool has a competition option, and we'll talk through what that means for registration and inspection.</p>"),
   ],
   faqs=[("Will more power hurt reliability?", "A conservative, well-supported build on a healthy car is very reliable. Problems come from skipping supporting mods: fueling, cooling, ignition and drivetrain. That's why our build tool adds them automatically."),
