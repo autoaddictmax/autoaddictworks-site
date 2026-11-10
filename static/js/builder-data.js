@@ -25,7 +25,7 @@ ds:["One-piece driveshaft","Stronger for repeated launches",1900,3],catback:["Ca
 harness:["Seat, harness & bar","Required by most rule books",3000,5,1]};
 var PL=[
  /* Power figures are approximate WHEEL horsepower (dynojet-style), compiled from published results
-    (bootmod3, Precision Raceworks, Pure Turbos, ARM Motorsports, MODE, Garage Whifbitz) and forum dyno threads.
+    from hardware vendors and forum dyno threads.
     Confirm against your own dyno history. */
  {id:"b58f",code:"B58",gen:"Gen 1 · 2016 to 2021",name:"340i · 440i · M240i",models:"340i (2016 to 2019) · 440i (2017 to 2020) · M240i (2017 to 2021) · 540i, 740i (2017 to 2019) · X3 M40i (2018 to 2019)",fac:320,stock:300,trans:"ZF 8-speed",tlim:600,tq:[420,460,500,540,580,620,700,750,1000],stq:330,tx:{name:"ZF 8HP50",warn:600,limit:700},turbo:"b58",
   tiers:[[370,"Stage 1",["tune"]],[410,"Stage 2",["intake","dp","cp","plugs"]],[430,"Stage 2+",["fmic","tt"]],[460,"Stage 2+ E30",["flex","lpfp"]],
