@@ -44,7 +44,7 @@ function build(){var p=plat(),idx=-1;for(var i=0;i<p.tiers.length;i++){if(p.tier
  if(S.c&&(S.m==="track"||S.m==="drag"))sup.push("harness");
  var all=have.concat(sup),lo=0,hi=0,hrs=2.5;all.forEach(function(k){var x=P[k];lo+=x[2]*0.82;hi+=x[2]*1.25;hrs+=x[3]});
  return {p:p,tier:tier,tgt:tgt,tq:tq,stops:stops,sup:sup,lo:lo+hrs*155*.9,hi:hi+hrs*155*1.15,hrs:hrs,have:have}}
-function partHTML(k){var x=P[k],race=x[4];return '<div class="part'+(race?' race':'')+'"><i></i><div>'+x[0]+(race?'<span class="rt">OFF-ROAD ONLY</span>':'')+'<small>'+x[1]+'</small></div></div>'}
+function partHTML(k){var x=P[k],race=x[4],tp=x[5];return '<div class="part'+(race?' race':'')+(tp?' tp':'')+'"><i></i><div>'+x[0]+(race?'<span class="rt">OFF-ROAD ONLY</span>':'')+(tp?'<span class="rt tpt">INDEPENDENT TUNER</span>':'')+'<small>'+x[1]+'</small></div></div>'}
 function render(){var b=build(),p=b.p,max=gmax();
  document.querySelectorAll(".plat").forEach(function(e){e.classList.toggle("sel",e.dataset.id===S.p)});
  document.querySelectorAll(".mode").forEach(function(e){e.classList.toggle("sel",e.dataset.id===S.m)});
@@ -76,13 +76,15 @@ function render(){var b=build(),p=b.p,max=gmax();
  $("psw").classList.toggle("on",S.price);
  $("pbody").innerHTML=(CAN_PRICE&&S.price)?'<b>'+fmt(b.lo)+' to '+fmt(b.hi)+'</b><p>Parts + ~'+Math.round(b.hrs)+' hrs labor. Final quote after a health check.</p>':'<span class="quote">Custom quote</span><p>We price every build after a pre-build health check.</p>';
  var f=[];if(b.have.indexOf("flex")>=0)f.push(["","Built around ethanol blends (E30 to E85). Flex fuel lets you run pump gas too, at lower power."]);
- if(S.c)f.push(["w","Competition build. Off-road use only, signed acknowledgment required."]);else if(b.tier)f.push(["","Street build: catted parts, tuned to stay free of warning lights."]);
+ if(S.c)f.push(["w","Competition build. Off-road use only, signed acknowledgment required."]);else if(b.tier)f.push(["","Street build: catted parts, built to stay free of warning lights."]);
+ if(p.gen3&&b.tier)f.push(["","Gen 3 B58: flash tuning support is still limited on this generation. Factory port injection makes ethanol blends easier."]);
+ if(b.tier)f.push(["","Tuning is done by independent tuning specialists, not by our shop. We handle the hardware, installation and supporting work, and tuning is arranged directly with the tuner."]);
  if(b.have.indexOf("hub")>=0)f.push(["w","S55 crank hub gets fixed before we add this torque."]);
  if(p.tx&&b.tier){if(b.sup.indexOf("tb")>=0)f.push(["w","~"+b.tq+" wtq is past what the "+p.tx.name+" holds. Plan on a built transmission: Pure Drivetrain, Advanced Torque Solutions (ATS), or a Dodson pack for 1,200+ hp."]);
-  else if(b.tq>p.tx.warn)f.push(["w","~"+b.tq+" wtq is pushing the "+p.tx.name+". It needs to be healthy, serviced and tuned (xHP). Past ~"+p.tx.limit+" wtq it needs a built transmission."])}
+  else if(b.tq>p.tx.warn)f.push(["w","~"+b.tq+" wtq is pushing the "+p.tx.name+". It needs to be healthy, serviced and tuned. Past ~"+p.tx.limit+" wtq it needs a built transmission."])}
  var stockTurbo=b.have.indexOf("hy")<0&&b.have.indexOf("tw")<0&&b.have.indexOf("big")<0;
- if(b.tier&&stockTurbo&&p.turbo==="b58"&&b.tgt>=p.stock*1.3)f.push(["w","Stock B58 turbo: we keep boost under ~30 psi. Past that it's in the danger zone, and a hybrid turbo is the right move."]);
- if(b.tier&&stockTurbo&&p.turbo==="s58"&&b.tgt>=p.stock*1.3)f.push(["","S58 twin turbos are bigger from the factory, so they make more power at less boost. We keep boost within safe limits for your fuel."]);
+ if(b.tier&&stockTurbo&&p.turbo==="b58"&&b.tgt>=p.stock*1.3)f.push(["w","Stock B58 turbo: boost should stay under ~30 psi. Past that it's in the danger zone, and a hybrid turbo is the right move."]);
+ if(b.tier&&stockTurbo&&p.turbo==="s58"&&b.tgt>=p.stock*1.3)f.push(["","S58 twin turbos are bigger from the factory, so they make more power at less boost. Your tuner sets safe boost limits for your fuel."]);
  if(b.have.indexOf("built")>=0)f.push(["","Built-motor builds are quoted one-on-one. Our own B58 340i makes 1,300 hp."]);
  $("flags").innerHTML=f.map(function(x){return '<div class="flag '+x[0]+'">'+x[1]+'</div>'}).join("");
  var pr=$("prog").children;for(var k=0;k<4;k++)pr[k].classList.add("on");

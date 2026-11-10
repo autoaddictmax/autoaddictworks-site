@@ -51,7 +51,7 @@ def business_schema(ctx):
                     "addressRegion": a["region"], "postalCode": a["postal"], "addressCountry": a["country"]},
         "areaServed": [{"@type": "City", "name": f"{c}, MA"} for c in CFG["areasServed"]],
         "knowsAbout": ["BMW repair", "BMW ISTA diagnostics", "Audi repair", "Volkswagen repair", "Mercedes-Benz repair",
-                       "European car maintenance", "Performance tuning", "Pre-purchase inspection"],
+                       "European car maintenance", "Performance builds", "Pre-purchase inspection"],
         "hasMap": CFG["mapsUrl"],
     }
     if not CFG.get("phoneIsPlaceholder"): s["telephone"] = CFG["phoneE164"]
@@ -91,7 +91,7 @@ def header(ctx):
 <nav class="nav" id="nav" aria-label="Main">
 <a href="{L('/')}"{' aria-current="page"' if ctx.path == "/" else ""}>Home</a>
 <div class="dd"><a href="{L('/services/')}"{cur('/services/')}>Services</a><button class="dd-btn" type="button" aria-expanded="false" aria-controls="dd-svc" aria-label="Show services and makes"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9l6 6 6-6"/></svg></button><div class="dd-menu" id="dd-svc">{svc}<hr>{mk}</div></div>
-<a href="{L('/services/performance-tuning/')}">Performance</a>
+<a href="{L('/services/performance-builds/')}">Performance</a>
 <a href="{L('/build/')}"{cur('/build/')}>Build Your Car</a>
 {sales}
 <a href="{L('/about/')}"{cur('/about/')}>About</a>
@@ -190,6 +190,7 @@ def build():
         sm.append(f"  <url><loc>{CFG['siteUrl'].rstrip('/')}{path}</loc><lastmod>{TODAY}</lastmod><priority>{pr}</priority></url>")
     sm.append("</urlset>")
     open(os.path.join(OUT, "sitemap.xml"), "w").write("\n".join(sm) + "\n")
+    if not PREVIEW: open(os.path.join(OUT, "_redirects"), "w").write("/services/performance-tuning/ /services/performance-builds/ 301\n/services/performance-tuning /services/performance-builds/ 301\n")
     open(os.path.join(OUT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\n\nSitemap: {CFG['siteUrl'].rstrip('/')}/sitemap.xml\n")
     json.dump({"name": CFG["name"], "short_name": "AA Works", "start_url": "/", "display": "standalone",
                "background_color": "#1B2528", "theme_color": "#1B2528",

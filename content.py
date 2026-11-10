@@ -9,7 +9,7 @@ SERVICES_NAV = [
     ("Maintenance & Inspections", "/services/maintenance/"),
     ("Engine & Drivetrain Repair", "/services/engine-repair/"),
     ("Brakes, Suspension & Steering", "/services/brakes-suspension/"),
-    ("Performance & Tuning", "/services/performance-tuning/"),
+    ("Performance Builds", "/services/performance-builds/"),
     ("Pre-Purchase Inspection", "/services/pre-purchase-inspection/"),
 ]
 MAKES_NAV = [
@@ -46,7 +46,7 @@ ICON = {
  "check": _I('<circle cx="12" cy="12" r="9"/><path d="M8 12.3l2.6 2.6L16 9.5"/>'),
 }
 SVC_ICON = {"/services/diagnostics/": "diag", "/services/maintenance/": "wrench", "/services/engine-repair/": "gear",
-            "/services/brakes-suspension/": "disc", "/services/performance-tuning/": "turbo", "/services/pre-purchase-inspection/": "shield"}
+            "/services/brakes-suspension/": "disc", "/services/performance-builds/": "turbo", "/services/pre-purchase-inspection/": "shield"}
 
 
 # ------------------------------------------------------------------ helpers
@@ -104,12 +104,12 @@ HOME_FAQS = [
      "Yes. We source genuine and OE-supplier parts (the companies that build the factory parts, like Bosch, Lemförder, Mahle and ZF) through European parts distributors and BMW dealer wholesale. If an aftermarket upgrade is the better choice for your goals, we'll explain why and price both."),
     ("How do your prices compare to the dealer?",
      "Our estimates are built from published labor times and real parts pricing, and you approve a written estimate before work starts. Most owners save meaningfully versus dealer service, without giving up factory-level diagnostics or parts quality."),
-    ("Can you help me modify or tune my car?",
-     "Yes. Performance is where our team lives. Start with the <a href=\"/build/\">Build Your Car</a> tool to see what your power goal takes and a ballpark price, then we'll confirm the plan after inspecting the car."),
+    ("Can you help me modify my car?",
+     "We plan and install performance hardware: intakes, downpipes, intercoolers, fueling, turbos and drivetrain upgrades. We don't do software tuning in-house; that's handled by independent tuning specialists. Start with the <a href=\"/build/\">Build Your Car</a> tool to see what your goal takes, then we'll confirm the plan after inspecting the car."),
 ]
 
-BRANDS = ["FCP Euro", "Precision Raceworks", "RK Autowerks", "Precision Turbo", "Turbosmart", "bootmod3", "MHD Tuning",
-          "xHP", "Dorch Engineering", "Spool Performance", "Pure Turbos", "CSF", "Wagner Tuning", "Eventuri", "Mishimoto", "KW Suspension", "Motul"]
+BRANDS = ["FCP Euro", "Precision Raceworks", "RK Autowerks", "Precision Turbo", "Turbosmart",
+          "Dorch Engineering", "Spool Performance", "Pure Turbos", "CSF", "Wagner Tuning", "Eventuri", "Mishimoto", "KW Suspension", "Motul"]
 def brands_marquee():
     items = "".join(f"<li>{e(b)}</li>" for b in BRANDS)
     return f'''<section class="brands" aria-label="Brands we build with"><span class="eyebrow line">Brands we build with</span>
@@ -121,12 +121,12 @@ def home(ctx):
     strip_items = [("Factory-Level Diagnostics", "diag", "/services/diagnostics/"),
                    ("Service & Maintenance", "wrench", "/services/maintenance/"),
                    ("Repairs & Troubleshooting", "gear", "/services/engine-repair/"),
-                   ("Performance Builds", "turbo", "/services/performance-tuning/"),
+                   ("Performance Builds", "turbo", "/services/performance-builds/"),
                    (("Vehicle Sales & Sourcing", "car", "/vehicle-sales/") if CFG.get("showVehicleSales") else ("Pre-Purchase Inspection", "shield", "/services/pre-purchase-inspection/"))]
     strip = "".join(f'<a class="istrip-i" href="{L(p)}">{ICON[i]}<span>{e(n)}</span></a>' for n, i, p in strip_items)
     tiles = [("Service & Maintenance", "maintenance", "/services/maintenance/", "wrench"),
              ("Repairs", "repairs", "/services/engine-repair/", "gear"),
-             ("Performance Builds", "performance", "/services/performance-tuning/", "turbo"),
+             ("Performance Builds", "performance", "/services/performance-builds/", "turbo"),
              (("Vehicle Sales", "sales", "/vehicle-sales/", "car") if CFG.get("showVehicleSales") else ("Diagnostics", "diagnostics", "/services/diagnostics/", "diag"))]
     tile_html = "".join(f'''<a class="ptile{'' if has_photo(slot) else ' art'}" href="{L(p)}"><div class="ptile-in" style="--img:url({L(photo(slot))})">
 <span class="ptile-ico">{ICON[ic]}</span><span class="ptile-t">{e(n)}</span><span class="ptile-a">{ICON["arrow"]}</span></div></a>''' for n, slot, p, ic in tiles)
@@ -163,13 +163,13 @@ def home(ctx):
 </div></section>
 
 <section class="section deep feature"><div class="wrap split">
-<div><span class="eyebrow line">Build your car</span><h2>Tell us the goal.<br><span class="gold">We'll map the build.</span></h2>
+<div><span class="eyebrow line">Build your car</span><h2>Tell us the goal.<br><span class="gold">We'll plan the build.</span></h2>
 <p class="lede">Pick your car, set the power you want and how you'll use it. The build planner lists the parts and supporting mods it takes, with a ballpark price, whether it's a street, track or full competition build.</p>
 <div class="btn-row"><a class="btn btn-primary" href="{L("/build/")}">Start a Build {ICON["arrow"]}</a></div></div>
 <a class="build-preview" href="{L("/build/")}" aria-label="Open the build planner">
 <div class="bp-h"><small>B58 Gen 1 · ZF 8-speed</small><b>Stage 2+ E85</b><span>~540 hp · Spirited street</span></div>
 <div class="bp-bar"><i style="width:42%"></i></div>
-<ul><li>ECU flash tune</li><li>Catted downpipe &amp; intake</li><li>Intercooler upgrade</li><li>Flex-fuel kit + fuel pump</li><li>Transmission tune</li></ul>
+<ul><li>Catted downpipe &amp; intake</li><li>Intercooler upgrade</li><li>Flex-fuel kit + fuel pump</li><li>Supporting mods</li></ul>
 <div class="bp-f"><span>Ballpark</span><b>Your build, priced</b></div></a>
 </div></section>
 
@@ -208,14 +208,14 @@ MAKES = {
    "<strong>Driveline:</strong> ZF 8-speed fluid service, transfer case (xDrive) service and actuator faults, differential service.",
    "<strong>Suspension:</strong> thrust-arm and control-arm bushings, air springs on X5/X7 and 7 Series.",
   ],
-  services=["Oil service and Condition Based Service (CBS) resets","Brake fluid, coolant, spark plugs and ZF transmission service","ISTA diagnostics, coding, programming and software updates","Battery registration and retrofits","Engine, cooling and oil-leak repair","Performance: bootmod3 / MHD tunes, downpipes, intercoolers, port injection, turbo upgrades"],
+  services=["Oil service and Condition Based Service (CBS) resets","Brake fluid, coolant, spark plugs and ZF transmission service","ISTA diagnostics, coding, programming and software updates","Battery registration and retrofits","Engine, cooling and oil-leak repair","Performance hardware: downpipes, intercoolers, port injection, turbo upgrades"],
   faqs=[("Do you work on BMW M cars?", "Yes. We service and modify M cars including the S55 (F80 M3, F82 M4, F87 M2 Competition) and S58 (G80 M3, G82 M4, G87 M2), from routine service to complete performance builds."),
         ("Can you code and program my BMW?", "Yes. We use ISTA for programming and module software updates, and can code retrofits and features after repairs or upgrades. If a repair needs a module programmed, we handle it in-house."),
-        ("How often should my BMW's oil be changed?", "BMW's Condition Based Service intervals can stretch past 10,000 miles. For turbocharged engines driven in New England weather (short trips, cold starts, or any tuning), we recommend every 5,000 to 7,500 miles."),
+        ("How often should my BMW's oil be changed?", "BMW's Condition Based Service intervals can stretch past 10,000 miles. For turbocharged engines driven in New England weather (short trips, cold starts, or added power), we recommend every 5,000 to 7,500 miles."),
         ("Do you service MINI?", "Yes. MINI shares BMW engines and electronics, and ISTA covers MINI as well.")]),
  "audi": dict(path="/audi-repair/", name="Audi",
   title="Audi Repair & Service in Marlborough, MA | Auto Addict Works",
-  desc="Audi specialist in Marlborough, MA. Diagnostics, maintenance, S tronic and quattro service, engine repair and tuning for A3–A8, Q-models, S and RS.",
+  desc="Audi specialist in Marlborough, MA. Diagnostics, maintenance, S tronic and quattro service, engine repair and performance upgrades for A3–A8, Q-models, S and RS.",
   h1="Audi Repair &amp; Service in Marlborough, MA",
   lede="Maintenance, diagnostics and repair for Audi A, S, RS and Q models, plus performance work for the 2.0T, 2.5 TFSI and 2.9/3.0T platforms.",
   intro="We work on the Audi models New England actually drives: A3/S3, A4/S4, A5/S5, A6, Q5/SQ5, Q7 and the RS cars. Every repair starts with a full module scan and the manufacturer's test procedure, and we use genuine or OE-supplier parts so your Audi drives the way it should.",
@@ -227,15 +227,15 @@ MAKES = {
    "<strong>S tronic and quattro:</strong> DSG/S tronic fluid service, Haldex service on transverse quattro models, rear differential service.",
    "<strong>Suspension:</strong> control-arm bushings, air suspension on Q7 and A8, alignment.",
   ],
-  services=["Scheduled maintenance and inspections","S tronic / DSG and Haldex service","Diagnostics and electrical fault-finding","Engine, cooling and oil-leak repair","Brakes, suspension and alignment","Performance: tunes, intakes, intercoolers and turbo upgrades for 2.0T, 2.5 TFSI, 2.9T and 3.0T"],
+  services=["Scheduled maintenance and inspections","S tronic / DSG and Haldex service","Diagnostics and electrical fault-finding","Engine, cooling and oil-leak repair","Brakes, suspension and alignment","Performance hardware: intakes, intercoolers and turbo upgrades for 2.0T, 2.5 TFSI, 2.9T and 3.0T"],
   faqs=[("How often does an S tronic need fluid service?", "Most Audi dual-clutch (S tronic/DSG) transmissions call for a fluid and filter service around every 40,000 miles. Skipping it is a common cause of harsh shifts and mechatronic problems."),
         ("Do you work on Audi RS models?", "Yes, including the RS3 and TT RS 2.5 TFSI five-cylinder and the RS5 2.9 TFSI, from maintenance through full performance builds."),
         ("Is my Audi still under warranty if I service it with you?", "Yes. Your factory warranty stays intact when maintenance is done to Audi's schedule with correct-spec parts and fluids, and we document every service.")]),
  "volkswagen": dict(path="/volkswagen-repair/", name="Volkswagen",
   title="VW Repair & Service in Marlborough, MA | Auto Addict Works",
-  desc="Volkswagen specialist in Marlborough, MA. GTI, Golf R, Jetta, Tiguan and Atlas service, DSG service, diagnostics, repair and performance tuning.",
+  desc="Volkswagen specialist in Marlborough, MA. GTI, Golf R, Jetta, Tiguan and Atlas service, DSG service, diagnostics, repair and performance upgrades.",
   h1="Volkswagen Repair &amp; Service in Marlborough, MA",
-  lede="GTI, Golf R, Jetta, GLI, Tiguan, Atlas and more. Maintained, repaired and tuned by European specialists.",
+  lede="GTI, Golf R, Jetta, GLI, Tiguan, Atlas and more. Maintained, repaired and upgraded by European specialists.",
   intro="Volkswagens share much of their engineering with Audi, and we treat them with the same care: full module scans, manufacturer test procedures and correct parts. We're especially at home with the EA888 2.0T in the GTI, GLI and Golf R, stock or modified.",
   issues=[
    "<strong>Water pump / thermostat housing</strong> leaks on EA888 2.0T engines.",
@@ -245,8 +245,8 @@ MAKES = {
    "<strong>Ignition:</strong> coil packs and spark plugs, especially on tuned cars.",
    "<strong>Carbon buildup</strong> on direct-injection engines.",
   ],
-  services=["Scheduled maintenance","DSG and Haldex service","Diagnostics and electrical repair","Cooling, oil-leak and engine repair","Brakes, suspension and alignment","Performance: Stage 1–2 tunes, intakes, intercoolers, downpipes and IS38/hybrid turbo upgrades"],
-  faqs=[("What does a Stage 1 tune do on a GTI or Golf R?", "On the EA888 2.0T, a Stage 1 software tune typically adds 50–80 horsepower with no hardware changes. Use the <a href=\"/build/\">Build Your Car</a> tool to see what higher goals require."),
+  services=["Scheduled maintenance","DSG and Haldex service","Diagnostics and electrical repair","Cooling, oil-leak and engine repair","Brakes, suspension and alignment","Performance hardware: intakes, intercoolers, downpipes and IS38/hybrid turbo upgrades"],
+  faqs=[("What does a Stage 1 build look like on a GTI or Golf R?", "On the EA888 2.0T, Stage 1 is software only and is done by an independent tuner; owners typically see 50 to 80 horsepower. Stage 2 adds hardware like a downpipe and intercooler, which we install. Use the <a href=\"/build/\">Build Your Car</a> tool to see what higher goals require."),
         ("How often should a DSG be serviced?", "Volkswagen typically specifies a DSG fluid and filter service around every 40,000 miles. More often is smart on tuned or hard-driven cars."),
         ("Do you work on the VW Atlas and Tiguan?", "Yes. Maintenance, Haldex service, diagnostics and repair on VW's SUVs as well as the GTI and Golf R.")]),
  "mercedes-benz": dict(path="/mercedes-benz-repair/", name="Mercedes-Benz",
@@ -263,7 +263,7 @@ MAKES = {
    "<strong>Electrical:</strong> battery and charging faults, module diagnostics.",
    "<strong>AMG:</strong> maintenance and performance for M276 (43), M177/M178 (63) and M139 (45) engines.",
   ],
-  services=["Service A and Service B","Diagnostics and electrical repair","7G / 9G-Tronic transmission service","Airmatic and suspension repair","Engine and oil-leak repair","AMG performance: tunes, intakes, downpipes and turbo upgrades"],
+  services=["Service A and Service B","Diagnostics and electrical repair","7G / 9G-Tronic transmission service","Airmatic and suspension repair","Engine and oil-leak repair","AMG performance hardware: intakes, downpipes and turbo upgrades"],
   faqs=[("What's the difference between Service A and Service B?", "Service A is the lighter interval (oil, filter and inspections). Service B adds items like the cabin filter and brake fluid. Your car's display tells you which is due; we perform either to the factory checklist."),
         ("Can you work on AMG models?", "Yes. Maintenance, repair and performance work on AMG 43, 45, 53 and 63 models."),
         ("Do you repair Airmatic suspension?", "Yes. We diagnose whether it's a strut, the compressor, a valve block or a leak before replacing anything.")]),
@@ -282,10 +282,10 @@ MAKES = {
    "<strong>Ignition:</strong> coils and spark plugs, especially on turbocharged models.",
    "<strong>Suspension:</strong> control-arm bushings, struts and mounts.",
   ],
-  services=["Oil service and Condition Based Service resets","ISTA diagnostics, coding and programming","Timing chain, cooling and oil-leak repair","Clutch and transmission service","Brakes, suspension and alignment","JCW and Cooper S tuning: tunes, intakes and downpipes"],
+  services=["Oil service and Condition Based Service resets","ISTA diagnostics, coding and programming","Timing chain, cooling and oil-leak repair","Clutch and transmission service","Brakes, suspension and alignment","JCW and Cooper S performance: intakes, downpipes and supporting mods"],
   faqs=[("Do you use dealer-level diagnostics on MINI?", "Yes. ISTA, BMW's factory software, covers MINI, so we diagnose, code and program MINIs the same way the dealer does."),
         ("Is the timing chain on my Cooper S a problem?", "The N14 and N18 engines in 2007 to 2016 Cooper S models are known for timing chain wear. A rattle on cold start is the usual warning sign. We can inspect it and tell you where yours stands."),
-        ("Do you tune MINIs?", "Yes, including JCW and Cooper S models. Tell us your goal and we'll plan it properly.")]),
+        ("Do you do performance work on MINIs?", "Yes, hardware and supporting mods on JCW and Cooper S models. Software tuning is handled by independent tuners. Tell us your goal and we'll plan the build.")]),
  "porsche": dict(path="/porsche-repair/", name="Porsche",
   title="Porsche Repair & Service in Marlborough, MA | Auto Addict Works",
   desc="Porsche service and repair in Marlborough, MA. 911, Cayman, Boxster, Macan, Cayenne and Panamera maintenance, diagnostics and repair.",
@@ -344,7 +344,7 @@ SERVICES = {
   body=[
    ("Maintenance that matches the manufacturer", "<p>European cars are specific about oil approvals, coolant types and transmission fluids. We use fluids that meet the manufacturer's specification (BMW LL-01/LL-17, VW 502/504/508, MB 229.5/229.71 and so on) and record every service on your repair order.</p>"),
    ("Services", ticks(["Oil and filter service, with Condition Based Service resets","Brake fluid flush","Spark plugs and ignition coils","Engine and cabin air filters","Coolant service","Automatic, DSG/S tronic and manual transmission fluid","Differential, transfer case and Haldex service","Multi-point inspection with photos"])),
-   ("Why intervals matter in New England", "<p>Short trips, cold starts and road salt are hard on European cars. For turbocharged engines we generally recommend oil changes every 5,000–7,500 miles rather than stretching to the maximum interval, especially if the car is tuned.</p>"),
+   ("Why intervals matter in New England", "<p>Short trips, cold starts and road salt are hard on European cars. For turbocharged engines we generally recommend oil changes every 5,000–7,500 miles rather than stretching to the maximum interval, especially on modified cars.</p>"),
   ],
   faqs=[("Will servicing my car here void the warranty?", "No. Under the Magnuson-Moss Warranty Act you can have maintenance done at any qualified shop. Keep your records. We provide them on every repair order."),
         ("Do you reset the service indicator?", "Yes, including BMW Condition Based Service (CBS) items and Mercedes Service A/B reminders.")]),
@@ -371,19 +371,20 @@ SERVICES = {
   ],
   faqs=[("How do I know if my control arm bushings are worn?", "Common signs are a shimmy under braking, clunks over bumps, vague steering or uneven tire wear. We'll inspect and show you."),
         ("Can you align a lowered car?", "Yes, we align to factory spec or to a performance spec that suits your tires and driving.")]),
- "/services/performance-tuning/": dict(name="Performance & Tuning",
-  title="BMW & European Performance Tuning | Marlborough, MA",
-  desc="ECU tuning, turbo upgrades, fueling, cooling and drivetrain builds for BMW, Audi, VW and Mercedes in Marlborough, MA. Plan your build online.",
-  h1="Performance &amp; Tuning",
+ "/services/performance-builds/": dict(name="Performance Builds",
+  title="BMW & European Performance Builds | Marlborough, MA",
+  desc="Turbo upgrades, fueling, cooling and drivetrain builds for BMW, Audi, VW and Mercedes in Marlborough, MA. Plan your build online.",
+  h1="Performance Builds",
   lede="Our shop car is a B58-powered 340i making 1,300 horsepower. Whether you want a clean Stage 1 or a full build, we plan it as a system: power, fueling, cooling, drivetrain and brakes.",
   body=[
+   ("Hardware is ours, tuning is theirs", "<p>We plan the build and install the parts. Software tuning is done by independent tuning specialists, and you work with the tuner directly on the calibration. Keeping those roles separate means each part of the build is handled by the people who do it every day.</p>"),
    ("Plan your build", "<p>Use our <a href=\"/build/\">Build Your Car</a> tool to pick your car, set a power goal and see the parts and supporting mods it takes with a ballpark price. Every build starts with a health check, compression or leak-down, a full scan and a look at known weak points, because power on a tired engine is money wasted.</p>"),
-   ("What we do", ticks(["Software tunes (bootmod3, MHD and platform-appropriate tuners) and custom tuning","Intakes, charge pipes, intercoolers and heat exchangers","Downpipes and exhaust","Fueling: port injection, low-pressure fuel pumps, injectors and flex-fuel/E85","Hybrid and big-single turbo upgrades","Transmission tuning, clutches, axles and driveshafts","Oil and transmission coolers","Brakes, suspension and tires to match the power"])),
+   ("What we do", ticks(["Intakes, charge pipes, intercoolers and heat exchangers","Downpipes and exhaust","Fueling: port injection, low-pressure fuel pumps, injectors and flex-fuel/E85","Hybrid and big-single turbo upgrades","Built transmissions, clutches, axles and driveshafts","Oil and transmission coolers","Brakes, suspension and tires to match the power"])),
    ("Street, track or competition", "<p>Street builds stay emissions-compliant with catted parts. If you're building a dedicated off-road or competition vehicle, tell us. The build tool has a competition option, and we'll talk through what that means for registration and inspection.</p>"),
   ],
-  faqs=[("Will a tune hurt reliability?", "A conservative, well-supported tune on a healthy car is very reliable. Problems come from skipping supporting mods: fueling, cooling, ignition and drivetrain. That's why our build tool adds them automatically."),
-        ("Can a tuned car pass Massachusetts inspection?", "Street builds using catted downpipes and emissions-compliant parts can pass as long as there are no warning lights and readiness monitors are set. Removing catalytic converters or emissions equipment won't pass and isn't legal on a road-registered car."),
-        ("Do you dyno tune?", "Ask us about custom tuning for your platform when you send your build.")]),
+  faqs=[("Will more power hurt reliability?", "A conservative, well-supported build on a healthy car is very reliable. Problems come from skipping supporting mods: fueling, cooling, ignition and drivetrain. That's why our build tool adds them automatically."),
+        ("Can a modified car pass Massachusetts inspection?", "Street builds using catted downpipes and emissions-compliant parts can pass as long as there are no warning lights and readiness monitors are set. Removing catalytic converters or emissions equipment won't pass and isn't legal on a road-registered car."),
+        ("Do you tune cars?", "No. We don't do software tuning in-house. Tuning is handled by independent tuning specialists, and we take care of the hardware, installation and supporting work.")]),
  "/services/pre-purchase-inspection/": dict(name="Pre-Purchase Inspection",
   title="Used BMW & European Pre-Purchase Inspection | Marlborough",
   desc="Pre-purchase inspection for used BMW, Audi, VW and Mercedes in Marlborough, MA. Full module scan, known-failure checks and a written cost report.",
@@ -439,7 +440,7 @@ def areas(ctx):
 <section class="section"><div class="wrap split"><div class="prose">
 <h2>Drivers come to us from</h2><ul style="columns:2">{towns}</ul>
 <p>Don't see your town? Plenty of our customers drive further for a specialist. Call us and we'll help you plan drop-off.</p>
-<h2>What we service</h2><p>{" · ".join(f'<a href="{ctx.L(p)}">{e(n)} repair</a>' for n, p in MAKES_NAV)}, plus <a href="{ctx.L("/services/performance-tuning/")}">performance builds</a> and <a href="{ctx.L("/services/pre-purchase-inspection/")}">pre-purchase inspections</a>.</p>
+<h2>What we service</h2><p>{" · ".join(f'<a href="{ctx.L(p)}">{e(n)} repair</a>' for n, p in MAKES_NAV)}, plus <a href="{ctx.L("/services/performance-builds/")}">performance builds</a> and <a href="{ctx.L("/services/pre-purchase-inspection/")}">pre-purchase inspections</a>.</p>
 </div>{side_panel(ctx)}</div></section>'''
 
 def contact(ctx):
@@ -469,7 +470,7 @@ def contact(ctx):
 BUILD_FAQS = [
  ("How accurate are the power numbers?", "They are estimates built from published tuner results and owner dyno sheets. Every dyno reads differently (a Dynojet and a Mustang dyno can be 10 to 15 percent apart), and fuel, weather and the condition of your car all move the number. We confirm real figures on your car."),
  ("How do you price a build?", "Every build is quoted after a pre-build health check, because condition, mileage and previous mods change the plan. Send us your build and we'll follow up with a written quote."),
- ("Why does the build add parts I didn't pick?", "Power needs support. Fueling, cooling, ignition and drivetrain limits are the usual reasons tuned cars fail, so the tool adds what your goal and use actually require."),
+ ("Why does the build add parts I didn't pick?", "Power needs support. Fueling, cooling, ignition and drivetrain limits are the usual reasons modified cars fail, so the tool adds what your goal and use actually require."),
  ("What does the off-road / competition option change?", "It unlocks parts that remove or modify emissions equipment, such as catless downpipes. Those builds are for vehicles used off public roads only. They can't pass Massachusetts inspection and aren't legal on a road-registered car."),
  ("My car isn't listed. Can you still build it?", "The planner covers the BMW platforms we build most: B58, S55 and S58. For anything else, send us a note through the contact form and we'll quote it directly."),
 ]
@@ -559,7 +560,7 @@ PAGES = {
  "/": dict(title="BMW & European Auto Repair, Marlborough MA | Auto Addict Works",
            desc="European auto repair in Marlborough, MA. Factory BMW ISTA diagnostics, genuine parts and performance builds for BMW, Audi, VW and Mercedes-Benz.",
            faqs=HOME_FAQS, body=home, priority="1.0"),
- "/services/": dict(title="European Auto Repair Services | Auto Addict Works", desc="Diagnostics, maintenance, engine and drivetrain repair, brakes and suspension, performance tuning and pre-purchase inspections in Marlborough, MA.",
+ "/services/": dict(title="European Auto Repair Services | Auto Addict Works", desc="Diagnostics, maintenance, engine and drivetrain repair, brakes and suspension, performance builds and pre-purchase inspections in Marlborough, MA.",
            crumbs=[("Home", "/"), ("Services", "/services/")], body=services_hub, priority="0.8"),
  "/build/": dict(title="Build Your Car: Performance Build Planner | Auto Addict Works",
            desc="Plan your BMW, Audi, VW or Mercedes build. Pick your car and power goal to see the parts, supporting mods and a ballpark price. Street, track or race.",
