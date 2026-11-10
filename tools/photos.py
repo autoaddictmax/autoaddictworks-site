@@ -46,6 +46,12 @@ def grade(im):
     im = ImageEnhance.Color(im).enhance(0.86)
     return ImageEnhance.Brightness(im).enhance(0.9)
 
+def tone(im, amt):
+    """Brand tint: shadows toward deep teal-black, highlights toward warm gold. amt 0..1."""
+    g = ImageOps.grayscale(im)
+    tinted = ImageOps.colorize(g, black=(8, 14, 16), mid=(70, 72, 66), white=(242, 226, 196))
+    return Image.blend(im, tinted, amt)
+
 def main():
     cfg = json.load(open(os.path.join(ROOT, "photos.json")))
     os.makedirs(OUT, exist_ok=True)
@@ -55,6 +61,7 @@ def main():
             print("missing", src); continue
         im = grade(ImageOps.exif_transpose(Image.open(src)).convert("RGB"))
         if c.get("bright"): im = ImageEnhance.Brightness(im).enhance(c["bright"])
+        if c.get("tone"): im = tone(im, c["tone"])
         for blur in c.get("blur", []):  # plates etc: [x0,y0,x1,y1] as fractions
             W, H = im.size; box = tuple(int(v * (W if i % 2 == 0 else H)) for i, v in enumerate(blur))
             reg = im.crop(box); im.paste(reg.resize((5, 3)).resize(reg.size).filter(ImageFilter.GaussianBlur(10)), box)

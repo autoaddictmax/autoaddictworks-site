@@ -44,5 +44,54 @@
       0.52
     ],
     "bright": 1.15
+  },
+  "performance": {
+    "src": "m2-turbo-bay.jpg",
+    "focus": [
+      0.35,
+      0.62
+    ],
+    "bright": 1.08,
+    "tone": 0.2
+  },
+  "page-services-performance-builds": {
+    "src": "m2-turbo-bay.jpg",
+    "focus": [
+      0.45,
+      0.62
+    ],
+    "focus_m": [
+      0.4,
+      0.6
+    ],
+    "bright": 1.1,
+    "tone": 0.2
+  },
+  "page-services-engine-repair": {
+    "src": "m2-engine-out.jpg",
+    "focus": [
+      0.5,
+      0.6
+    ],
+    "focus_m": [
+      0.5,
+      0.62
+    ],
+    "bright": 1.08,
+    "tone": 0.35,
+    "zoom": 1.0
+  },
+  "page-bmw-repair": {
+    "src": "m4-white-hex.jpg",
+    "focus": [
+      0.55,
+      0.62
+    ],
+    "focus_m": [
+      0.5,
+      0.6
+    ],
+    "bright": 0.95,
+    "tone": 0.25
   }
 }
