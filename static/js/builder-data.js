@@ -1,6 +1,7 @@
 /* Auto Addict Works build planner data.
    P: part key -> [name, why, typical parts price USD, labor hours, offroadOnly]
-   PL: platforms -> tiers [hp, stage name, parts added, parts removed]. Edit freely. */
+   PL: platforms -> tiers [whp, stage name, parts added, parts removed]; tq = est. wheel torque per tier;
+   tx = automatic transmission torque zones (warn = pushing it, limit = needs a built trans). Edit freely. */
 window.AAW_B=(function(){
 
 var P={tune:["ECU flash tune","bootmod3 or MHD, mapped to your hardware and fuel",1000,1.5],ecu:["ECU unlock (if required)","Newer ECUs need a bench unlock",900,1.5],
@@ -15,7 +16,7 @@ tw:["Upgraded turbos","e.g. Pure Turbos Stage 2, stock turbos are maxed",7000,18
 cust:["Custom dyno tune","Calibrated to your exact setup",1550,3],oil:["Oil cooler","Sustained boost and track heat",900,4],
 rad:["Upgraded radiator","More heat to reject",780,3],inj:["Upgraded injectors","Fuel for big-turbo power",1400,4],
 built:["Built engine","Forged rods and pistons",14500,40],hub:["Crank hub fix","Pinned or keyed hub before E85-level torque",650,8],
-tb:["Built transmission","Clutch packs for this torque",5500,18],dcc:["DCT clutch packs","Stock DCT clutches slip past this torque",4000,14],
+tb:["Built transmission","Pure Drivetrain, Advanced Torque Solutions (ATS), or a Dodson pack for 1,200+ hp builds",6500,18],dcc:["DCT clutch packs","Stock DCT clutches slip past this torque",4000,14],
 pads:["Performance pads + fluid","Fade-resistant stopping",520,2.5],tires:["200TW tires","Grip is the first limit",1550,1.5],
 align:["Performance alignment","Set for your tires and driving",0,1.5],tcool:["Transmission cooler","Keeps gearbox temps in check on track",570,3],
 radials:["Drag radials","Traction off the line",1400,1.5],axles:["Upgraded axles","Launches break factory axles",2500,5],
@@ -25,18 +26,18 @@ var PL=[
  /* Power figures are approximate WHEEL horsepower (dynojet-style), compiled from tuner-published results
     (bootmod3, Precision Raceworks, Pure Turbos, ARM Motorsports, MODE, Garage Whifbitz) and forum dyno threads.
     Confirm against your own dyno history. */
- {id:"b58f",code:"B58",gen:"Gen 1 · 2016 to 2019",name:"340i / 440i / M240i",models:"F30 340i, F32 440i, F22 M240i, G30 540i",fac:320,stock:300,trans:"ZF 8-speed",tlim:600,
+ {id:"b58f",code:"B58",gen:"Gen 1 · 2016 to 2019",name:"340i / 440i / M240i",models:"F30 340i, F32 440i, F22 M240i, G30 540i",fac:320,stock:300,trans:"ZF 8-speed",tlim:600,tq:[420,460,500,540,580,620,700,750,1000],stq:330,tx:{name:"ZF 8HP50",warn:600,limit:700},turbo:"b58",
   tiers:[[370,"Stage 1",["tune"]],[410,"Stage 2",["intake","dp","cp","plugs"]],[430,"Stage 2+",["fmic","tt"]],[460,"Stage 2+ E30",["flex","lpfp"]],
          [500,"Stock-Turbo E50",["hpfp","coils"]],[580,"Hybrid Turbo",["hy","cust","oil"]],[700,"Hybrid Turbo E85 + PI",["pi"]],
          [850,"Big Single",["big","rad","inj"],["hy"]],[1300,"Built Motor",["built"]]]},
- {id:"b58g",code:"B58",gen:"Gen 2 · 2020+",name:"M340i / M440i / M240i",models:"G20 M340i, G22 M440i, G42 M240i, Z4 M40i, X3 M40i",fac:382,stock:380,trans:"ZF 8-speed",tlim:600,
+ {id:"b58g",code:"B58",gen:"Gen 2 · 2020+",name:"M340i / M440i / M240i",models:"G20 M340i, G22 M440i, G42 M240i, Z4 M40i, X3 M40i",fac:382,stock:380,trans:"ZF 8-speed",tlim:600,tq:[500,520,540,580,600,620,660,750,850],stq:400,tx:{name:"ZF 8HP51",warn:600,limit:700},turbo:"b58",
   tiers:[[440,"Stage 1",["tune","ecu"]],[460,"Stage 2",["intake","dp","plugs"]],[475,"Stage 2 E30",["fmic","tt","flex"]],
          [510,"Stock-Turbo E50",["lpfp","coils"]],[540,"Stock-Turbo E60 + PI",["pi"]],[580,"Hybrid Turbo",["hy","cust","oil"]],[650,"Hybrid Turbo E85",["hpfp"]],
          [850,"Big Single",["big","rad","inj"],["hy"]],[1000,"Built Motor",["built"]]]},
- {id:"s55",code:"S55",gen:"F8x · 2015 to 2021",name:"M3 / M4 / M2C",models:"F80 M3, F82 M4, F87 M2 Competition",fac:425,stock:400,trans:"7-speed DCT",tlim:560,dct:1,
+ {id:"s55",code:"S55",gen:"F8x · 2015 to 2021",name:"M3 / M4 / M2C",models:"F80 M3, F82 M4, F87 M2 Competition",fac:425,stock:400,trans:"7-speed DCT",tlim:560,dct:1,tq:[480,520,560,620,620,640],stq:400,turbo:"s55",
   tiers:[[450,"Stage 1",["tune"]],[495,"Stage 2",["dp","intake","cp","plugs"]],[545,"Stage 2+",["fmic","dct","hub"]],
          [600,"Stock-Turbo E85",["flex","lpfp","coils"]],[650,"Upgraded Turbos",["tw","cust","oil"]],[730,"Upgraded Turbos E85 + PI",["pi","hpfp"]]]},
- {id:"s58",code:"S58",gen:"G8x · 2021+",name:"M3 / M4 / M2",models:"G80 M3, G82 M4, G87 M2, X3 M / X4 M",fac:503,stock:450,trans:"ZF 8-speed M",tlim:720,
+ {id:"s58",code:"S58",gen:"G8x · 2021+",name:"M3 / M4 / M2",models:"G80 M3, G82 M4, G87 M2, X3 M / X4 M",fac:503,stock:450,trans:"ZF 8-speed M",tlim:720,tq:[560,620,675,720,800],stq:443,tx:{name:"ZF 8HP76",warn:750,limit:850},turbo:"s58",
   tiers:[[540,"Stage 1",["tune","ecu"]],[590,"Stage 2",["dp","intake","fmic","plugs","tt"]],[660,"Stage 2 E50",["flex","lpfp"]],
          [730,"Stage 2 E85 + PI",["pi","coils"]],[900,"Upgraded Turbos",["tw","cust","oil","hpfp"]]]}];
 var MODES=[["daily","Daily driver","Reliable, CEL-free",'<path d="M4 15l2-5h12l2 5v3H4z"/><circle cx="8" cy="18" r="1.6"/><circle cx="16" cy="18" r="1.6"/>'],

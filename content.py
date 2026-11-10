@@ -467,6 +467,7 @@ def contact(ctx):
 </div></section>'''
 
 BUILD_FAQS = [
+ ("How accurate are the power numbers?", "They are estimates built from published tuner results and owner dyno sheets. Every dyno reads differently (a Dynojet and a Mustang dyno can be 10 to 15 percent apart), and fuel, weather and the condition of your car all move the number. We confirm real figures on your car."),
  ("How do you price a build?", "Every build is quoted after a pre-build health check, because condition, mileage and previous mods change the plan. Send us your build and we'll follow up with a written quote."),
  ("Why does the build add parts I didn't pick?", "Power needs support. Fueling, cooling, ignition and drivetrain limits are the usual reasons tuned cars fail, so the tool adds what your goal and use actually require."),
  ("What does the off-road / competition option change?", "It unlocks parts that remove or modify emissions equipment, such as catless downpipes. Those builds are for vehicles used off public roads only. They can't pass Massachusetts inspection and aren't legal on a road-registered car."),
@@ -499,6 +500,7 @@ def build_page(ctx):
 
 <section class="sec"><div class="wrap">
  <div class="sec-h"><b>03</b><h2>Set your power goal</h2><p>Drag the needle or jump to a stage</p></div>
+ <p class="estnote">Power figures are estimates based on published tuner and owner dyno results. Every dyno reads differently, and stock-turbo numbers vary the most. We confirm real numbers on your car.</p>
  <div class="power">
   <div class="gauge-card">
    <svg class="bx-gauge" viewBox="0 0 400 300" id="gauge">
@@ -523,7 +525,7 @@ def build_page(ctx):
     <path class="d-area" id="d-area"/><path class="d-stock" id="d-stock"/><path class="d-tgt" id="d-tgt"/>
    </svg>
    <div class="kpis"><div><b id="k1">+75%</b><span>Power gain</span></div><div><b id="k2">Stage 2+ E85</b><span>Build level</span></div><div><b id="k3">E85 / 93</b><span>Fuel</span></div></div>
-   <span class="illus">Illustrative curve from typical tuner results, not your car&#39;s dyno sheet</span>
+   <span class="illus">Illustrative curve. Every dyno reads differently.</span>
   </div>
  </div>
 </div></section>

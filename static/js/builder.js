@@ -35,15 +35,15 @@ function curve(peak,spoolLate){var pts=[];for(var rpm=2000;rpm<=7000;rpm+=125){v
 function path(pts,ymax,close){var d=pts.map(function(p,i){var x=56+(p[0]-2000)/5000*644,y=330-p[1]/ymax*300;return (i?"L":"M")+x.toFixed(1)+" "+y.toFixed(1)}).join(" ");return close?d+" L700 330 L56 330 Z":d}
 function build(){var p=plat(),idx=-1;for(var i=0;i<p.tiers.length;i++){if(p.tiers[i][0]>=S.hp){idx=i;break}}if(S.hp<=p.stock)idx=-1;
  var stops=[],have=[];for(var j=0;j<=idx;j++){var t=p.tiers[j],add=[];t[2].forEach(function(k){if(k==="dp"&&S.c)k="dpr";if(have.indexOf(k)<0){have.push(k);add.push(k)}});(t[3]||[]).forEach(function(k){var a=have.indexOf(k);if(a>=0)have.splice(a,1)});stops.push({n:t[1],hp:t[0],parts:add,drop:t[3]||[]})}
- var tier=idx>=0?p.tiers[idx]:null,tgt=tier?tier[0]:p.stock,sup=[];
- if(tier&&tgt>p.tlim)sup.push(p.dct?"dcc":"tb");
+ var tier=idx>=0?p.tiers[idx]:null,tgt=tier?tier[0]:p.stock,tq=tier?p.tq[idx]:p.stq,sup=[];
+ if(p.tx){if(tier&&tq>p.tx.limit*(S.m==="drag"?0.93:1))sup.push("tb")}else if(tier&&tgt>p.tlim)sup.push("dcc");
  if(S.m==="street")sup.push("pads");
  if(S.m==="track"){sup.push("pads","tires","align");if(have.indexOf("oil")<0&&tier)sup.push("oil");sup.push("tcool")}
  if(S.m==="drag"){sup.push("radials");if(tgt>p.stock*1.4)sup.push("axles","ds")}
  if(S.m==="show")sup.push("catback");
  if(S.c&&(S.m==="track"||S.m==="drag"))sup.push("harness");
  var all=have.concat(sup),lo=0,hi=0,hrs=2.5;all.forEach(function(k){var x=P[k];lo+=x[2]*0.82;hi+=x[2]*1.25;hrs+=x[3]});
- return {p:p,tier:tier,tgt:tgt,stops:stops,sup:sup,lo:lo+hrs*155*.9,hi:hi+hrs*155*1.15,hrs:hrs,have:have}}
+ return {p:p,tier:tier,tgt:tgt,tq:tq,stops:stops,sup:sup,lo:lo+hrs*155*.9,hi:hi+hrs*155*1.15,hrs:hrs,have:have}}
 function partHTML(k){var x=P[k],race=x[4];return '<div class="part'+(race?' race':'')+'"><i></i><div>'+x[0]+(race?'<span class="rt">OFF-ROAD ONLY</span>':'')+'<small>'+x[1]+'</small></div></div>'}
 function render(){var b=build(),p=b.p,max=gmax();
  document.querySelectorAll(".plat").forEach(function(e){e.classList.toggle("sel",e.dataset.id===S.p)});
@@ -55,7 +55,7 @@ function render(){var b=build(),p=b.p,max=gmax();
  $("needle").style.transform="rotate("+((A1-A0)*S.hp/max+A0+90)+"deg)";
  document.querySelectorAll(".g-mark").forEach(function(m){m.classList.toggle("hit",+m.dataset.hp<=b.tgt&&b.tier)});
  document.querySelectorAll("#stagechips button").forEach(function(c){c.classList.toggle("on",+c.dataset.hp===b.tgt)});
- $("hp").textContent=S.hp.toLocaleString();$("gain").textContent=S.hp>p.stock?"+"+(S.hp-p.stock)+" whp over stock":"Stock power";
+ $("hp").textContent=S.hp.toLocaleString();$("gain").textContent=(S.hp>p.stock?"+"+(S.hp-p.stock)+" whp over stock":"Stock power")+" · ~"+b.tq+" wtq";
  // dyno
  var step=Math.ceil(b.tgt/5/50)*50,ymax=step*6,big=b.have.indexOf("big")>=0||b.have.indexOf("tw")>=0||b.have.indexOf("hy")>=0;
  $("d-stock").setAttribute("d",path(curve(p.stock,false),ymax));$("d-tgt").setAttribute("d",path(curve(b.tgt,big),ymax));$("d-area").setAttribute("d",path(curve(b.tgt,big),ymax,true));
@@ -70,7 +70,7 @@ function render(){var b=build(),p=b.p,max=gmax();
  // summary
  var mname={};MODES.forEach(function(m){mname[m[0]]=m[1]});
  $("s-car").textContent=p.code+" "+p.gen.split(" · ")[0]+" · "+p.trans;$("s-stage").textContent=b.tier?b.tier[1]:"Stock";
- $("s-sub").textContent="~"+b.tgt+" whp · "+mname[S.m]+(S.c?" · Competition":"");
+ $("s-sub").textContent="~"+b.tgt+" whp / ~"+b.tq+" wtq · "+mname[S.m]+(S.c?" · Competition":"");
  var top=p.tiers[p.tiers.length-1][0];$("s-bar").style.width=(b.tgt/top*100)+"%";$("s-stockmark").style.left=(p.stock/top*100)+"%";
  $("s-stock").textContent="Stock "+p.stock;$("s-max").textContent="Max "+top.toLocaleString();
  $("psw").classList.toggle("on",S.price);
@@ -78,6 +78,11 @@ function render(){var b=build(),p=b.p,max=gmax();
  var f=[];if(b.have.indexOf("flex")>=0)f.push(["","Built around ethanol blends (E30 to E85). Flex fuel lets you run pump gas too, at lower power."]);
  if(S.c)f.push(["w","Competition build. Off-road use only, signed acknowledgment required."]);else if(b.tier)f.push(["","Street build: catted parts, tuned to stay free of warning lights."]);
  if(b.have.indexOf("hub")>=0)f.push(["w","S55 crank hub gets fixed before we add this torque."]);
+ if(p.tx&&b.tier){if(b.sup.indexOf("tb")>=0)f.push(["w","~"+b.tq+" wtq is past what the "+p.tx.name+" holds. Plan on a built transmission: Pure Drivetrain, Advanced Torque Solutions (ATS), or a Dodson pack for 1,200+ hp."]);
+  else if(b.tq>p.tx.warn)f.push(["w","~"+b.tq+" wtq is pushing the "+p.tx.name+". It needs to be healthy, serviced and tuned (xHP). Past ~"+p.tx.limit+" wtq it needs a built transmission."])}
+ var stockTurbo=b.have.indexOf("hy")<0&&b.have.indexOf("tw")<0&&b.have.indexOf("big")<0;
+ if(b.tier&&stockTurbo&&p.turbo==="b58"&&b.tgt>=p.stock*1.3)f.push(["w","Stock B58 turbo: we keep boost under ~30 psi. Past that it's in the danger zone, and a hybrid turbo is the right move."]);
+ if(b.tier&&stockTurbo&&p.turbo==="s58"&&b.tgt>=p.stock*1.3)f.push(["","S58 twin turbos are bigger from the factory, so they make more power at less boost. We keep boost within safe limits for your fuel."]);
  if(b.have.indexOf("built")>=0)f.push(["","Built-motor builds are quoted one-on-one. Our own B58 340i makes 1,300 hp."]);
  $("flags").innerHTML=f.map(function(x){return '<div class="flag '+x[0]+'">'+x[1]+'</div>'}).join("");
  var pr=$("prog").children;for(var k=0;k<4;k++)pr[k].classList.add("on");
@@ -87,7 +92,7 @@ function render(){var b=build(),p=b.p,max=gmax();
 var LAST=null;
 function sheet(){var b=LAST,p=b.p,mname={};MODES.forEach(function(m){mname[m[0]]=m[1]});
  var L=["AUTO ADDICT WORKS BUILD SHEET","Vehicle: "+(S.vinLabel||p.code+" "+p.name)+(S.vin?" (VIN "+S.vin+")":""),"Platform: "+p.code+" "+p.gen+" · "+p.trans,
-  "Goal: "+(b.tier?b.tier[1]+" ~"+b.tgt+" whp":"Stock")+" · "+mname[S.m]+(S.c?" · OFF-ROAD / COMPETITION BUILD":""),"","Build path:"];
+  "Goal: "+(b.tier?b.tier[1]+" ~"+b.tgt+" whp / ~"+b.tq+" wtq":"Stock")+" · "+mname[S.m]+(S.c?" · OFF-ROAD / COMPETITION BUILD":""),"","Build path:"];
  b.stops.forEach(function(s){L.push(" "+s.n+" (~"+s.hp+" whp): "+s.parts.map(function(k){return P[k][0]}).join(", "))});
  if(b.sup.length)L.push(" Supporting: "+b.sup.map(function(k){return P[k][0]}).join(", "));
  L.push("","Link: "+location.href);return L.join("\n")}
@@ -114,5 +119,6 @@ function decode(){var v=$("vin").value.trim().toUpperCase().replace(/[^A-Z0-9]/g
  }).catch(function(){vmsg("Couldn't decode that VIN right now. Pick your platform above instead.","err")})}
 $("vin-go").onclick=decode;$("vin").addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();decode()}});
 loadHash();setup();render();
+window.addEventListener("hashchange",function(){loadHash();setup();render()});
 
 })();
