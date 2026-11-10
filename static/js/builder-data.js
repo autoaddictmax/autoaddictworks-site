@@ -26,19 +26,19 @@ var PL=[
     (bootmod3, Precision Raceworks, Pure Turbos, ARM Motorsports, MODE, Garage Whifbitz) and forum dyno threads.
     Confirm against your own dyno history. */
  {id:"b58f",code:"B58",gen:"Gen 1 · 2016 to 2019",name:"340i / 440i / M240i",models:"F30 340i, F32 440i, F22 M240i, G30 540i",fac:320,stock:300,trans:"ZF 8-speed",tlim:600,
-  tiers:[[370,"Stage 1",["tune"]],[420,"Stage 2",["intake","dp","cp","plugs"]],[440,"Stage 2+",["fmic","tt"]],[470,"Stage 2+ E30",["flex","lpfp"]],
-         [530,"Stock-Turbo E85",["hpfp","coils"]],[600,"Hybrid Turbo",["hy","cust","oil"]],[700,"Hybrid Turbo E85 + PI",["pi"]],
+  tiers:[[370,"Stage 1",["tune"]],[410,"Stage 2",["intake","dp","cp","plugs"]],[430,"Stage 2+",["fmic","tt"]],[460,"Stage 2+ E30",["flex","lpfp"]],
+         [500,"Stock-Turbo E50",["hpfp","coils"]],[580,"Hybrid Turbo",["hy","cust","oil"]],[700,"Hybrid Turbo E85 + PI",["pi"]],
          [850,"Big Single",["big","rad","inj"],["hy"]],[1300,"Built Motor",["built"]]]},
- {id:"b58g",code:"B58",gen:"Gen 2 · 2020+",name:"M340i / M440i / M240i",models:"G20 M340i, G22 M440i, G42 M240i, Z4 M40i, X3 M40i",fac:382,stock:360,trans:"ZF 8-speed",tlim:600,
-  tiers:[[430,"Stage 1",["tune","ecu"]],[455,"Stage 2",["intake","dp","plugs"]],[480,"Stage 2+ E30",["fmic","tt","flex"]],
-         [520,"Stock-Turbo E85",["lpfp","hpfp","coils"]],[560,"Hybrid Turbo",["hy","cust","oil"]],[700,"Hybrid Turbo E85 + PI",["pi"]],
-         [850,"Big Single",["big","rad","inj"],["hy"]],[1200,"Built Motor",["built"]]]},
+ {id:"b58g",code:"B58",gen:"Gen 2 · 2020+",name:"M340i / M440i / M240i",models:"G20 M340i, G22 M440i, G42 M240i, Z4 M40i, X3 M40i",fac:382,stock:380,trans:"ZF 8-speed",tlim:600,
+  tiers:[[440,"Stage 1",["tune","ecu"]],[460,"Stage 2",["intake","dp","plugs"]],[475,"Stage 2 E30",["fmic","tt","flex"]],
+         [510,"Stock-Turbo E50",["lpfp","coils"]],[540,"Stock-Turbo E60 + PI",["pi"]],[580,"Hybrid Turbo",["hy","cust","oil"]],[650,"Hybrid Turbo E85",["hpfp"]],
+         [850,"Big Single",["big","rad","inj"],["hy"]],[1000,"Built Motor",["built"]]]},
  {id:"s55",code:"S55",gen:"F8x · 2015 to 2021",name:"M3 / M4 / M2C",models:"F80 M3, F82 M4, F87 M2 Competition",fac:425,stock:400,trans:"7-speed DCT",tlim:560,dct:1,
   tiers:[[450,"Stage 1",["tune"]],[495,"Stage 2",["dp","intake","cp","plugs"]],[545,"Stage 2+",["fmic","dct","hub"]],
          [600,"Stock-Turbo E85",["flex","lpfp","coils"]],[650,"Upgraded Turbos",["tw","cust","oil"]],[730,"Upgraded Turbos E85 + PI",["pi","hpfp"]]]},
- {id:"s58",code:"S58",gen:"G8x · 2021+",name:"M3 / M4 / M2",models:"G80 M3, G82 M4, G87 M2, X3 M / X4 M",fac:503,stock:470,trans:"ZF 8-speed M",tlim:720,
-  tiers:[[560,"Stage 1",["tune","ecu"]],[620,"Stage 2",["dp","intake","fmic","plugs","tt"]],[720,"Stage 2 E85",["flex","lpfp"]],
-         [760,"Stage 2 E85 + PI",["pi","coils"]],[900,"Upgraded Turbos",["tw","cust","oil","hpfp"]]]}];
+ {id:"s58",code:"S58",gen:"G8x · 2021+",name:"M3 / M4 / M2",models:"G80 M3, G82 M4, G87 M2, X3 M / X4 M",fac:503,stock:450,trans:"ZF 8-speed M",tlim:720,
+  tiers:[[540,"Stage 1",["tune","ecu"]],[590,"Stage 2",["dp","intake","fmic","plugs","tt"]],[660,"Stage 2 E50",["flex","lpfp"]],
+         [730,"Stage 2 E85 + PI",["pi","coils"]],[900,"Upgraded Turbos",["tw","cust","oil","hpfp"]]]}];
 var MODES=[["daily","Daily driver","Reliable, CEL-free",'<path d="M4 15l2-5h12l2 5v3H4z"/><circle cx="8" cy="18" r="1.6"/><circle cx="16" cy="18" r="1.6"/>'],
  ["street","Spirited street","Back roads & weekends",'<path d="M3 20c5-2 6-9 9-9s3 6 9 9"/><path d="M12 3v4"/>'],
  ["track","Track / HPDE","Heat & braking",'<path d="M4 4v16"/><path d="M4 4h12l-2 4 2 4H4"/>'],

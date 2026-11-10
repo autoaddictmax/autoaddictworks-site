@@ -2,7 +2,7 @@
 var P=AAW_B.P,PL=AAW_B.PL,MODES=AAW_B.MODES,VIN=AAW_B.VIN;
 var root=document.getElementById("builder");if(!root)return;
 var CAN_PRICE=!!(window.AAW&&window.AAW.builderShowPricing);
-var S={p:"b58f",m:"street",hp:470,c:false,price:false,vin:"",vinLabel:""};
+var S={p:"b58f",m:"street",hp:460,c:false,price:false,vin:"",vinLabel:""};
 var $=function(i){return document.getElementById(i)};
 function fmt(n){return "$"+(Math.round(n/100)*100).toLocaleString()}
 function plat(){return PL.filter(function(x){return x.id===S.p})[0]}
