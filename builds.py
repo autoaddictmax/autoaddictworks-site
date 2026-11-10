@@ -30,4 +30,26 @@ BUILDS = [
     gallery=[], timeline=[], dyno=None,
     builder_link="#p=b58f&m=drag&hp=1300",
   ),
+  dict(
+    slug="m2-72mm",
+    name="M2 72mm",  # placeholder title, confirm
+    tag="Customer build",
+    car="2025 BMW M2 (G87)",
+    engine="S58",
+    color=None,
+    power=None, power_note=None,   # NEED: power figure and fuel
+    fuel=None, trans=None, use=None,  # NEED: trans (manual/auto, built?), use
+    story=None,
+    mods={
+      "Power": ["Precision 72mm single turbo", "Hood dump"],
+      "Engine": ["Cam lock"],  # confirm meaning
+      "Chassis": ["Beadlock wheels"],
+      # NEED: confirm which of the 340i's mods carry over (built engine, built trans, fuel system, port injection, Reflex+, flex fuel, coilovers, drag radials)
+    },
+    tuning="Custom calibration by an independent tuning specialist.",
+    images=dict(card="/img/builds/m2-72mm-card.jpg", hero="/img/builds/m2-72mm-hero.jpg", og="/img/builds/m2-72mm-og.jpg"),
+    gallery=[], timeline=[], dyno=None,
+    owner_ok=False,  # NEED before publishing
+    builder_link="#p=s58&m=drag",
+  ),
 ]
