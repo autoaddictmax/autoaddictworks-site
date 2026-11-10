@@ -653,3 +653,9 @@ a.card:hover{background:linear-gradient(170deg,#25343A,#1A2528)}
 @media(max-width:640px){.cb-form{grid-template-columns:1fr}.cb{padding:48px 0}}
 .fin-callout{border:1px solid rgba(197,165,114,.5);background:linear-gradient(120deg,rgba(197,165,114,.14),rgba(197,165,114,.03));padding:16px 18px;border-radius:2px}
 .fin-callout strong{color:var(--accent)}
+.cb-form{grid-template-columns:1fr 1fr 1.2fr}
+.cb-form .cb-msg{grid-column:1/3}
+.cb-form .btn{grid-column:3}
+.cb-consent{grid-column:1/-1;margin:0;font-size:12px;line-height:1.5;color:var(--ink-muted)}
+@media(max-width:640px){.cb-form .cb-msg,.cb-form .btn{grid-column:auto}}
+@media(max-width:640px){.cb-form{grid-template-columns:1fr}}

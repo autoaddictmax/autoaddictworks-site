@@ -77,7 +77,9 @@ def callback(ctx, heading="Request a call back"):
 <label class="sr" for="cb-name">Name</label><input id="cb-name" name="name" placeholder="Name" autocomplete="name" required>
 <label class="sr" for="cb-phone">Phone</label><input id="cb-phone" name="phone" type="tel" placeholder="Phone" autocomplete="tel" required>
 <label class="sr" for="cb-vin">VIN (optional)</label><input id="cb-vin" name="vin" placeholder="VIN (optional)" maxlength="17" autocapitalize="characters" spellcheck="false">
+<label class="sr" for="cb-msg">What's going on? (optional)</label><input id="cb-msg" name="message" class="cb-msg" placeholder="What's going on? (optional)">
 <button class="btn btn-primary" type="submit">Call me back</button>
+<p class="cb-consent">By submitting, you agree we may call or text you at this number about your request. Msg and data rates may apply. Reply STOP to opt out.</p>
 <div class="form-status" role="status"></div>
 </form></div></section>'''
 
@@ -503,6 +505,7 @@ def contact(ctx):
 <p class="note">We'll only use your details to respond to this request.</p>
 
 <p class="muted small" style="margin-top:12px">Bringing your own parts? We're happy to install them. Our warranty covers parts we supply, so customer-supplied parts and the labor tied to them aren't covered.</p>
+<p class="muted small" style="margin-top:4px">By submitting, you agree we may call, text or email you about your request. Msg and data rates may apply. Reply STOP to opt out of texts.</p>
 </form>
 <aside class="panel"><h3>Shop</h3>
 <address class="nap"><strong>{e(CFG["name"])}</strong><br>{e(A["street"])}<br>{e(A["city"])}, {A["region"]} {A["postal"]}</address>
