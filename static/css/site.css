@@ -640,3 +640,14 @@ a.card:hover{background:linear-gradient(170deg,#25343A,#1A2528)}
 .bx .part .rt.tpt{background:rgba(201,169,110,.14);color:var(--gold,#C9A96E);border-color:rgba(201,169,110,.4)}
 .bx .plat .stock span{white-space:nowrap}
 .bx .plat .stock{gap:10px;flex-wrap:wrap}
+/* call back band */
+.cb{padding:64px 0;border-top:1px solid var(--border);background:radial-gradient(60% 140% at 100% 0%,rgba(197,165,114,.10),transparent 60%),var(--surface-deep)}
+.cb-in{display:grid;grid-template-columns:1fr 1.25fr;gap:48px;align-items:center}
+.cb-copy h2{margin:12px 0 10px}.cb-copy p{color:var(--ink-muted);margin:0}
+.cb-form{display:grid;grid-template-columns:1fr 1fr 1.2fr auto;gap:12px;align-items:stretch}
+.cb-form input{min-height:52px;background:var(--surface-raised);border:1px solid var(--border);color:var(--ink);padding:0 16px;font:inherit;font-size:16px;border-radius:2px;width:100%}
+.cb-form input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.cb-form .btn{white-space:nowrap}
+.cb-form .form-status{grid-column:1/-1}
+@media(max-width:1000px){.cb-in{grid-template-columns:1fr;gap:24px}}
+@media(max-width:640px){.cb-form{grid-template-columns:1fr}.cb{padding:48px 0}}

@@ -70,6 +70,17 @@ def page_hero(ctx, eyebrow, h1, lede, crumbs, ctas=True):
     return f'''<section class="page-hero" style="--bg:url({ctx.L(photo('page'))})"><div class="wrap">{cr}<span class="eyebrow line">{e(eyebrow)}</span>
 <h1>{h1}</h1><p class="lede">{lede}</p>{btns}</div></section>'''
 
+def callback(ctx, heading="Request a call back"):
+    return f'''<section class="cb"><div class="wrap cb-in">
+<div class="cb-copy"><span class="eyebrow line">Quick question?</span><h2>{heading}</h2><p>Leave your number and we'll call you back during shop hours. Add your VIN and we can look up your car before we call.</p></div>
+<form class="cb-form lead-form" novalidate data-kind="Call back request">
+<label class="sr" for="cb-name">Name</label><input id="cb-name" name="name" placeholder="Name" autocomplete="name" required>
+<label class="sr" for="cb-phone">Phone</label><input id="cb-phone" name="phone" type="tel" placeholder="Phone" autocomplete="tel" required>
+<label class="sr" for="cb-vin">VIN (optional)</label><input id="cb-vin" name="vin" placeholder="VIN (optional)" maxlength="17" autocapitalize="characters" spellcheck="false">
+<button class="btn btn-primary" type="submit">Call me back</button>
+<div class="form-status" role="status"></div>
+</form></div></section>'''
+
 def faq_block(faqs, title="Common questions"):
     items = "".join(f"<details><summary>{e(q)}</summary><p>{a}</p></details>" for q, a in faqs)
     return f'<section class="section"><div class="wrap"><div class="head"><span class="eyebrow">FAQ</span><h2>{title}</h2></div><div class="faq">{items}</div></div></section>'
@@ -196,6 +207,7 @@ def home(ctx):
 
 <section class="section tight"><div class="wrap">{marques(ctx)}</div></section>
 
+{callback(ctx)}
 {faq_block(HOME_FAQS)}
 
 <section class="section tight"><div class="wrap"><p class="muted small" style="max-width:900px">
@@ -329,7 +341,7 @@ def make_page(key):
 <h2>{m["name"]} services</h2><ul>{"".join(f"<li>{s}</li>" for s in m["services"])}</ul>
 <p>Want more from your {m["name"]}? <a href="{ctx.L("/build/")}">Build your car</a> and see what your power goal takes.</p>
 </div>{side_panel(ctx, f"Book your {m['name']}")}</div></section>
-{faq_block(m["faqs"], f"{m['name']} questions")}'''
+{callback(ctx)}{faq_block(m["faqs"], f"{m['name']} questions")}'''
     return dict(title=m["title"], desc=m["desc"], crumbs=[("Home", "/"), (f"{m['name']} Repair", m["path"])],
                 faqs=m["faqs"], service=f"{m['name']} repair and service", body=body, priority="0.9")
 
@@ -435,7 +447,7 @@ def service_page(path):
                          [("Home", "/"), ("Services", "/services/"), (s["name"], path)]) + f'''
 <section class="section"><div class="wrap split"><div class="prose">{sections}
 <h2>Makes we service</h2><p>{" · ".join(f'<a href="{ctx.L(p)}">{e(n)}</a>' for n, p in MAKES_NAV)}</p></div>
-{side_panel(ctx)}</div></section>{faq_block(s["faqs"])}'''
+{side_panel(ctx)}</div></section>{callback(ctx)}{faq_block(s["faqs"])}'''
     return dict(title=s["title"], desc=s["desc"], crumbs=[("Home", "/"), ("Services", "/services/"), (s["name"], path)],
                 faqs=s["faqs"], service=s["name"], body=body, priority="0.8")
 
@@ -478,7 +490,7 @@ def contact(ctx):
     return page_hero(ctx, "Contact", "Book Service or Ask a Question", "Tell us about your car and what's going on. We'll reply with next steps, or call us directly.",
                      [("Home", "/"), ("Contact", "/contact/")], ctas=False) + f'''
 <section class="section"><div class="wrap split">
-<form class="form" id="contact-form" novalidate>
+<form class="form lead-form" id="contact-form" novalidate data-kind="Service request">
 <div id="build-summary-wrap" hidden><label for="build">Your build</label><textarea id="build" name="build" readonly style="min-height:180px"></textarea></div>
 <div class="row"><div><label for="name">Name</label><input id="name" name="name" autocomplete="name" required></div>
 <div><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required></div></div>
