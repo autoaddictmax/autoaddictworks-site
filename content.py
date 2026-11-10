@@ -422,11 +422,11 @@ def build_profile(b):
 <h2 class="bh">Build sheet</h2>
 <div class="mgrid">{mods}</div>
 <div class="btune">{ICON["check"]}<p><b>Tuning</b>{e(b["tuning"])} We handled the hardware, installation and supporting work.</p></div>
-<div class="btn-row" style="margin-top:28px"><a class="btn btn-primary" href="{ctx.L("/build/")}{b.get("builder_link","")}">Start from this build {ICON["arrow"]}</a><a class="btn btn-ghost" href="{ctx.L("/builds/")}">All builds</a></div>
+<div class="btn-row" style="margin-top:28px"><a class="btn btn-primary" href="{ctx.L("/build/")}{b.get("builder_link") or ""}">{"Start from this build" if b.get("builder_link") else "Plan your build"} {ICON["arrow"]}</a><a class="btn btn-ghost" href="{ctx.L("/builds/")}">All builds</a></div>
 </div></div></section>
 {more}'''
     return dict(title=(f'{b["name"]}: {b["car"].split(" (")[0]}, {b["power"]} | Auto Addict Works' if b["name"] not in b["car"] else f'{b["name"]} Build, {b["power"]} | Auto Addict Works')[:70],
-                desc=f'{b["car"]} built by Auto Addict Works in Marlborough, MA: {b["power"]} {b["power_note"] or ""}, {b.get("turbo","")} turbo, built engine and transmission. Full build sheet.',
+                desc=f'{b["car"]} built by Auto Addict Works in Marlborough, MA: {b["power"]}{(" " + b["power_note"]) if b.get("power_note") else ""}, {b.get("turbo","")} turbo. Full build sheet with every mod.',
                 crumbs=crumbs, body=body, og=b["images"]["og"], priority="0.6")
 
 # ------------------------------------------------------------------ services
