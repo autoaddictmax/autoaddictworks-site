@@ -1,0 +1,33 @@
+"""Builds showcase data. Page goes live once there are at least two builds.
+Rules: no tuner names (tuning credited to an independent specialist), plates blurred,
+owner OK required for customer cars. Sections with no data are hidden on the page."""
+
+BUILDS = [
+  dict(
+    slug="project-1300",
+    name="Project 1300",
+    tag="Shop car",
+    car="2017 BMW 340i xDrive (F30)",
+    engine="B58 Gen 1",
+    color="Satin black wrap",
+    power="1,300 hp", power_note="on E85",
+    fuel="E85 (flex fuel)",
+    trans="Built 8-speed automatic",
+    use="Drag",
+    story="Our own 340i, built in this shop with the same process we use on customer cars: health check first, fueling before boost, and a drivetrain that can hold the power.",
+    mods={
+      "Power": ["Turbosmart 76mm turbo", "RK Autowerks intake manifold"],
+      "Engine": ["Built engine"],
+      "Fueling": ["Upgraded low-pressure fuel pump", "Upgraded injectors", "Return-style fuel system",
+                  "Port injection", "Reflex+ controller", "Flex fuel (E85)"],
+      "Drivetrain": ["Built transmission"],
+      "Chassis": ["Coilovers", "Drag radials"],
+      "Exterior": ["Satin black wrap by Auto Addict Car Care"],
+    },
+    tuning="Custom flex fuel calibration by an independent tuning specialist.",
+    images=dict(card="/img/builds/project-1300-card.jpg", hero="/img/builds/project-1300-hero.jpg",
+                og="/img/builds/project-1300-og.jpg"),
+    gallery=[], timeline=[], dyno=None,
+    builder_link="#p=b58f&m=drag&hp=1300",
+  ),
+]
