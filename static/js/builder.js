@@ -85,7 +85,7 @@ function render(){var b=build(),p=b.p,max=gmax();
  var stockTurbo=b.have.indexOf("hy")<0&&b.have.indexOf("tw")<0&&b.have.indexOf("big")<0;
  if(b.tier&&stockTurbo&&p.turbo==="b58"&&b.tgt>=p.stock*1.3)f.push(["w","Stock B58 turbo: boost should stay under ~30 psi. Past that it's in the danger zone, and a hybrid turbo is the right move."]);
  if(b.tier&&stockTurbo&&p.turbo==="s58"&&b.tgt>=p.stock*1.3)f.push(["","S58 twin turbos are bigger from the factory, so they make more power at less boost. Your tuner sets safe boost limits for your fuel."]);
- if(b.have.indexOf("built")>=0)f.push(["","Built-motor builds are quoted one-on-one. Our own B58 340i makes 1,300 hp."]);
+ if(b.have.indexOf("built")>=0)f.push(["","Built-motor builds are quoted one-on-one. Built engines and transmissions come from specialist builders; we handle installation and supporting work. Our own B58 340i makes 1,300 hp."]);
  $("flags").innerHTML=f.map(function(x){return '<div class="flag '+x[0]+'">'+x[1]+'</div>'}).join("");
  var pr=$("prog").children;for(var k=0;k<4;k++)pr[k].classList.add("on");
  var mb=$("mbar");mb.hidden=false;$("mbar-t").textContent=(b.tier?b.tier[1]:"Stock")+" · ~"+b.tgt+" whp";

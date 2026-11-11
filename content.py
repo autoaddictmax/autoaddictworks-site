@@ -503,7 +503,7 @@ SERVICES = {
    ("Done right the first time", "<p>Big jobs are where shortcuts hurt. We replace the related wear items while we're in there, and tell you which ones are optional, so you aren't paying the same labor twice.</p>"),
   ],
   faqs=[("Is my oil leak worth fixing?", "Often, yes. Leaking oil on European engines frequently lands on exhaust parts or rots the serpentine belt and rubber hoses. We'll show you where it's coming from and what it's affecting."),
-        ("Do you rebuild engines?", "For performance builds, yes: forged internals as part of a build plan. For stock engines we'll give you honest repair-versus-replace numbers.")]),
+        ("Do you rebuild engines or transmissions?", "No. We don't build engines or transmissions in-house. When a build calls for a built engine or transmission, it comes from a specialist builder and we handle the removal, installation and supporting work. For stock engines we'll give you honest repair-versus-replace numbers.")]),
  "/services/brakes-suspension/": dict(name="Brakes, Suspension & Steering",
   title="European Brakes & Suspension Repair | Marlborough, MA",
   desc="Brakes, control arms, bushings, air suspension, coilovers and alignment for BMW, Audi, VW and Mercedes in Marlborough, MA.",
@@ -526,7 +526,7 @@ SERVICES = {
    ("Hardware is ours, tuning is theirs", "<p>We plan the build and install the parts. Software tuning is done by independent tuning specialists, and you work with the tuner directly on the calibration. Keeping those roles separate means each part of the build is handled by the people who do it every day.</p>"),
    ("Built right, not cheap", "<p>More power always costs more than the parts that make it. A proper build includes the fueling, cooling, drivetrain and brakes to support it, plus a healthy engine to start with. We'll be straight with you about cost and risk before anything is ordered. If the goal is the cheapest way to more boost, we're not the right shop; if you want it done properly, we'd love to build it.</p>"),
    ("Plan your build", "<p>Use our <a href=\"/build/\">Build Your Car</a> tool to pick your car, set a power goal and see the parts and supporting mods it takes with a ballpark price. Every build starts with a health check, compression or leak-down, a full scan and a look at known weak points, because power on a tired engine is money wasted.</p>"),
-   ("What we do", ticks(["Intakes, charge pipes, intercoolers and heat exchangers","Downpipes and exhaust","Fueling: port injection, low-pressure fuel pumps, injectors and flex-fuel/E85","Hybrid and big-single turbo upgrades","Built transmissions, clutches, axles and driveshafts","Oil and transmission coolers","Brakes, suspension and tires to match the power"])),
+   ("What we do", ticks(["Intakes, charge pipes, intercoolers and heat exchangers","Downpipes and exhaust","Fueling: port injection, low-pressure fuel pumps, injectors and flex-fuel/E85","Hybrid and big-single turbo upgrades","Installing built transmissions from specialist builders, plus clutches, axles and driveshafts","Oil and transmission coolers","Brakes, suspension and tires to match the power"])),
    ("Flexible financing", "<p class=\"fin-callout\"><strong>Finance your build.</strong> Flexible terms available. Ask when you send your build.</p><p>Builds can be financed with flexible terms, so you can do it right the first time instead of cutting corners on supporting mods. Ask about financing when you send your build.</p>"),
    ("Street, track or competition", "<p>Street builds stay emissions-compliant with catted parts. If you're building a dedicated off-road or competition vehicle, tell us. The build tool has a competition option, and we'll talk through what that means for registration and inspection.</p>"),
   ],
@@ -642,7 +642,7 @@ def build_page(ctx):
 </div></section>
 
 <section class="sec"><div class="wrap">
- <div class="sec-h"><b>01</b><h2>Choose your platform</h2><p>BMW turbo platforms we build in-house</p></div>
+ <div class="sec-h"><b>01</b><h2>Choose your platform</h2><p>BMW turbo platforms we plan and install builds on</p></div>
  <div class="plats" id="plats"></div>
  <div class="vinbar"><span>Not sure? Decode your VIN</span><input id="vin" placeholder="17-character VIN" maxlength="17" autocomplete="off" spellcheck="false" aria-label="VIN"><button class="btn" id="vin-go" type="button">Decode</button></div><div class="vinmsg" id="vin-msg" aria-live="polite"></div>
 </div></section>
