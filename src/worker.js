@@ -39,7 +39,7 @@ async function handleLead(request, env) {
   lead.first_name = parts[0];
   lead.last_name = parts.slice(1).join(" ");
   lead.phone = "+" + (digits.length === 10 ? "1" + digits : digits);
-  lead.source = "website";
+  lead.source = "Auto Addict Works Website";
   if (!env.GHL_WEBHOOK_URL) return json({ ok: false, error: "not configured" }, 503);
   const r = await fetch(env.GHL_WEBHOOK_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(lead) });
   return r.ok ? json({ ok: true }) : json({ ok: false, error: "upstream " + r.status }, 502);
