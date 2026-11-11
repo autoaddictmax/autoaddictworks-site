@@ -4,17 +4,17 @@
    tx = automatic transmission torque zones (warn = pushing it, limit = needs a built trans). Edit freely. */
 window.AAW_B=(function(){
 
-var P={pig:["Engine tune (piggyback)","Gen 3 flash support is still limited, so piggyback units are common",0,0,0,1],
-tune:["Engine tune","Matched to your hardware and fuel",0,0,0,1],ecu:["ECU unlock (if required)","Newer ECUs need a bench unlock before tuning",0,0,0,1],
+var P={pig:["Engine tune, piggyback (independent tuner)","Gen 3 flash support is still limited, so piggyback units are common",0,0,0,1],
+tune:["Engine tune (independent tuner)","Matched to your hardware and fuel",0,0,0,1],ecu:["ECU unlock (if required)","Newer ECUs need a bench unlock before tuning",0,0,0,1],
 intake:["High-flow intake","Lower intake temps",420,.8],cp:["Aluminum charge pipe","Factory plastic pipe fails under boost",300,1],
 dp:["Catted downpipe","Big flow gain, keeps the cats",1400,3],dpr:["Catless downpipe","Max flow, competition only",750,3,1],
 fmic:["Upgraded intercooler / heat exchanger","e.g. CSF or Wagner, holds charge temps down",1050,3],plugs:["Colder spark plugs","Stops misfires at higher boost",190,1],
-coils:["Upgraded ignition coils","Stronger spark on E85",400,.5],tt:["Transmission tune","Raises torque limits, sharper shifts",0,0,0,1],
-dct:["DCT tune","Raises clutch clamping and torque limits",0,0,0,1],flex:["Flex-fuel kit","Run E85 blends or pump gas",600,1.5],
+coils:["Upgraded ignition coils","Stronger spark on E85",400,.5],tt:["Transmission tune (independent tuner)","Raises torque limits, sharper shifts",0,0,0,1],
+dct:["DCT tune (independent tuner)","Raises clutch clamping and torque limits",0,0,0,1],flex:["Flex-fuel kit","Run E85 blends or pump gas",600,1.5],
 lpfp:["Low-pressure fuel pump","e.g. Spool or Fuel-It, keeps up with ethanol",680,2.5],pi:["Port injection kit","e.g. Precision Raceworks PI, needed past DI fueling limits",2100,6],
 hpfp:["Upgraded HPFP","e.g. Dorch Engineering, more direct-injection fuel",1450,3],hy:["Hybrid turbo","e.g. Pure Turbos Pure800, factory fitment",4100,10],
 tw:["Upgraded turbos","e.g. Pure Turbos Stage 2, stock turbos are maxed",7000,18],big:["Big single turbo kit","Manifold, turbo, gate and piping",10200,25],
-cust:["Custom tune","Calibrated to your exact setup",0,0,0,1],oil:["Oil cooler","Sustained boost and track heat",900,4],
+cust:["Custom tune (independent tuner)","Calibrated to your exact setup",0,0,0,1],oil:["Oil cooler","Sustained boost and track heat",900,4],
 rad:["Upgraded radiator","More heat to reject",780,3],inj:["Upgraded injectors","Fuel for big-turbo power",1400,4],
 built:["Built engine","Forged rods and pistons",14500,40],hub:["Crank hub fix","Pinned or keyed hub before E85-level torque",650,8],
 tb:["Built transmission","Pure Drivetrain, Advanced Torque Solutions (ATS), or a Dodson pack for 1,200+ hp builds",6500,18],dcc:["DCT clutch packs","Stock DCT clutches slip past this torque",4000,14],

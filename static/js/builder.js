@@ -97,6 +97,7 @@ function sheet(){var b=LAST,p=b.p,mname={};MODES.forEach(function(m){mname[m[0]]
   "Goal: "+(b.tier?b.tier[1]+" ~"+b.tgt+" whp / ~"+b.tq+" wtq":"Stock")+" · "+mname[S.m]+(S.c?" · OFF-ROAD / COMPETITION BUILD":""),"","Build path:"];
  b.stops.forEach(function(s){L.push(" "+s.n+" (~"+s.hp+" whp): "+s.parts.map(function(k){return P[k][0]}).join(", "))});
  if(b.sup.length)L.push(" Supporting: "+b.sup.map(function(k){return P[k][0]}).join(", "));
+ L.push("","Tuning is handled by an independent tuning specialist, not by Auto Addict Works.");
  L.push("","Link: "+location.href);return L.join("\n")}
 function copy(t,btn,label){(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){if(btn){var o=btn.textContent;btn.textContent=label||"Copied ✓";setTimeout(function(){btn.textContent=o},1800)}}).catch(function(){window.prompt("Copy this:",t)})}
 $("r-copy").onclick=function(){copy(sheet(),this)};
