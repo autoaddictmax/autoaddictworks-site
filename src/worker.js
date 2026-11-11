@@ -34,6 +34,8 @@ async function handleLead(request, env) {
   if (!lead.message && !lead.build) return json({ ok: false, error: "message required" }, 400);
   if (!lead.vehicle) return json({ ok: false, error: "vehicle required" }, 400);
   if (lead.type === "Service request" && !lead.email) return json({ ok: false, error: "email required" }, 400);
+  // Fill "Service" so the notification never shows a blank line.
+  if (!lead.reason) lead.reason = lead.build ? "Performance build" : lead.type === "Call back request" ? "Call back" : "General question";
   const digits = lead.phone.replace(/\D/g, "");
   if (digits.length < 10 || digits.length > 11) return json({ ok: false, error: "phone" }, 400);
   const parts = lead.name.split(/\s+/);
