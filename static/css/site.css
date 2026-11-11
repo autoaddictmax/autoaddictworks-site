@@ -744,3 +744,4 @@ a.card:hover{background:linear-gradient(170deg,#25343A,#1A2528)}
 .cb-form .cb-msg{grid-column:2/4}
 .cb-form .btn{grid-column:1/-1;justify-self:start}
 @media(max-width:640px){.cb-form{grid-template-columns:1fr}.cb-form .cb-msg,.cb-form .btn{grid-column:auto}}
+.page-hero.has-photo{border-bottom:0}
