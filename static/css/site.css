@@ -744,3 +744,9 @@ a.card:hover{background:linear-gradient(170deg,#25343A,#1A2528)}
 .cb-form .cb-msg{grid-column:2/4}
 .cb-form .btn{grid-column:1/-1;justify-self:start}
 @media(max-width:640px){.cb-form{grid-template-columns:1fr}.cb-form .cb-msg,.cb-form .btn{grid-column:auto}}
+/* approach: keep the full-width band, but line its content up with the page column on wide screens */
+@media (min-width:901px){
+ .approach-img.art .ista-mock{left:max(12%,calc((100vw - var(--wrap))/2 + 24px));width:min(60%,560px)}
+ .approach-copy{padding-right:max(8%,calc((100vw - var(--wrap))/2 + 24px));max-width:none}
+ .approach-copy > *{max-width:640px}
+}
