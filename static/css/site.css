@@ -749,11 +749,10 @@ a.card:hover{background:linear-gradient(170deg,#25343A,#1A2528)}
 .ptile{border:0}
 .ptile::after{content:"";position:absolute;inset:0;z-index:2;border:1px solid rgba(197,165,114,.2);pointer-events:none;transition:border-color .25s}
 .ptile:hover::after{border-color:var(--accent)}
-/* header logo: emblem + live text so the tagline stays readable */
-.brand{display:inline-flex;align-items:center;gap:14px;text-decoration:none}
+/* header logo: emblem + live text, sized close to the original lockup */
+.brand{display:inline-flex;align-items:center;gap:12px;text-decoration:none}
 .brand img.brand-mark{height:62px;width:62px}
-.brand-txt{display:flex;flex-direction:column;gap:5px;line-height:1}
-.brand-txt b{font:700 19px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
-.brand-txt small{font:600 11px/1 var(--display);letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
-@media (max-width:980px){.brand img.brand-mark{height:46px;width:46px}.brand{gap:10px}.brand-txt b{font-size:15px}.brand-txt small{font-size:9.5px;letter-spacing:.18em}}
-@media (max-width:360px){.brand-txt small{display:none}}
+.brand-txt{display:flex;flex-direction:column;gap:6px;line-height:1}
+.brand-txt b{font:600 14px/1.15 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.brand-txt small{font:600 7.5px/1 var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+@media (max-width:980px){.brand img.brand-mark{height:48px;width:48px}.brand{gap:10px}.brand-txt b{font-size:12.5px}.brand-txt small{font-size:6.5px}}
