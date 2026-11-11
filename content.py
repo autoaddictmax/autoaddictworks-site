@@ -243,7 +243,7 @@ MAKES = {
   desc="BMW specialist in Marlborough, MA. Factory ISTA diagnostics, coding and programming, genuine parts, maintenance, repair and performance for every BMW.",
   h1="BMW Repair &amp; Service in Marlborough, MA",
   lede="BMW is what we do first and know best. Factory ISTA diagnostics, coding and programming, genuine and OE parts, and a team that builds BMWs for fun.",
-  intro="From an F30 328i commuter to a G80 M3, we service and repair the full BMW lineup (2, 3, 4, 5, 7 and 8 Series, X models, Z4, i-models and M cars) plus MINI. Because we run ISTA, BMW's own diagnostic and programming software, we can follow the same guided test plans, register batteries, code retrofits and update module software the way the dealer does.",
+  intro="From an E90 328i or E92 M3 to an F30 commuter or a new G80 M3, we service and repair E, F and G chassis BMWs across the full lineup (2, 3, 4, 5, 7 and 8 Series, X models, Z4, i-models and M cars) plus MINI. Because we run ISTA, BMW's own diagnostic and programming software, we can follow the same guided test plans, register batteries, code retrofits and update module software the way the dealer does.",
   issues=[
    "<strong>Oil leaks:</strong> oil filter housing gasket, valve cover gasket and oil pan gasket on N20, N52, N54, N55 and B58 engines.",
    "<strong>Cooling system:</strong> electric water pumps, thermostats, expansion tanks and plastic coolant pipes.",
