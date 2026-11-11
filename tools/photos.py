@@ -67,6 +67,7 @@ def main():
             reg = im.crop(box); im.paste(reg.resize((5, 3)).resize(reg.size).filter(ImageFilter.GaussianBlur(10)), box)
         fx, fy = c.get("focus", [0.5, 0.5])
         d, m = SIZES[kind(slot)]
+        if c.get("size"): d = tuple(c["size"])  # optional per-photo output size, e.g. a landscape tile
         crop_to(im, *d, fx, fy, c.get("zoom", 1.0)).save(os.path.join(OUT, f"{slot}.jpg"), quality=72, optimize=True, progressive=True)
         if m:
             mf = c.get("focus_m", [fx, fy])
