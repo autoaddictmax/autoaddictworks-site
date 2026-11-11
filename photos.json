@@ -114,5 +114,17 @@
     ],
     "bright": 0.95,
     "tone": 0.12
+  },
+  "diagnostics": {
+    "src": "ecu-bench.jpg",
+    "size": [
+      1200,
+      900
+    ],
+    "focus": [
+      0.5,
+      0.47
+    ],
+    "zoom": 1.0
   }
 }
