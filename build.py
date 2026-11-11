@@ -90,7 +90,7 @@ def header(ctx):
     sales = f'<a href="{L("/vehicle-sales/")}"{cur("/vehicle-sales/")}>Vehicle Sales</a>' if CFG.get("showVehicleSales") else ""
     return f'''<a class="skip" href="#main">Skip to content</a>
 <header class="site-header"><div class="wrap">
-<a class="brand" href="{L('/')}" aria-label="{esc(CFG['name'])} home"><img src="{L('/img/logo-horizontal.svg')}" alt="{esc(CFG['name'])}, {esc(CFG['tagline'])}" width="252" height="50"></a>
+<a class="brand" href="{L('/')}" aria-label="{esc(CFG['name'])} home"><img class="brand-mark" src="{L('/img/emblem-gold.svg')}" alt="" width="60" height="60"><span class="brand-txt"><b>Auto Addict Works</b><small>European Vehicle Specialists</small></span></a>
 <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
 <nav class="nav" id="nav" aria-label="Main">
 <a href="{L('/')}"{' aria-current="page"' if ctx.path == "/" else ""}>Home</a>
