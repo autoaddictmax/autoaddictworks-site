@@ -103,6 +103,32 @@ _ALL = [
     gallery=[], timeline=[], dyno=None,
     builder_link="#p=s58&hp=900",
   ),
+  dict(
+    slug="2022-bmw-m4",
+    name="2022 BMW M4 Competition",
+    tag="Customer build",
+    car="2022 BMW M4 Competition (G82)",
+    engine="S58",
+    color=None,
+    power="850 hp", power_note=None,
+    fuel=None,
+    trans="Stock 8-speed automatic",
+    turbo="Precision 68mm single",
+    owner=("@sherpa.matt", "https://www.instagram.com/sherpa.matt/"),
+    story="A 2022 M4 Competition on a stock engine and stock transmission, converted to a single 68mm Precision turbo with a full fuel system, Opus carbon ceramic brakes and Nitron suspension.",
+    mods={
+      "Power": ["Precision 68mm single turbo conversion", "Opus titanium exhaust"],
+      "Engine": ["Stock S58"],
+      "Fueling": ["AFS800 fuel kit", "Port injection"],
+      "Drivetrain": ["Stock 8-speed automatic"],
+      "Brakes": ["Opus carbon ceramic brakes"],
+      "Chassis": ["Nitron suspension"],
+    },
+    tuning="Custom calibration by an independent tuning specialist.",
+    images=dict(card="/img/builds/2022-bmw-m4-card.jpg", hero="/img/builds/2022-bmw-m4-hero.jpg", og="/img/builds/2022-bmw-m4-og.jpg"),
+    gallery=[], timeline=[], dyno=None,
+    builder_link="#p=s58&hp=850",
+  ),
 ]
 
 BUILDS = sorted([x for x in _ALL if not x.get("draft")], key=lambda x: -int(x["power"].split()[0].replace(",", "")))  # highest power first
