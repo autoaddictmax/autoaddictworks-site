@@ -604,7 +604,8 @@ def contact(ctx):
 <div><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required></div></div>
 <div class="row"><div><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email"></div>
 <div><label for="vehicle">Year, make &amp; model</label><input id="vehicle" name="vehicle" placeholder="e.g. 2019 BMW 340i"></div></div>
-<div><label for="reason">What can we help with?</label><select id="reason" name="reason"><option>Maintenance / service</option><option>Diagnosis / warning light</option><option>Repair</option><option>Performance build</option><option>Pre-purchase inspection</option><option>Something else</option></select></div>
+<div class="row"><div><label for="vin">VIN <span class="muted">(optional)</span></label><input id="vin" name="vin" maxlength="17" autocapitalize="characters" spellcheck="false" placeholder="17 characters, on the windshield or door jamb"></div>
+<div><label for="reason">What can we help with?</label><select id="reason" name="reason"><option>Maintenance / service</option><option>Diagnosis / warning light</option><option>Repair</option><option>Performance build</option><option>Pre-purchase inspection</option><option>Something else</option></select></div></div>
 <div><label for="msg">What's going on?</label><textarea id="msg" name="message" placeholder="Symptoms, warning lights, mileage, preferred drop-off day…" required></textarea></div>
 <div class="form-status" id="form-status" role="status"></div>
 <div><button class="btn btn-primary" type="submit">Send Request</button></div>
