@@ -187,6 +187,7 @@ def home(ctx):
 <img class="medal" src="{L("/img/emblem-gold.svg")}" alt="" width="520" height="520">
 <div class="chip-ista chip-warr">{ICON["check"]}<span>{WARRANTY}<br><small>On parts we supply</small></span></div>
 <div class="chip-ista">{ICON["diag"]}<span>BMW ISTA<br><small>Factory diagnostics</small></span></div>
+<div class="chip-ista chip-oem">{ICON["check"]}<span>Genuine &amp; OEM parts<br><small>No mystery parts</small></span></div>
 </div></div></section>
 
 <section class="section"><div class="wrap">
