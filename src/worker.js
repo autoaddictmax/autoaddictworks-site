@@ -32,7 +32,8 @@ async function handleLead(request, env) {
   for (const k of FIELDS) lead[k] = d[k] != null ? String(d[k]).trim().slice(0, 4000) : "";
   if (!lead.name || !lead.phone) return json({ ok: false, error: "name and phone required" }, 400);
   if (!lead.message && !lead.build) return json({ ok: false, error: "message required" }, 400);
-  if (lead.type === "Service request" && (!lead.email || !lead.vehicle)) return json({ ok: false, error: "email and vehicle required" }, 400);
+  if (!lead.vehicle) return json({ ok: false, error: "vehicle required" }, 400);
+  if (lead.type === "Service request" && !lead.email) return json({ ok: false, error: "email required" }, 400);
   const digits = lead.phone.replace(/\D/g, "");
   if (digits.length < 10 || digits.length > 11) return json({ ok: false, error: "phone" }, 400);
   const parts = lead.name.split(/\s+/);

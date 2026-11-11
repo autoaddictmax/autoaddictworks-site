@@ -95,6 +95,7 @@ def callback(ctx, heading="Request a call back"):
 <input type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
 <label class="sr" for="cb-name">Name</label><input id="cb-name" name="name" placeholder="Name" autocomplete="name" required>
 <label class="sr" for="cb-phone">Phone</label><input id="cb-phone" name="phone" type="tel" placeholder="Phone" autocomplete="tel" required>
+<label class="sr" for="cb-vehicle">Year, make &amp; model</label><input id="cb-vehicle" name="vehicle" placeholder="Year, make &amp; model" required>
 <label class="sr" for="cb-vin">VIN (optional)</label><input id="cb-vin" name="vin" placeholder="VIN (optional)" maxlength="17" autocapitalize="characters" spellcheck="false">
 <label class="sr" for="cb-msg">What's going on?</label><input id="cb-msg" name="message" class="cb-msg" placeholder="What's going on? e.g. check engine light, oil leak" required>
 <button class="btn btn-primary" type="submit">Call me back</button>

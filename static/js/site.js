@@ -28,7 +28,8 @@
       var d={};new FormData(form).forEach(function(v,k){d[k]=String(v).trim()});
       if(!d.name||!d.phone){say('Please add your name and phone number.');return}
       if(!d.message&&!d.build){say("Please tell us what's going on with the car.");return}
-      if(form.id==='contact-form'){if(!d.email||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)){say('Please add a valid email address.');return}if(!d.vehicle){say('Please add the year, make and model.');return}}
+      if(!d.vehicle){say('Please add the year, make and model.');return}
+      if(form.id==='contact-form'&&(!d.email||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email))){say('Please add a valid email address.');return}
       if(d.vin&&!/^[A-HJ-NPR-Z0-9]{17}$/i.test(d.vin)){say('That VIN should be 17 characters. Leave it blank if you are not sure.');return}
       d.type=form.dataset.kind||'Website lead';d.source='website';d.page=location.pathname;d.submittedAt=new Date().toISOString();
       if(cfg.formEndpoint){
