@@ -126,5 +126,17 @@
       0.47
     ],
     "zoom": 1.0
+  },
+  "maintenance": {
+    "src": "b58-valvetrain.jpg",
+    "size": [
+      1200,
+      900
+    ],
+    "focus": [
+      0.5,
+      0.62
+    ],
+    "zoom": 1.0
   }
 }
