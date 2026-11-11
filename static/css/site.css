@@ -745,3 +745,7 @@ a.card:hover{background:linear-gradient(170deg,#25343A,#1A2528)}
 .cb-form .btn{grid-column:1/-1;justify-self:start}
 @media(max-width:640px){.cb-form{grid-template-columns:1fr}.cb-form .cb-msg,.cb-form .btn{grid-column:auto}}
 .page-hero.has-photo{border-bottom:0}
+/* tile outline drawn on top of the zooming photo so all four sides change color together */
+.ptile{border:0}
+.ptile::after{content:"";position:absolute;inset:0;z-index:2;border:1px solid rgba(197,165,114,.2);pointer-events:none;transition:border-color .25s}
+.ptile:hover::after{border-color:var(--accent)}
