@@ -362,7 +362,7 @@ def make_page(key):
 <h2>{m["name"]} service done properly</h2><p>{m["intro"]}</p>
 <h2>Common {m["name"]} problems we fix</h2>{ticks(m["issues"])}
 {repair_links(ctx, m["path"], f"{m['name']} repair guides")}
-<h2>{m["name"]} services</h2><ul>{"".join(f"<li>{s}</li>" for s in m["services"])}</ul>
+<h2>{m["name"]} services</h2>{ticks(m["services"])}
 <p>Want more from your {m["name"]}? <a href="{ctx.L("/build/")}">Build your car</a> and see what your power goal takes.</p>
 </div>{side_panel(ctx, f"Book your {m['name']}")}</div></section>
 {callback(ctx)}{faq_block(m["faqs"], f"{m['name']} questions")}'''
@@ -587,11 +587,13 @@ def about(ctx):
 
 def areas(ctx):
     from towns import TOWNS as _T
-    towns = "".join((f'<li><a href="{ctx.L(f"/areas-we-serve/{t.lower()}-ma/")}">{e(t)}, MA</a></li>' if t.lower() in _T else f"<li>{e(t)}, MA</li>") for t in CFG["areasServed"])
+    guides = chips(f'<a class="lpill" href="{ctx.L(f"/areas-we-serve/{k}-ma/")}">{e(v["name"])}, MA</a>' for k, v in _T.items())
+    others = chips(f'<span class="lpill lpill-plain">{e(t)}, MA</span>' for t in CFG["areasServed"] if t.lower() not in _T)
     return page_hero(ctx, "Areas we serve", "European Auto Repair Near You", f"Our shop is in {CITY}, a short drive from across MetroWest and Central Massachusetts via I-495, I-290, Route 20 and Route 9.",
                      [("Home", "/"), ("Areas We Serve", "/areas-we-serve/")]) + f'''
 <section class="section"><div class="wrap split"><div class="prose">
-<h2>Drivers come to us from</h2><ul style="columns:2">{towns}</ul>
+<h2>Town guides</h2><p>Directions, drive times and what we see most from each town.</p>{guides}
+<h2>We also serve</h2>{others}
 <p>Don't see your town? Plenty of our customers drive further for a specialist. Call us and we'll help you plan drop-off.</p>
 <h2>What we service</h2>{chips([f'<a class="lpill" href="{ctx.L(p)}">{e(n)}</a>' for n, p in MAKES_NAV] + [f'<a class="lpill" href="{ctx.L("/services/performance-builds/")}">Performance builds</a>', f'<a class="lpill" href="{ctx.L("/services/pre-purchase-inspection/")}">Pre-purchase inspections</a>'])}
 </div>{side_panel(ctx)}</div></section>'''
