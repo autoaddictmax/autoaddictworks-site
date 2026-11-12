@@ -119,6 +119,7 @@ def cards(ctx, items, cols=3, deep=False):
             out.append(f'<div class="card">{num}<h3>{e(title)}</h3><p>{text}</p></div>')
     return f'<div class="grid g{cols}">{"".join(out)}</div>'
 
+def chips(items): return '<div class="lpills">' + "".join(items) + '</div>'
 def ticks(items): return '<ul class="ticks">' + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
 
 def side_panel(ctx, heading="Visit the shop"):
@@ -387,13 +388,13 @@ def repair_page(path):
     crumbs = [("Home", "/"), (pn, pp), (r["name"], path)]
     def body(ctx):
         secs = "".join(f"<h2>{h}</h2>{b}" for h, b in r["sections"])
-        rel = " · ".join(f'<a href="{ctx.L(p)}">{e(REPAIRS[p]["name"] if p in REPAIRS else SERVICES[p]["name"])}</a>' for p in r["related"])
+        rel = chips(f'<a class="lpill" href="{ctx.L(p)}">{e(REPAIRS[p]["name"] if p in REPAIRS else SERVICES[p]["name"])}</a>' for p in r["related"])
         return page_hero(ctx, f"{pn.replace(' Repair','')} · {CITY}" if pp != "/services/" else f"Services · {CITY}", r["h1"], r["lede"], crumbs) + f'''
 <section class="section"><div class="wrap split"><div class="prose">
 <h2>Which cars are affected</h2>{ticks(r["cars"])}
 <h2>Symptoms to watch for</h2>{ticks(r["symptoms"])}
 {secs}
-<h2>Related</h2><p>{rel}</p>
+<h2>Related</h2>{rel}
 </div>{side_panel(ctx, "Book this repair")}</div></section>{callback(ctx)}{faq_block(r["faqs"])}'''
     return dict(title=r["title"], desc=r["desc"], crumbs=crumbs, faqs=r["faqs"], service=r["name"], body=body, priority="0.7")
 
@@ -555,7 +556,7 @@ def service_page(path):
                          [("Home", "/"), ("Services", "/services/"), (s["name"], path)]) + f'''
 <section class="section"><div class="wrap split"><div class="prose">{sections}
 {repair_links(ctx, path, "Repair guides")}
-<h2>Makes we service</h2><p>{" · ".join(f'<a href="{ctx.L(p)}">{e(n)}</a>' for n, p in MAKES_NAV)}</p></div>
+<h2>Makes we service</h2>{chips(f'<a class="lpill" href="{ctx.L(p)}">{e(n)}</a>' for n, p in MAKES_NAV)}</div>
 {side_panel(ctx)}</div></section>{callback(ctx)}{faq_block(s["faqs"])}'''
     return dict(title=s["title"], desc=s["desc"], crumbs=[("Home", "/"), ("Services", "/services/"), (s["name"], path)],
                 faqs=s["faqs"], service=s["name"], body=body, priority="0.8")
@@ -592,7 +593,7 @@ def areas(ctx):
 <section class="section"><div class="wrap split"><div class="prose">
 <h2>Drivers come to us from</h2><ul style="columns:2">{towns}</ul>
 <p>Don't see your town? Plenty of our customers drive further for a specialist. Call us and we'll help you plan drop-off.</p>
-<h2>What we service</h2><p>{" · ".join(f'<a href="{ctx.L(p)}">{e(n)} repair</a>' for n, p in MAKES_NAV)}, plus <a href="{ctx.L("/services/performance-builds/")}">performance builds</a> and <a href="{ctx.L("/services/pre-purchase-inspection/")}">pre-purchase inspections</a>.</p>
+<h2>What we service</h2>{chips([f'<a class="lpill" href="{ctx.L(p)}">{e(n)}</a>' for n, p in MAKES_NAV] + [f'<a class="lpill" href="{ctx.L("/services/performance-builds/")}">Performance builds</a>', f'<a class="lpill" href="{ctx.L("/services/pre-purchase-inspection/")}">Pre-purchase inspections</a>'])}
 </div>{side_panel(ctx)}</div></section>'''
 
 def contact(ctx):
@@ -758,13 +759,13 @@ def town_page(slug):
         ("How do I book?", f"Call {CFG['phoneDisplay']} or send a request online. We'll confirm a drop-off time and give you a written estimate before any work begins."),
     ]
     def body(ctx):
-        near = " · ".join(
-            f'<a href="{ctx.L(town_path(x.lower()))}">{e(x)}</a>' if x.lower() in TOWN_PAGES else e(x) for x in t["nearby"])
-        makes = " · ".join(f'<a href="{ctx.L(p)}">{e(m)} repair</a>' for m, p in MAKES_NAV)
+        near = chips(f'<a class="lpill" href="{ctx.L(town_path(x.lower()))}">{e(x)}</a>' if x.lower() in TOWN_PAGES else f'<span class="lpill lpill-plain">{e(x)}</span>' for x in t["nearby"])
+        makes = chips(f'<a class="lpill" href="{ctx.L(p)}">{e(m)}</a>' for m, p in MAKES_NAV)
         svc = [("Diagnostics", "/services/diagnostics/"), ("Maintenance", "/services/maintenance/"), ("Engine &amp; drivetrain repair", "/services/engine-repair/"),
                ("Brakes &amp; suspension", "/services/brakes-suspension/"), ("Coding &amp; retrofits", "/services/coding-retrofits/"), ("Pre-purchase inspections", "/services/pre-purchase-inspection/")]
-        svcs = " · ".join(f'<a href="{ctx.L(p)}">{n2}</a>' for n2, p in svc if p in PAGES)
-        guides = " · ".join(f'<a href="{ctx.L(p)}">{e(REPAIRS[p]["name"])}</a>' for p in list(REPAIRS)[:6])
+        svc.append(("Performance builds", "/services/performance-builds/"))
+        svcs = chips(f'<a class="lpill" href="{ctx.L(p)}">{n2}</a>' for n2, p in svc if p in PAGES)
+        guides = chips(f'<a class="lpill" href="{ctx.L(p)}">{e(REPAIRS[p]["name"])}</a>' for p in list(REPAIRS)[:6])
         return page_hero(ctx, f"Areas we serve · {n}", f"European Auto Repair for {n} Drivers",
                          f"BMW, Audi, VW and Mercedes specialists {t['drive']} from {n}, in {CITY}. Factory diagnostics, genuine parts and a written estimate before any work.", crumbs) + f'''
 <section class="section"><div class="wrap split"><div class="prose">
@@ -772,10 +773,11 @@ def town_page(slug):
 <h2>Getting here from {n}</h2>
 <p>We're {t["drive"]} from {n}. {t["route"]} Our shop is at {e(A["street"])}, {e(A["city"])}, MA. Drop-off is by appointment.</p>
 <h2>Why {n} drivers come to us</h2>{ticks(t["local"])}
-<h2>What we work on</h2><p>{makes}</p>
-<p>Services: {svcs}, plus <a href="{ctx.L("/services/performance-builds/")}">performance builds</a>.</p>
-<h2>Common repairs we handle</h2><p>{guides}</p>
-<h2>Also serving near {n}</h2><p>{near}. <a href="{ctx.L("/areas-we-serve/")}">See all areas we serve</a>.</p>
+<h2>Makes we work on</h2>{makes}
+<h2>Services</h2>{svcs}
+<h2>Common repairs we handle</h2>{guides}
+<h2>Also serving near {n}</h2>{near}
+<p><a href="{ctx.L("/areas-we-serve/")}">See all areas we serve →</a></p>
 </div>{side_panel(ctx, f"Book from {n}")}</div></section>{callback(ctx)}{faq_block(faqs, f"{n} drivers often ask")}'''
     return dict(title=f"BMW & European Auto Repair near {n}, MA | Auto Addict Works",
                 desc=f"European auto repair for {n}, MA drivers. BMW, Audi, VW and Mercedes diagnostics, maintenance and repair, {t['drive']} away in {CITY}.",
