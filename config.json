@@ -63,7 +63,8 @@
     "Wayland",
     "Ashland",
     "Hopkinton",
-    "Clinton"
+    "Clinton",
+    "Worcester"
   ],
   "showVehicleSales": false,
   "_showVehicleSales_note": "Turn on once the dealer license is issued \u2014 adds the Vehicle Sales page, nav link and home tiles.",

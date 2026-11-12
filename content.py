@@ -585,7 +585,8 @@ def about(ctx):
 </div>{side_panel(ctx)}</div></section>'''
 
 def areas(ctx):
-    towns = "".join(f"<li>{e(t)}, MA</li>" for t in CFG["areasServed"])
+    from towns import TOWNS as _T
+    towns = "".join((f'<li><a href="{ctx.L(f"/areas-we-serve/{t.lower()}-ma/")}">{e(t)}, MA</a></li>' if t.lower() in _T else f"<li>{e(t)}, MA</li>") for t in CFG["areasServed"])
     return page_hero(ctx, "Areas we serve", "European Auto Repair Near You", f"Our shop is in {CITY}, a short drive from across MetroWest and Central Massachusetts via I-495, I-290, Route 20 and Route 9.",
                      [("Home", "/"), ("Areas We Serve", "/areas-we-serve/")]) + f'''
 <section class="section"><div class="wrap split"><div class="prose">
@@ -743,3 +744,40 @@ for p in SERVICES: PAGES[p] = service_page(p)
 for p in REPAIRS: PAGES[p] = repair_page(p)
 PAGES["/builds/"] = dict(title="Builds: BMW Performance Builds | Auto Addict Works", desc="Performance builds from Auto Addict Works in Marlborough, MA. Full build sheets for B58 and S58 BMWs making 1,200+ hp, planned and built in our shop.", crumbs=[("Home", "/"), ("Builds", "/builds/")], body=builds_index, priority="0.7")
 for _b in BUILDS: PAGES["/builds/" + _b["slug"] + "/"] = build_profile(_b)
+
+# ------------------------------------------------------------------ town pages
+from towns import TOWNS as TOWN_PAGES
+def town_path(slug): return f"/areas-we-serve/{slug}-ma/"
+def town_page(slug):
+    t = TOWN_PAGES[slug]; n = t["name"]; path = town_path(slug)
+    crumbs = [("Home", "/"), ("Areas We Serve", "/areas-we-serve/"), (n, path)]
+    faqs = [
+        (f"How far is Auto Addict Works from {n}?", f"{t['drive'][0].upper() + t['drive'][1:]} by car. {t['route']} We're at {A['street']}, {A['city']}, MA."),
+        ("Which cars do you work on?", "BMW is our deepest specialty, with Audi, Volkswagen, Mercedes-Benz, MINI and Porsche as well. We handle diagnostics, maintenance, repairs, coding and performance builds."),
+        t["faq_extra"],
+        ("How do I book?", f"Call {CFG['phoneDisplay']} or send a request online. We'll confirm a drop-off time and give you a written estimate before any work begins."),
+    ]
+    def body(ctx):
+        near = " · ".join(
+            f'<a href="{ctx.L(town_path(x.lower()))}">{e(x)}</a>' if x.lower() in TOWN_PAGES else e(x) for x in t["nearby"])
+        makes = " · ".join(f'<a href="{ctx.L(p)}">{e(m)} repair</a>' for m, p in MAKES_NAV)
+        svc = [("Diagnostics", "/services/diagnostics/"), ("Maintenance", "/services/maintenance/"), ("Engine &amp; drivetrain repair", "/services/engine-repair/"),
+               ("Brakes &amp; suspension", "/services/brakes-suspension/"), ("Coding &amp; retrofits", "/services/coding-retrofits/"), ("Pre-purchase inspections", "/services/pre-purchase-inspection/")]
+        svcs = " · ".join(f'<a href="{ctx.L(p)}">{n2}</a>' for n2, p in svc if p in PAGES)
+        guides = " · ".join(f'<a href="{ctx.L(p)}">{e(REPAIRS[p]["name"])}</a>' for p in list(REPAIRS)[:6])
+        return page_hero(ctx, f"Areas we serve · {n}", f"European Auto Repair for {n} Drivers",
+                         f"BMW, Audi, VW and Mercedes specialists {t['drive']} from {n}, in {CITY}. Factory diagnostics, genuine parts and a written estimate before any work.", crumbs) + f'''
+<section class="section"><div class="wrap split"><div class="prose">
+<p>{t["intro"]}</p>
+<h2>Getting here from {n}</h2>
+<p>We're {t["drive"]} from {n}. {t["route"]} Our shop is at {e(A["street"])}, {e(A["city"])}, MA. Drop-off is by appointment.</p>
+<h2>Why {n} drivers come to us</h2>{ticks(t["local"])}
+<h2>What we work on</h2><p>{makes}</p>
+<p>Services: {svcs}, plus <a href="{ctx.L("/services/performance-builds/")}">performance builds</a>.</p>
+<h2>Common repairs we handle</h2><p>{guides}</p>
+<h2>Also serving near {n}</h2><p>{near}. <a href="{ctx.L("/areas-we-serve/")}">See all areas we serve</a>.</p>
+</div>{side_panel(ctx, f"Book from {n}")}</div></section>{callback(ctx)}{faq_block(faqs, f"{n} drivers often ask")}'''
+    return dict(title=f"BMW & European Auto Repair near {n}, MA | Auto Addict Works",
+                desc=f"European auto repair for {n}, MA drivers. BMW, Audi, VW and Mercedes diagnostics, maintenance and repair, {t['drive']} away in {CITY}.",
+                crumbs=crumbs, faqs=faqs, service="European Auto Repair", area=n, body=body, priority="0.6")
+for _t in TOWN_PAGES: PAGES[town_path(_t)] = town_page(_t)

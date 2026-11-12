@@ -74,10 +74,10 @@ def faq_schema(faqs):
     return {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
         {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": re.sub("<[^>]+>", "", a)}} for q, a in faqs]}
 
-def service_schema(ctx, name, desc):
+def service_schema(ctx, name, desc, area="Marlborough"):
     return {"@context": "https://schema.org", "@type": "Service", "name": name, "description": desc,
             "serviceType": name, "provider": {"@id": ctx.abs("/") + "#business"},
-            "areaServed": {"@type": "City", "name": "Marlborough, MA"}, "url": ctx.abs(ctx.path)}
+            "areaServed": {"@type": "City", "name": f"{area}, MA"}, "url": ctx.abs(ctx.path)}
 
 def book_href(ctx):
     return CFG["bookingUrl"] or ctx.L("/contact/")
@@ -132,7 +132,7 @@ def page_html(ctx, p):
                "@id": ctx.abs("/") + "#business", "name": CFG["name"], "url": ctx.abs("/")}]
     if p.get("crumbs"): schemas.append(breadcrumb_schema(ctx, p["crumbs"]))
     if p.get("faqs"): schemas.append(faq_schema(p["faqs"]))
-    if p.get("service"): schemas.append(service_schema(ctx, p["service"], desc))
+    if p.get("service"): schemas.append(service_schema(ctx, p["service"], desc, p.get("area", "Marlborough")))
     ld = "\n".join(f'<script type="application/ld+json">{json.dumps(s, ensure_ascii=False)}</script>' for s in schemas)
     body = p["body"](ctx)
     if PREVIEW:
