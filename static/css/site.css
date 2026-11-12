@@ -763,3 +763,4 @@ a.card:hover{background:linear-gradient(170deg,#25343A,#1A2528)}
 .lpill{display:inline-flex;align-items:center;min-height:38px;padding:8px 16px;border:1px solid rgba(197,165,114,.35);border-radius:999px;background:rgba(197,165,114,.06);color:var(--ink)!important;font:500 14px/1.2 var(--body);text-decoration:none!important;transition:border-color .2s,background .2s,color .2s}
 a.lpill:hover{border-color:var(--accent);background:rgba(197,165,114,.14);color:var(--accent)!important}
 .lpill-plain{border-color:rgba(241,235,223,.14);background:transparent;color:var(--ink-muted)!important}
+.section .lpills a.lpill{display:inline-flex;padding:8px 16px}
