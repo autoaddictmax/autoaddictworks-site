@@ -717,7 +717,7 @@ def notfound(ctx):
 
 # ------------------------------------------------------------------ registry
 PAGES = {
- "/": dict(title="BMW & European Auto Repair, Marlborough MA | Auto Addict Works",
+ "/": dict(title="Auto Addict Works | BMW & European Auto Repair in Marlborough, MA",
            desc="European auto repair in Marlborough, MA. Factory BMW ISTA diagnostics, genuine parts and performance builds for BMW, Audi, VW and Mercedes-Benz.",
            faqs=HOME_FAQS, body=home, priority="1.0"),
  "/services/": dict(title="European Auto Repair Services | Auto Addict Works", desc="Diagnostics, maintenance, engine and drivetrain repair, brakes and suspension, performance builds and pre-purchase inspections in Marlborough, MA.",
